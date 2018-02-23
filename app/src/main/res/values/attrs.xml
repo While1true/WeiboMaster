@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SettingView">
+        <attr name="titlesize" format="dimension" />
+        <attr name="titletextcolor" format="color" />
+        <attr name="titletext" format="string" />
+        <attr name="titleDrawable" format="reference" />
+
+        <attr name="drawablePadding" format="dimension" />
+
+
+        <attr name="subTextsize" format="dimension" />
+        <attr name="subTextcolor" format="color" />
+        <attr name="subtitleText" format="string" />
+        <attr name="subtitleDrawable" format="reference" />
+
+        <attr name="image" format="reference" />
+
+        <attr name="showSwitch" format="boolean" />
+        <attr name="switchOnText" format="string" />
+        <attr name="switchOffText" format="string" />
+    </declare-styleable>
+    <declare-styleable name="TextProgressBar">
+        <attr name="textColor" format="color"/>
+        <attr name="textSize" format="dimension"/>
+        <attr name="text" format="string"/>
+        <attr name="textGravity" format="enum">
+            <enum name="LEFT" value="0"/>
+            <enum name="CENTER" value="1"/>
+            <enum name="RIGHR" value="2"/>
+            <enum name="MOVE" value="3"/>
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="RadiusRelativelayout">
+        <attr name="corner_radius" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="IndicateView">
+        <attr name="indicateColor" format="color"/>
+        <attr name="indicateTextColor" format="color"/>
+        <attr name="indicate" format="integer"/>
+        <attr name="indicateRadius" format="float"/>
+        <attr name="indicatesize" format="float"/>
+        <attr name="maxnum" format="integer"/>
+    </declare-styleable>
+</resources>

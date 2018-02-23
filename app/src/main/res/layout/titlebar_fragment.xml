@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/colorPrimaryDark"
+        app:cardCornerRadius="0dp"
+        app:cardUseCompatPadding="false"
+        app:cardPreventCornerOverlap="false"
+        app:cardElevation="@dimen/size6">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/extraspace"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp" />
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:theme="@style/ToolbarStyle"
+                android:layout_margin="0dp"
+                app:contentInsetStart="0dp"
+                >
+                <!--app:popupTheme="@style/PopStyle"-->
+                <RelativeLayout
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/iv_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/menu_background_selector"
+                        android:paddingLeft="@dimen/size15"
+                        android:paddingRight="@dimen/size15"
+                        android:src="@drawable/ic_back" />
+
+                    <TextView
+                        android:id="@+id/tv_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:textColor="#fff"
+                        android:textSize="@dimen/titlesize"
+                        android:transitionName="xx" />
+                    <ImageView
+                        android:id="@+id/iv_menu"
+                        android:layout_width="@dimen/size53"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/size7"
+                        android:background="@drawable/menu_background_selector"
+                        android:paddingBottom="@dimen/size13"
+                        android:paddingLeft="@dimen/size7"
+                        android:paddingRight="@dimen/size7"
+                        android:paddingTop="@dimen/size13"
+                        android:src="@drawable/ic_menu"
+                        android:visibility="invisible" />
+                </RelativeLayout>
+            </android.support.v7.widget.Toolbar>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <FrameLayout
+        android:id="@+id/fl_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>
