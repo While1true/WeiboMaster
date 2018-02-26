@@ -8,7 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
     <style name="AppTheme_Launch" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/limit</item>
+        <item name="android:windowBackground">@mipmap/limit</item>
     </style>
     <style name="ToolbarStyle" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->

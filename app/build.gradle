@@ -10,7 +10,7 @@ android {
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
     defaultConfig {
-        applicationId "com.master.weibomaster"
+        applicationId "com.master.VangeBugs"
         minSdkVersion 21
         targetSdkVersion 26
         versionCode 1
@@ -61,7 +61,6 @@ dependencies {
     compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
     compile(name: 'nestrefreshlib-release', ext: 'aar')
 //    compile 'com.didi.virtualapk:core:0.9.1'
-    compile files('libs/Msc.jar')
 //    implementation 'androidx.core:core-ktx:0.1'
 
 }
