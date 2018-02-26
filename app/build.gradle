@@ -8,6 +8,7 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 26
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.master.weibomaster"
         minSdkVersion 21
@@ -23,6 +24,11 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs "libs"
         }
     }
 }
@@ -55,5 +61,7 @@ dependencies {
     compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
     compile(name: 'nestrefreshlib-release', ext: 'aar')
 //    compile 'com.didi.virtualapk:core:0.9.1'
+    compile files('libs/Msc.jar')
+//    implementation 'androidx.core:core-ktx:0.1'
 
 }

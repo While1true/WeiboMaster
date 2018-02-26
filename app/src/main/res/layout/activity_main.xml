@@ -8,19 +8,50 @@
 
     <TextView
         android:id="@+id/tv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/size8"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/size24"
         android:layout_marginEnd="@dimen/size8"
         android:layout_marginStart="@dimen/size8"
         android:gravity="center"
         android:lineSpacingExtra="@dimen/size5"
-        android:layout_marginTop="@dimen/size8"
-        android:textSize="@dimen/middlesize"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="@dimen/middlesize"
+        app:layout_constraintBottom_toTopOf="@+id/share"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/size8"
+        android:layout_marginStart="@dimen/size8"
+        android:layout_marginTop="@dimen/size24"
+        android:text="每日推荐"
+        android:textSize="@dimen/bigsize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/size24"
+        android:layout_marginEnd="@dimen/size24"
+        android:background="@drawable/bt_bg"
+        android:text="学习了"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+    <Button
+        android:id="@+id/share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/size24"
+        android:layout_marginEnd="@dimen/size16"
+        android:background="@drawable/bt_bg"
+        android:text="分享"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/next" />
 </android.support.constraint.ConstraintLayout>

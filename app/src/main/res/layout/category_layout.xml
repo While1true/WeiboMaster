@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<android.support.v4.view.ViewPager
+    android:layout_weight="1"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"/>
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        app:cardElevation="@dimen/size5"
+        android:translationZ="@dimen/size24"
+        android:layout_height="wrap_content">
+    <RadioGroup
+        android:id="@+id/rg_menu"
+        android:layout_gravity="bottom"
+        android:paddingBottom="@dimen/size5"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/category"
+            android:layout_weight="1"
+            android:text="@string/category"
+            android:gravity="center"
+            android:checked="true"
+            android:button="@null"
+            android:textColor="@drawable/text_selector"
+            android:drawablePadding="@dimen/size2"
+            android:drawableTop="@drawable/category_selector"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <RadioButton
+            android:gravity="center"
+            android:id="@+id/collect"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/size2"
+            android:button="@null"
+            android:text="@string/collect"
+            android:textColor="@drawable/text_selector"
+            android:drawableTop="@drawable/collect_selector"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+    </RadioGroup>
+    </android.support.v7.widget.CardView>
+</LinearLayout>
