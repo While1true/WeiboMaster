@@ -74,7 +74,7 @@ abstract class BaseFragment : Fragment() {
 
     open fun contentView(): View? = null
     open fun needTitle(): Boolean {
-        return true
+        return false
     }
 
     open fun onBack() {
