@@ -44,14 +44,17 @@
         android:text="学习了"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-    <Button
+
+    <com.master.weibomaster.Widgets.GradualButton
         android:id="@+id/share"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/size24"
+        android:layout_height="0dp"
+        android:paddingRight="@dimen/size32"
         android:layout_marginEnd="@dimen/size16"
+        android:paddingLeft="@dimen/size32"
         android:background="@drawable/bt_bg"
         android:text="分享"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/next" />
+        app:layout_constraintBottom_toBottomOf="@+id/next"
+        app:layout_constraintEnd_toStartOf="@+id/next"
+        app:layout_constraintTop_toTopOf="@+id/next" />
 </android.support.constraint.ConstraintLayout>

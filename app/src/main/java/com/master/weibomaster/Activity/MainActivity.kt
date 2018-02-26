@@ -37,6 +37,7 @@ class MainActivity : BaseActivity(), SynthesizerListener {
 
     override fun onCompleted(p0: SpeechError?) {
         K2JUtils.toast("播报进度："+100.toString())
+        share.start(0xffff4070.toInt(),share.currentTextColor)
     }
 
     override fun onSpeakProgress(p0: Int, p1: Int, p2: Int) {

@@ -9,7 +9,7 @@ import com.master.weibomaster.Util.StateBarUtils
  */
 class CategoryActivity :BaseActivity() {
     override fun initView() {
-        title="每日推荐"
+        setTitle("分类")
         StateBarUtils.performTransStateBar(window)
     }
 

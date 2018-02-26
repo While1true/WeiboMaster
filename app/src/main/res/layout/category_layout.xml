@@ -20,24 +20,28 @@
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:layout_height="wrap_content">
-        <RadioButton
+        <com.master.weibomaster.Widgets.IndicateRadioButton
             android:id="@+id/category"
             android:layout_weight="1"
             android:text="@string/category"
             android:gravity="center"
             android:checked="true"
-            android:button="@null"
+            android:clickable="true"
+            app:indicate="66"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:textColor="@drawable/text_selector"
             android:drawablePadding="@dimen/size2"
             android:drawableTop="@drawable/category_selector"
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
-        <RadioButton
+        <com.master.weibomaster.Widgets.IndicateRadioButton
             android:gravity="center"
             android:id="@+id/collect"
             android:layout_weight="1"
+            android:clickable="true"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:drawablePadding="@dimen/size2"
-            android:button="@null"
+            app:indicate="88"
             android:text="@string/collect"
             android:textColor="@drawable/text_selector"
             android:drawableTop="@drawable/collect_selector"
