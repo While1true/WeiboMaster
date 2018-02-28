@@ -46,6 +46,7 @@ dependencies {
     compile  'com.android.support.constraint:constraint-layout:1.0.2'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     compile "org.jetbrains.kotlinx:kotlinx-coroutines-core:$cor_version"
+    compile "org.jetbrains.anko:anko-commons:$anko_version"
     //Rxjava
     compile 'io.reactivex.rxjava2:rxjava:2.1.1'
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'

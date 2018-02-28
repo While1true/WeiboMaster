@@ -72,7 +72,8 @@ public class IndicateRadioButton extends RadioButton {
          * 大于最大值画一个圆
          */
         if (indicate > max) {
-            canvas.drawCircle(width - indicateRadius/2, indicateRadius/2, indicateRadius / 2, paint);
+            float min = Math.min(width - indicateRadius / 2, width / 2 + getCompoundDrawables()[1].getIntrinsicWidth() / 2);
+            canvas.drawCircle(min, indicateRadius/2, indicateRadius / 2, paint);
             return;
         }
         /**

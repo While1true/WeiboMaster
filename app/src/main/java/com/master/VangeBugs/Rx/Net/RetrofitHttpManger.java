@@ -23,7 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitHttpManger {
     private static final int DEFAULT_CONNECT_TIMEOUT = 5;
     private static final int DEFAULT_READ_TIMEOUT = 10;
-    private static final String BASEURL = "http://10.0.110.134:8000/masterWeiBo/";
+    private static final String BASEURL = "http://10.0.110.134:8080/Vange/";
     private Retrofit mRetrofit;
 
 

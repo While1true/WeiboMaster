@@ -1,6 +1,8 @@
 <resources>
-    <string name="app_name">WeiboMaster</string>
+    <string name="app_name">VangeBugs</string>
     <string name="category">项目分类</string>
     <string name="collect">关注进度</string>
     <string name="bug_1333">新提交bug数：1333</string>
+    <string name="mao">小毛</string>
+    <string name="solved">已解决</string>
 </resources>

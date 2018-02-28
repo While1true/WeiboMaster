@@ -19,6 +19,9 @@ import com.master.VangeBugs.Util.PrefUtil
 fun startActivity(context: Context, clazz: Class<out Activity>) {
     context.startActivity(Intent(context, clazz))
 }
+fun startActivity(context: Context, intent: Intent) {
+    context.startActivity(intent)
+}
 
 
 /**
