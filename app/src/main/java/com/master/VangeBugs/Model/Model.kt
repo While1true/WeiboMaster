@@ -23,9 +23,16 @@ data class DownStatu constructor(
 
 data class BugCategory(
         val category: String, //基本
+        val category_id: String, //基本
         val dcount: Int //13399
 )
 
+
+data class xx(
+		val model: String, //Vange.bug
+		val pk: Int, //1
+		val fields: Bug
+)
 
 data class Bug(
         val id: Long,

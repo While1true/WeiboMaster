@@ -1,10 +1,7 @@
 package com.master.VangeBugs.Api
 
-import com.master.VangeBugs.Model.Base
-import com.master.VangeBugs.Model.Bug
 import com.master.VangeBugs.Rx.Net.RetrofitHttpManger
 import com.master.VangeBugs.Rx.RxSchedulers
-import io.reactivex.Observable
 
 /**
  * Created by 不听话的好孩子 on 2018/2/26.

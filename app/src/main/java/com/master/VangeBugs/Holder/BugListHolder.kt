@@ -1,16 +1,13 @@
 package com.master.VangeBugs.Holder
 
-import android.app.Activity
 import android.app.AlertDialog
-import android.content.DialogInterface
-import android.content.Intent
 import android.text.TextUtils
-import com.master.VangeBugs.Activity.ProgramListActivity
 import com.master.VangeBugs.Api.ApiImpl
 import com.master.VangeBugs.Fragment.DetailF
 import com.master.VangeBugs.Model.Base
 import com.master.VangeBugs.Model.Bug
 import com.master.VangeBugs.Model.UPDATE_INDICATE
+import com.master.VangeBugs.Model.xx
 import com.master.VangeBugs.R
 import com.master.VangeBugs.Rx.DataObserver
 import com.master.VangeBugs.Rx.Utils.RxBus
@@ -21,14 +18,14 @@ import com.nestrefreshlib.Adpater.Base.Holder
 import com.nestrefreshlib.Adpater.Base.MyCallBack
 import com.nestrefreshlib.Adpater.Impliment.BaseHolder
 import coms.pacs.pacs.Utils.mtoString
-import coms.pacs.pacs.Utils.startActivity
 import coms.pacs.pacs.Utils.toast
 
 /**
  * Created by 不听话的好孩子 on 2018/2/26.
  */
-class BugListHolder : BaseHolder<Bug>(R.layout.bug_list_layout) {
-    override fun onViewBind(p0: Holder?, p1: Bug?, p2: Int) {
+class BugListHolder : BaseHolder<xx>(R.layout.bug_list_layout) {
+    override fun onViewBind(p0: Holder?, p3: xx?, p2: Int) {
+        var p1=p3?.fields
         p0?.setText(R.id.issue, "发布者：" + p1?.publisher + (if (p1?.like == 1) "/(已重点关注)" else ""))
         p0?.setText(R.id.publisher, if (TextUtils.isEmpty(p1?.title
                         ?: "")) getissue(p1?.issue) else p1?.title)

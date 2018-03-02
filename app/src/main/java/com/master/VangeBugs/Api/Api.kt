@@ -1,9 +1,6 @@
 package com.master.VangeBugs.Api
 
-import com.master.VangeBugs.Model.Base
-import com.master.VangeBugs.Model.Bug
-import com.master.VangeBugs.Model.BugCategory
-import com.master.VangeBugs.Model.ToDo
+import com.master.VangeBugs.Model.*
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -19,10 +16,10 @@ interface Api {
     fun getToDo():Observable<Base<ToDo>>
 
     @GET("buglist")
-    fun getBugList(@Query("category")category:String,@Query("pagenum")pagenum: Int,@Query("pagesize")pagesize: Int):Observable<Base<List<Bug>>>
+    fun getBugList(@Query("category")category:String,@Query("pagenum")pagenum: Int,@Query("pagesize")pagesize: Int):Observable<Base<List<xx>>>
 
     @GET("unsolvelike")
-    fun getUnsolvedLike():Observable<Base<List<Bug>>>
+    fun getUnsolvedLike():Observable<Base<List<xx>>>
 
     @GET("like")
     fun like(@Query("id")id:Long,@Query("like")like:Int):Observable<Base<Any>>

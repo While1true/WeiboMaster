@@ -11,10 +11,7 @@ import android.view.View
 import com.master.VangeBugs.Api.ApiImpl
 import com.master.VangeBugs.Holder.BugListHolder
 import com.master.VangeBugs.Holder.CategoryHolder
-import com.master.VangeBugs.Model.Base
-import com.master.VangeBugs.Model.Bug
-import com.master.VangeBugs.Model.BugCategory
-import com.master.VangeBugs.Model.UPDATE_INDICATE
+import com.master.VangeBugs.Model.*
 import com.master.VangeBugs.R
 import com.master.VangeBugs.Rx.DataObserver
 import com.master.VangeBugs.Rx.MyObserver
@@ -39,7 +36,7 @@ class LikeF : BaseFragment() {
         stateLayout = StateLayout(context)
         stateLayout?.setStateListener(object : DefaultStateListener() {
             override fun netError(p0: Context?) {
-                init(null)
+                getdata()
             }
         })
         return stateLayout?.setContent(getLayoutId())
@@ -61,8 +58,8 @@ class LikeF : BaseFragment() {
 
     private fun getdata() {
         ApiImpl.apiImpl.getUnsolvedLike()
-                .subscribe(object : DataObserver<List<Bug>>(this) {
-                    override fun OnNEXT(bean: List<Bug>) {
+                .subscribe(object : DataObserver<List<xx>>(this) {
+                    override fun OnNEXT(bean: List<xx>) {
                         if (adapter == null)
                             stateLayout?.showItem()
                         showData(bean)
@@ -76,7 +73,7 @@ class LikeF : BaseFragment() {
     }
 
     var adapter: SAdapter? = null
-    private fun showData(bean: List<Bug>) {
+    private fun showData(bean: List<xx>) {
         if (adapter == null) {
             adapter = SAdapter(bean)
                     .apply {
@@ -86,7 +83,8 @@ class LikeF : BaseFragment() {
             refreshlayout.setAdapter(adapter)
             refreshlayout.getmScroll<RecyclerView>().itemAnimator = DefaultItemAnimator()
         } else {
-            adapter!!.differUpdate(bean)
+            adapter!!.setList(bean)
+            adapter?.notifyDataSetChanged()
         }
     }
 }

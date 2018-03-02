@@ -18,6 +18,7 @@ class CategoryHolder : BaseHolder<BugCategory>(R.layout.category_item) {
         p0?.itemView?.setOnClickListener {
             val intent = Intent(p0?.itemView.context, ProgramListActivity::class.java)
             intent.putExtra("category", p1?.category)
+            intent.putExtra("category_id", p1?.category_id)
             startActivity(p0?.itemView.context, intent)
         }
     }
