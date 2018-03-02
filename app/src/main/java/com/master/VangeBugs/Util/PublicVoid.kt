@@ -5,7 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
+import android.support.v7.widget.DividerItemDecoration
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.util.TypedValue
+import android.view.View
 import com.kxjsj.doctorassistant.Utils.MyToast
 import com.master.VangeBugs.App
 import com.master.VangeBugs.Util.FragmentUtils

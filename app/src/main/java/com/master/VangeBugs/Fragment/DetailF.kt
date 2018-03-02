@@ -75,7 +75,7 @@ class DetailF : BaseFragment() {
                 标题：${bug.title}
                 项目：${bug.category}
                 发布者：${bug.publisher}
-                发布时间:${bug.title}
+                发布时间:${bug.time}
                 状态：${if (bug.state == 1) "已解决" else "待解决"}
 
                 问题：${bug.issue}

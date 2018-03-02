@@ -1,7 +1,12 @@
 package com.master.VangeBugs.Activity
 
 import android.content.Context
+import android.support.v7.widget.DividerItemDecoration
+import android.support.v7.widget.InnerDecorate
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.View
+import android.widget.LinearLayout
 import com.master.VangeBugs.Api.ApiImpl
 import com.master.VangeBugs.Base.BaseActivity
 import com.master.VangeBugs.Holder.BugListHolder
@@ -13,6 +18,7 @@ import com.master.VangeBugs.Rx.DataObserver
 import com.master.VangeBugs.Util.StateBarUtils
 import com.nestrefreshlib.Adpater.Impliment.SAdapter
 import com.nestrefreshlib.RefreshViews.RefreshListener
+import com.nestrefreshlib.RefreshViews.RefreshWrap.MyRefreshInnerHandler
 import com.nestrefreshlib.State.DefaultStateListener
 import com.nestrefreshlib.State.StateLayout
 import kotlinx.android.synthetic.main.refreshlayout.*
@@ -54,14 +60,15 @@ class ProgramListActivity : BaseActivity() {
                             else if (bean.size < pagesize) {
 //                                stateLayout?.showState(StateEnum.SHOW_INFO, "没有更多了")
                                 refreshlayout.attrsUtils.canfootr = false
+                                stateLayout?.showItem()
                             }
                         } else if (bean.size < pagesize) {
                             list.add(Any())
                             adapter?.addType(NomoreHolder())
                             refreshlayout.attrsUtils.canfootr = false
+                            stateLayout?.showItem()
                         }
                         adapter?.notifyDataSetChanged()
-                        stateLayout?.showItem()
                         refreshlayout.NotifyCompleteRefresh0()
                     }
 
@@ -76,11 +83,20 @@ class ProgramListActivity : BaseActivity() {
                 })
     }
 
+
     private fun initAdapter() {
         adapter = SAdapter(list)
                 .addLifeOwener(this)
                 .addType(BugListHolder())
-        refreshlayout.setInnerAdapter(adapter)
+
+        val recyclerView = refreshlayout.getmScroll<RecyclerView>()
+        recyclerView.layoutManager=LinearLayoutManager(this)
+        recyclerView.addItemDecoration(InnerDecorate(this,LinearLayout.VERTICAL))
+        MyRefreshInnerHandler.setInnerRecyclerviewAdapter(
+                refreshlayout,MyRefreshInnerHandler(),
+                adapter)
+//        refreshlayout.setInnerAdapter()
+
         refreshlayout.setListener(object : RefreshListener() {
             override fun Loading() {
                 pagenum++
