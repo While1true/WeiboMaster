@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/size8"
         android:layout_marginStart="@dimen/size8"
-        android:textColor="@color/black"
+        android:textColor="@color/black353535"
         android:textSize="@dimen/titlesize"
         app:layout_constraintBottom_toBottomOf="@+id/close"
         app:layout_constraintEnd_toEndOf="parent"

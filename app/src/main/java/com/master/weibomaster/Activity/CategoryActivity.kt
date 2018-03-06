@@ -1,11 +1,16 @@
 package com.master.weibomaster.Activity
 
-import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
-import com.master.weibomaster.Base.BaseActivity
+import com.master.VangeBugs.Api.ApiImpl
+import com.master.VangeBugs.Base.BaseActivity
 import com.master.weibomaster.Fragment.CategoryF
+import com.master.weibomaster.Model.Base
+import com.master.weibomaster.Model.ToDo
+import com.master.weibomaster.Model.UPDATE_INDICATE
 import com.master.weibomaster.R
+import com.master.weibomaster.Rx.DataObserver
+import com.master.weibomaster.Rx.Utils.RxBus
 import com.master.weibomaster.Util.StateBarUtils
 import kotlinx.android.synthetic.main.category_layout.*
 
@@ -41,10 +46,19 @@ class CategoryActivity : BaseActivity() {
                 vp.currentItem = 1
             }
         }
+        RxBus.getDefault().toObservable(UPDATE_INDICATE, Base::class.java)
+                .subscribe({ loadData()})
 
     }
 
     override fun loadData() {
+        ApiImpl.apiImpl.getToDo()
+                .subscribe(object : DataObserver<ToDo>(this){
+                    override fun OnNEXT(bean: ToDo?) {
+                        collect.indicate=bean?.like__count?:0
+                        category.indicate=bean?.count?:0
+                    }
+                })
     }
 
     override fun getLayoutId() = R.layout.category_layout

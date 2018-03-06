@@ -2,47 +2,18 @@ package com.master.weibomaster.Activity
 
 import android.content.Intent
 import android.os.Build
-import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.TextAppearanceSpan
-import com.iflytek.cloud.SpeechError
-import com.iflytek.cloud.SynthesizerListener
-import com.master.weibomaster.Base.BaseActivity
+import com.master.VangeBugs.Base.BaseActivity
 import com.master.weibomaster.R
 import com.master.weibomaster.Rx.MyObserver
 import com.master.weibomaster.Rx.RxSchedulers
-import com.master.weibomaster.Rx.Utils.RxLifeUtils
-import com.master.weibomaster.Util.K2JUtils
-import com.master.weibomaster.Voice.XFVoice
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.concurrent.TimeUnit
 
-class MainActivity : BaseActivity(), SynthesizerListener {
-    override fun onBufferProgress(p0: Int, p1: Int, p2: Int, p3: String?) {
-    }
-
-    override fun onSpeakBegin() {
-    }
-
-    override fun onEvent(p0: Int, p1: Int, p2: Int, p3: Bundle?) {
-    }
-
-    override fun onSpeakPaused() {
-    }
-
-    override fun onSpeakResumed() {
-    }
-
-    override fun onCompleted(p0: SpeechError?) {
-        K2JUtils.toast("播报进度："+100.toString())
-        share.start(0xffff4070.toInt(),share.currentTextColor)
-    }
-
-    override fun onSpeakProgress(p0: Int, p1: Int, p2: Int) {
-        K2JUtils.toast("播报进度："+p0.toString())
-    }
+class MainActivity : BaseActivity(){
 
     override fun initView() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -57,7 +28,6 @@ class MainActivity : BaseActivity(), SynthesizerListener {
         tv.text = text
         val split = text.split(" ")
         val size = split.size
-        XFVoice.readerString(text,this)
         Observable.interval(1000,800,TimeUnit.MILLISECONDS)
                 .take(size.toLong())
                 .compose(RxSchedulers.compose())
@@ -82,15 +52,6 @@ class MainActivity : BaseActivity(), SynthesizerListener {
 
     override fun needTitle(): Boolean {
         return false
-    }
-
-    override fun onStop() {
-        super.onStop()
-        XFVoice.mTts.stopSpeaking()
-    }
-    override fun onDestroy() {
-        super.onDestroy()
-        XFVoice.mTts.destroy()
     }
 
 }

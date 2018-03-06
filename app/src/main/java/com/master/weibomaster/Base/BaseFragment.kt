@@ -11,29 +11,28 @@ import com.master.weibomaster.R
 import com.master.weibomaster.Rx.Utils.RxLifeUtils
 import com.master.weibomaster.Util.SizeUtils
 import com.master.weibomaster.Util.StateBarUtils
+import com.nestrefreshlib.State.StateLayout
 import kotlinx.android.synthetic.main.titlebar_fragment.*
 
 /**
  * Created by vange on 2018/1/16.
  */
 abstract class BaseFragment : Fragment() {
-    var contentView: View? = null
     private var firestLoad = true
     private var viewCreated = false
     private var isvisable = false
+    var stateLayout: StateLayout? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var inflate: View? = null
+        stateLayout = StateLayout(context).setContent(getLayoutId())
         if (needTitle()) {
-            inflate = layoutInflater.inflate(R.layout.titlebar_fragment, container, false)
-            layoutInflater.inflate(getLayoutId(), inflate!!.findViewById(R.id.fl_content) as ViewGroup, true)
+             inflate = layoutInflater.inflate(R.layout.titlebar_fragment, container, false)
+            val viewGroup = inflate!!.findViewById(R.id.fl_content) as ViewGroup
+            viewGroup.addView(stateLayout)
             inflate!!.findViewById<View>(R.id.iv_back).setOnClickListener { onBack() }
             handleTitlebar(inflate)
         } else {
-            contentView = contentView()
-            if (contentView == null) {
-                contentView = layoutInflater.inflate(getLayoutId(), null)
-            }
-            inflate = contentView
+            inflate = stateLayout
         }
         inflate?.isClickable = true
         return inflate
@@ -72,7 +71,6 @@ abstract class BaseFragment : Fragment() {
 
     open fun loadLazy() {}
 
-    open fun contentView(): View? = null
     open fun needTitle(): Boolean {
         return false
     }

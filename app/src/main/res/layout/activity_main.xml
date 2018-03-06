@@ -15,7 +15,7 @@
         android:layout_marginStart="@dimen/size8"
         android:gravity="center"
         android:lineSpacingExtra="@dimen/size5"
-        android:textColor="@color/black"
+        android:textColor="@color/black353535"
         android:textSize="@dimen/middlesize"
         app:layout_constraintBottom_toTopOf="@+id/share"
         app:layout_constraintEnd_toEndOf="parent"

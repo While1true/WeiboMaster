@@ -2,9 +2,7 @@ package com.master.weibomaster
 
 import android.app.Application
 import android.content.Context
-import com.iflytek.cloud.SpeechUtility
 import com.master.weibomaster.Util.AdjustUtil
-import com.master.weibomaster.Voice.XFVoice
 import com.nestrefreshlib.RefreshViews.RefreshLayout
 
 /**
@@ -24,10 +22,6 @@ class App : Application() {
                 .setScrollLayoutIdDefault(R.layout.recyclerview)
                 .setHeaderLayoutidDefault(R.layout.header_layout)
                 .setFooterLayoutidDefault(R.layout.footer_layout))
-
-        SpeechUtility.createUtility(this, "appid=" + "5a90dd1f")
-        XFVoice.setDefaultParam()
-
     }
 
 
