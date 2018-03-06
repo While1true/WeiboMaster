@@ -53,6 +53,7 @@ dependencies {
     //文件夹适配
     compile 'com.zhy.base:fileprovider:1.0.0'
     compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
+
     compile(name: 'nestrefreshlib-release', ext: 'aar')
 //    compile 'com.didi.virtualapk:core:0.9.1'
 

@@ -1,4 +1,4 @@
-package com.master.weibomaster.Base
+package com.master.VangeBugs.Base
 
 import android.os.Build
 import android.os.Bundle
@@ -7,29 +7,28 @@ import android.support.v7.widget.CardView
 import android.view.View
 import com.master.weibomaster.R
 import com.master.weibomaster.Rx.Utils.RxLifeUtils
+import com.master.weibomaster.Util.ActivityUtils
 import com.master.weibomaster.Util.SizeUtils
-import com.master.weibomaster.Util.StateBarUtils
+import com.nestrefreshlib.State.StateLayout
 import kotlinx.android.synthetic.main.titlebar_activity.*
 
 /**
  * Created by vange on 2018/1/16.
  */
-abstract class BaseActivity:AppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity(){
+    var stateLayout: StateLayout? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if(needTitle()) {
+        ActivityUtils.addActivity(this)
+        stateLayout = StateLayout(this).setContent(getLayoutId())
+        if (needTitle()) {
             setContentView(R.layout.titlebar_activity)
             setSupportActionBar(toolbar)
-            layoutInflater.inflate(getLayoutId(), fl_content, true)
+            fl_content.addView(stateLayout)
             handleTitlebar()
             iv_back.setOnClickListener { onBack() }
-        }
-        else {
-            var view=contentView()
-            if (view== null)
-                setContentView(getLayoutId())
-            else
-                setContentView(view)
+        } else {
+            setContentView(stateLayout)
         }
 
         initView()
@@ -48,32 +47,34 @@ abstract class BaseActivity:AppCompatActivity() {
 
     abstract fun loadData()
 
-    abstract fun getLayoutId():Int
+    abstract fun getLayoutId(): Int
 
-     fun setTitle(title:String){
-         tv_title.text = title
+    fun setTitle(title: String) {
+        tv_title.text = title
     }
 
-    open fun needTitle():Boolean{
+    open fun needTitle(): Boolean {
         return true
     }
 
-    open fun onBack(){
+    open fun onBack() {
         onBackPressed()
     }
+
     open fun contentView(): View? = null
 
-    open fun setMenuClickListener(res:Int,listener:View.OnClickListener){
+    open fun setMenuClickListener(res: Int, listener: View.OnClickListener) {
         iv_menu.setOnClickListener(listener)
-        if(res!=0){
+        if (res != 0) {
             iv_menu.setImageResource(res)
         }
-        iv_menu.visibility=View.VISIBLE
+        iv_menu.visibility = View.VISIBLE
     }
 
 
     override fun onDestroy() {
         super.onDestroy()
+        ActivityUtils.remove(this)
         RxLifeUtils.getInstance().remove(this)
     }
 
