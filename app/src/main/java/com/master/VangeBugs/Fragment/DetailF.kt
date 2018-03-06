@@ -7,6 +7,7 @@ import com.master.VangeBugs.Api.ApiImpl
 import com.master.VangeBugs.Model.Base
 import com.master.VangeBugs.Model.Bug
 import com.master.VangeBugs.Model.UPDATE_INDICATE
+import com.master.VangeBugs.Model.xx
 import com.master.VangeBugs.R
 import com.master.VangeBugs.Rx.DataObserver
 import com.master.VangeBugs.Rx.Utils.RxBus
@@ -20,7 +21,7 @@ import kotlinx.android.synthetic.main.textview.*
  */
 class DetailF : BaseFragment() {
 
-    private var bug: Bug? = null
+    private var bug: xx? = null
     var callback: MyCallBack<Boolean>? = null
 
 
@@ -29,22 +30,22 @@ class DetailF : BaseFragment() {
     override fun init(savedInstanceState: Bundle?) {
         setTitle("Bug详情")
         textview.movementMethod = ScrollingMovementMethod.getInstance()
-        show(bug!!)
+        show(bug!!.fields)
         like.setOnClickListener {
             like.isEnabled=false
-            ApiImpl.apiImpl.like(bug!!.id,(bug!!.like+1)%2)
+            ApiImpl.apiImpl.like(bug!!.pk.toLong(),(bug!!.fields.like+1)%2)
                     .subscribe(object : DataObserver<Any>(this){
                         override fun OnNEXT(bean: Any?) {
                             RxBus.getDefault().post(Base(code = UPDATE_INDICATE, data = ""))
-                            bug!!.like=(bug!!.like+1)%2
-                            callback?.call(bug!!.like==1)
-                            like.isSelected = bug!!.like==1
-                            if( bug!!.like==1){
+                            bug!!.fields.like=(bug!!.fields.like+1)%2
+                            callback?.call(bug!!.fields.like==1)
+                            like.isSelected = bug!!.fields.like==1
+                            if( bug!!.fields.like==1){
                                 "已设为重点关注".toast()
                             }else{
                                 "取消关注成功".toast()
                             }
-                            like.text = if(bug!!.like==1)"已关注" else "关注"
+                            like.text = if(bug!!.fields.like==1)"已关注" else "关注"
                         }
 
                         override fun onComplete() {
@@ -56,7 +57,7 @@ class DetailF : BaseFragment() {
         }
     }
 
-    fun display(bug: Bug?):DetailF {
+    fun display(bug: xx?):DetailF {
         this.bug = bug
         return this
     }

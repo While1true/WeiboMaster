@@ -33,7 +33,7 @@ class BugListHolder : BaseHolder<xx>(R.layout.bug_list_layout) {
         p0?.setText(R.id.state, if (p1?.state == 0) "待解决" else "解决")
 
         p0?.itemView?.setOnClickListener {
-            val display = DetailF().display(p1)
+            val display = DetailF().display(p3)
             display.callback= MyCallBack<Boolean> {
                 p0?.setText(R.id.issue, "发布者：" + p1?.publisher + (if (it) "/(已重点关注)" else ""))
             }
@@ -47,7 +47,7 @@ class BugListHolder : BaseHolder<xx>(R.layout.bug_list_layout) {
                     .setMessage(if (islike) "将从关注页移除" else "将直接添加在关注页方便查看")
                     .setNegativeButton("取消", null)
                     .setPositiveButton("确认", { dialog, which ->
-                        ApiImpl.apiImpl.like(p1!!.id, (p1!!.like + 1) % 2)
+                        ApiImpl.apiImpl.like(p3!!.pk.toLong(), (p1!!.like + 1) % 2)
                                 .subscribe(object : DataObserver<Any>(p0?.itemView) {
                                     override fun onComplete() {
                                         super.onComplete()

@@ -2,23 +2,18 @@ package com.master.VangeBugs.Fragment
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.*
 import android.view.View
+import android.widget.LinearLayout
 import com.master.VangeBugs.Api.ApiImpl
 import com.master.VangeBugs.Holder.BugListHolder
-import com.master.VangeBugs.Holder.CategoryHolder
 import com.master.VangeBugs.Model.*
 import com.master.VangeBugs.R
 import com.master.VangeBugs.Rx.DataObserver
-import com.master.VangeBugs.Rx.MyObserver
 import com.master.VangeBugs.Rx.Utils.RxBus
-import com.nestrefreshlib.Adpater.Base.Holder
-import com.nestrefreshlib.Adpater.Impliment.BaseHolder
+import com.master.VangeBugs.Util.RefreshDifferUtils
 import com.nestrefreshlib.Adpater.Impliment.SAdapter
+import com.nestrefreshlib.RefreshViews.RefreshWrap.RefreshAdapterHandler
 import com.nestrefreshlib.State.DefaultStateListener
 import com.nestrefreshlib.State.StateLayout
 import coms.pacs.pacs.BaseComponent.BaseFragment
@@ -31,6 +26,7 @@ class LikeF : BaseFragment() {
     override fun getLayoutId() = R.layout.refreshlayout
 
     private var stateLayout: StateLayout? = null
+    private var refreshAdapterHandler: RefreshAdapterHandler? = null
 
     override fun contentView(): View? {
         stateLayout = StateLayout(context)
@@ -80,11 +76,19 @@ class LikeF : BaseFragment() {
                         addType(BugListHolder())
                         addLifeOwener { lifecycle }
                     }
-            refreshlayout.setAdapter(adapter)
-            refreshlayout.getmScroll<RecyclerView>().itemAnimator = DefaultItemAnimator()
+
+            val getmScroll = refreshlayout.getmScroll<RecyclerView>()
+            getmScroll.itemAnimator = DefaultItemAnimator()
+            getmScroll.addItemDecoration(InnerDecorate(context,LinearLayout.VERTICAL))
+            getmScroll.adapter=adapter
+            getmScroll.itemAnimator=DefaultItemAnimator()
+            getmScroll.layoutManager=LinearLayoutManager(context)
+//            RefreshAdapterHandler().attachRefreshLayout(refreshlayout,adapter,LinearLayoutManager(context))
         } else {
-            adapter!!.setList(bean)
+            adapter?.setList(bean)
             adapter?.notifyDataSetChanged()
+//            adapter?.differUpdate(bean)
+//            RefreshDifferUtils.differUpdate(bean,refreshlayout)
         }
     }
 }

@@ -32,7 +32,11 @@ data class xx(
 		val model: String, //Vange.bug
 		val pk: Int, //1
 		val fields: Bug
-)
+):SAdapter.DifferCallback.differ {
+	override fun firstCondition()=fields.category
+
+	override fun secondCondition()=fields.publisher
+}
 
 data class Bug(
         val id: Long,
@@ -43,11 +47,7 @@ data class Bug(
 		val issue: String, //未知原因
 		val time: String, //2018-02-26
 		var like: Int //2018-02-26
-):SAdapter.DifferCallback.differ {
-	override fun firstCondition()=id.toString()
-
-	override fun secondCondition()=publisher
-}
+)
 
 
 data class ToDo(
