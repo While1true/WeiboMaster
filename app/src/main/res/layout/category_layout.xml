@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:layout_height="wrap_content">
-        <com.master.weibomaster.Widgets.IndicateRadioButton
+        <com.master.VangeBugs.Widgets.IndicateRadioButton
             android:id="@+id/category"
             android:layout_weight="1"
             android:text="@string/category"
@@ -35,7 +35,7 @@
             android:drawableTop="@drawable/category_selector"
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
-        <com.master.weibomaster.Widgets.IndicateRadioButton
+        <com.master.VangeBugs.Widgets.IndicateRadioButton
             android:gravity="center"
             android:id="@+id/collect"
             android:layout_weight="1"
