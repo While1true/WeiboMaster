@@ -8,7 +8,7 @@ import java.io.Serializable
  * Created by vange on 2018/1/16.
  */
 
-data class Base<T> constructor(var message: String, var data: T, var code: Int) : Serializable
+data class Base<T> constructor(var message: String="", var data: T, var code: Int) : Serializable
 
 data class DownStatu constructor(
 		var id: Long=0,
@@ -29,10 +29,12 @@ data class Artical(
 		val come: String, //纻麻兰若-常观世音法语集
 		val mid: String, //4187660929263940
 		val hrefStr: String, //常观世音微语录
+		val href: String, //常观世音微语录
+		val timestr: String, //常观世音微语录
 		val datelong: String, //1513899631000
 		val imgs: String, ////ww1.sinaimg.cn/thumbnail/608185adjw1ery25r6ugmj20ku0ku0x1.jpg
-		val like_count: Int, //0
-		val is_like: Int //0
+		var like_count: Int, //0
+		var is_like: Int //0
 ): SAdapter.DifferCallback.differ {
 	override fun firstCondition()=id.toString()
 

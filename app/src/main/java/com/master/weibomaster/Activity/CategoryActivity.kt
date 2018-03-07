@@ -5,6 +5,7 @@ import android.support.v4.view.ViewPager
 import com.master.VangeBugs.Api.ApiImpl
 import com.master.VangeBugs.Base.BaseActivity
 import com.master.weibomaster.Fragment.CategoryF
+import com.master.weibomaster.Fragment.LikeF
 import com.master.weibomaster.Model.Base
 import com.master.weibomaster.Model.ToDo
 import com.master.weibomaster.Model.UPDATE_INDICATE
@@ -18,7 +19,7 @@ import kotlinx.android.synthetic.main.category_layout.*
  * Created by 不听话的好孩子 on 2018/2/24.
  */
 class CategoryActivity : BaseActivity() {
-    val fragments = arrayOf(CategoryF::class.java, CategoryF::class.java)
+    val fragments = arrayOf(CategoryF::class.java, LikeF::class.java)
     override fun initView() {
         setTitle("分类")
         StateBarUtils.performTransStateBar(window)

@@ -13,6 +13,7 @@
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -39,6 +40,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.CategoryListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.WebViewActivity"
             android:screenOrientation="portrait" />
     </application>
 

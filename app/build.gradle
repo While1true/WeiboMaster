@@ -19,7 +19,11 @@ android {
 
 //        aaptOptions.cruncherEnabled = false
 //        aaptOptions.useNewCruncher = false
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
+        }
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -28,22 +32,20 @@ android {
     }
     sourceSets {
         main {
-            jniLibs.srcDirs "libs"
+            jniLibs.srcDirs = ["libs", "jniLibs"]
         }
     }
 }
 repositories { flatDir { dirs 'libs' } }
 dependencies {
-    compile  fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-
-    compile  "com.android.support:appcompat-v7:$support"
+    compile "com.android.support:appcompat-v7:$support"
     compile "com.android.support:recyclerview-v7:$support"
     compile "com.android.support:cardview-v7:$support"
-
     compile "com.android.support:design:$support"
-    compile  'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     compile "org.jetbrains.kotlinx:kotlinx-coroutines-core:$cor_version"
     //Rxjava
@@ -59,9 +61,8 @@ dependencies {
     //文件夹适配
     compile 'com.zhy.base:fileprovider:1.0.0'
     compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
-
     compile(name: 'nestrefreshlib-release', ext: 'aar')
-//    compile 'com.didi.virtualapk:core:0.9.1'
-//    implementation 'androidx.core:core-ktx:0.1'
-
+    //    compile 'com.didi.virtualapk:core:0.9.1'
+    //    implementation 'androidx.core:core-ktx:0.1'
+    implementation files('libs/tbs_sdk_thirdapp_v3.5.0.1004_43500_sharewithdownload_withoutGame_obfs_20170801_113025.jar')
 }

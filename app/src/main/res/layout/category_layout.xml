@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f0f0f0"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 <android.support.v4.view.ViewPager
     android:id="@+id/vp"
@@ -28,7 +29,6 @@
             android:gravity="center"
             android:checked="true"
             android:clickable="true"
-            app:indicate="66"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:textColor="@drawable/text_selector"
             android:drawablePadding="@dimen/size2"
@@ -42,7 +42,6 @@
             android:clickable="true"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:drawablePadding="@dimen/size2"
-            app:indicate="88"
             android:text="@string/collect"
             android:textColor="@drawable/text_selector"
             android:drawableTop="@drawable/collect_selector"

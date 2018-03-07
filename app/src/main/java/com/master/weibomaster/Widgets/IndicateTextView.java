@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
 import com.master.weibomaster.R;
 
@@ -17,20 +18,20 @@ import com.master.weibomaster.R;
  * Created by vange on 2017/9/21.
  */
 
-public class IndicateRadioButton extends android.support.v7.widget.AppCompatRadioButton {
+public class IndicateTextView extends android.support.v7.widget.AppCompatTextView {
     int indicateColor, indicateTextColor, indicate, max = 99999;
     float indicateRadius, indicatesize;
     Paint paint;
 
-    public IndicateRadioButton(Context context) {
+    public IndicateTextView(Context context) {
         this(context, null);
     }
 
-    public IndicateRadioButton(Context context, @Nullable AttributeSet attrs) {
+    public IndicateTextView(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public IndicateRadioButton(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public IndicateTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         obtainAttrs(attrs);
     }
@@ -62,6 +63,8 @@ public class IndicateRadioButton extends android.support.v7.widget.AppCompatRadi
         }
         paint.setColor(indicateColor);
         int width = getWidth();
+
+
         /**
          * 大于最大值画一个圆
          */

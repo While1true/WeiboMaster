@@ -12,6 +12,7 @@ import com.master.weibomaster.Holder.ArticalListHolder
 import com.master.weibomaster.Model.Artical
 import com.master.weibomaster.R
 import com.master.weibomaster.Rx.DataObserver
+import com.master.weibomaster.Util.DeviceUtils
 import com.master.weibomaster.Util.StateBarUtils
 import com.nestrefreshlib.Adpater.Impliment.SAdapter
 import com.nestrefreshlib.RefreshViews.RefreshListener
@@ -46,7 +47,7 @@ class CategoryListActivity : BaseActivity() {
     }
 
     override fun loadData() {
-        ApiImpl.apiImpl.getArticalList(category, pagenum, pagesize)
+        ApiImpl.apiImpl.getArticalList(category, DeviceUtils.deviceID, pagenum, pagesize)
                 .subscribe(object : DataObserver<List<Artical>>(this) {
                     override fun OnNEXT(bean: List<Artical>) {
                         if (pagenum == 0) {
@@ -70,7 +71,7 @@ class CategoryListActivity : BaseActivity() {
                         } else if (bean.size < pagesize) {
                             nomore = true
                             refreshAdapterHandler?.stopLoading("这是底线了")
-                        }else{}
+                        }
                         refreshlayout.NotifyCompleteRefresh0()
                         adapter!!.notifyDataSetChanged()
                     }
@@ -79,6 +80,8 @@ class CategoryListActivity : BaseActivity() {
                         super.OnERROR(error)
                         if (pagenum == 0)
                             stateLayout?.ShowError()
+                        else
+                            refreshAdapterHandler?.stopLoading("出错了，上拉重试")
                         if (pagenum > 0)
                             pagenum--
                         refreshlayout.NotifyCompleteRefresh0()
@@ -108,6 +111,7 @@ class CategoryListActivity : BaseActivity() {
 
             override fun Refreshing() {
                 nomore = false
+                list.clear()
                 pagenum = 0
                 loadData()
             }

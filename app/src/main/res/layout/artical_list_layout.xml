@@ -1,21 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_margin="@dimen/size16"
+    app:cardElevation="@dimen/size2"
+    android:translationZ="@dimen/size2"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/content"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content">
 
-</android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/black535353"
+            android:textSize="@dimen/contentsize"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/come"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="来源"
+            app:layout_constraintStart_toStartOf="@+id/content"
+            app:layout_constraintTop_toBottomOf="@+id/content" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="8dp"
+            android:text="2018-3-7"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/content" />
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="@dimen/size16"
+            android:background="@color/linecolor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/come" />
+
+        <LinearLayout
+            android:id="@+id/handlerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:divider="@color/linecolor"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/size8"
+            android:paddingTop="@dimen/size16"
+            android:showDividers="middle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/line">
+
+            <TextView
+                android:id="@+id/share"
+                android:background="?android:attr/selectableItemBackground"
+                android:layout_width="0dp"
+                android:clickable="true"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/share"
+                android:gravity="center"
+                android:text="分享" />
+
+            <TextView
+                android:id="@+id/cloud"
+                android:layout_width="0dp"
+                android:clickable="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/cloud"
+                android:gravity="center"
+                android:text="词图" />
+
+            <TextView
+                android:id="@+id/net"
+                android:layout_width="0dp"
+                android:clickable="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/ic_net"
+                android:gravity="center"
+                android:text="原文查看" />
+
+            <com.master.weibomaster.Widgets.IndicateTextView
+                android:id="@+id/collect"
+                android:layout_width="0dp"
+                app:indicate="66"
+                android:clickable="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/collect_selector2"
+                android:gravity="center"
+                android:text="收藏" />
+        </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>
