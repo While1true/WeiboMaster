@@ -1,5 +1,6 @@
 package com.master.VangeBugs.Base
 
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -9,6 +10,7 @@ import com.master.weibomaster.R
 import com.master.weibomaster.Rx.Utils.RxLifeUtils
 import com.master.weibomaster.Util.ActivityUtils
 import com.master.weibomaster.Util.SizeUtils
+import com.nestrefreshlib.State.DefaultStateListener
 import com.nestrefreshlib.State.StateLayout
 import kotlinx.android.synthetic.main.titlebar_activity.*
 
@@ -20,7 +22,7 @@ abstract class BaseActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ActivityUtils.addActivity(this)
-        stateLayout = StateLayout(this).setContent(getLayoutId())
+        initStateLayout()
         if (needTitle()) {
             setContentView(R.layout.titlebar_activity)
             setSupportActionBar(toolbar)
@@ -33,6 +35,17 @@ abstract class BaseActivity : AppCompatActivity(){
 
         initView()
         loadData()
+    }
+
+    private fun initStateLayout() {
+        stateLayout = StateLayout(this).setContent(getLayoutId())
+        stateLayout?.setStateListener(object : DefaultStateListener() {
+            override fun netError(p0: Context?) {
+                stateLayout?.showLoading()
+                loadData()
+            }
+
+        })
     }
 
     private fun handleTitlebar() {
@@ -60,8 +73,6 @@ abstract class BaseActivity : AppCompatActivity(){
     open fun onBack() {
         onBackPressed()
     }
-
-    open fun contentView(): View? = null
 
     open fun setMenuClickListener(res: Int, listener: View.OnClickListener) {
         iv_menu.setOnClickListener(listener)
