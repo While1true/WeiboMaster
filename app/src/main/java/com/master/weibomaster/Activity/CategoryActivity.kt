@@ -49,7 +49,6 @@ class CategoryActivity : BaseActivity() {
         }
         RxBus.getDefault().toObservable(UPDATE_INDICATE, Base::class.java)
                 .subscribe({ loadData()})
-
     }
 
     override fun loadData() {

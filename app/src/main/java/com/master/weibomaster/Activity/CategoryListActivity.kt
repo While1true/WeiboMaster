@@ -35,14 +35,6 @@ class CategoryListActivity : BaseActivity() {
         StateBarUtils.performTransStateBar(window)
         category = intent.getStringExtra("category")
         setTitle(category)
-
-        stateLayout?.setStateListener(object : DefaultStateListener() {
-            override fun netError(p0: Context?) {
-                loadData()
-            }
-
-        })
-
         stateLayout?.showLoading()
     }
 
@@ -96,7 +88,7 @@ class CategoryListActivity : BaseActivity() {
                 .addType(ArticalListHolder())
 
         val recyclerView = refreshlayout.getmScroll<RecyclerView>()
-        recyclerView.addItemDecoration(InnerDecorate(this, LinearLayout.VERTICAL))
+//        recyclerView.addItemDecoration(InnerDecorate(this, LinearLayout.VERTICAL))
         refreshAdapterHandler = RefreshAdapterHandler()
         refreshAdapterHandler?.attachRefreshLayout(refreshlayout, adapter, LinearLayoutManager(this))
 

@@ -44,6 +44,10 @@
         <activity
             android:name=".Activity.WebViewActivity"
             android:screenOrientation="portrait" />
+
+        <service
+            android:name=".Services.X5PreLoadService"
+            android:enabled="true"/>
     </application>
 
 </manifest>

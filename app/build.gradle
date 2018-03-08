@@ -61,8 +61,11 @@ dependencies {
     //文件夹适配
     compile 'com.zhy.base:fileprovider:1.0.0'
     compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
+
     compile(name: 'nestrefreshlib-release', ext: 'aar')
     //    compile 'com.didi.virtualapk:core:0.9.1'
     //    implementation 'androidx.core:core-ktx:0.1'
     implementation files('libs/tbs_sdk_thirdapp_v3.5.0.1004_43500_sharewithdownload_withoutGame_obfs_20170801_113025.jar')
+
+    implementation 'com.github.chrisbanes:PhotoView:2.1.3'
 }

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<com.nestrefreshlib.RefreshViews.RefreshLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:elastic_overscroll="true">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/imgLayout"
+                android:background="@color/colorfff"
+                android:layout_width="match_parent"
+                android:paddingBottom="50dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:textSize="@dimen/middlesize" />
+                <com.master.weibomaster.Widgets.SmartImageView
+                    android:id="@+id/imageview"
+                    android:layout_width="match_parent"
+
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</com.nestrefreshlib.RefreshViews.RefreshLayout>
+    <LinearLayout
+        android:padding="8dp"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:background="@color/color30666666"
+        android:layout_height="wrap_content">
+        <TextView
+        android:gravity="center"
+        android:id="@+id/share"
+        android:layout_weight="1"
+        android:drawableTop="@drawable/share"
+        android:text="分享图片"
+        android:layout_width="0dp"
+        android:layout_height="match_parent" />
+        <TextView
+            android:gravity="center"
+            android:id="@+id/wordshare"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/share_word"
+            android:text="带文字分享"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</FrameLayout>

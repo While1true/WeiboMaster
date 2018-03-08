@@ -1,5 +1,6 @@
 package com.master.weibomaster.Fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.InnerDecorate
@@ -21,6 +22,7 @@ import com.master.weibomaster.Util.DeviceUtils
 import com.nestrefreshlib.Adpater.Impliment.SAdapter
 import com.nestrefreshlib.RefreshViews.RefreshListener
 import com.nestrefreshlib.RefreshViews.RefreshWrap.RefreshAdapterHandler
+import com.nestrefreshlib.State.DefaultStateListener
 import coms.pacs.pacs.BaseComponent.BaseFragment
 import kotlinx.android.synthetic.main.refreshlayout.*
 
@@ -40,10 +42,9 @@ class LikeF : BaseFragment() {
 
     override fun init(savedInstanceState: Bundle?) {
         stateLayout?.showLoading()
-        loadData()
     }
 
-    private fun loadData() {
+    override fun loadData() {
         ApiImpl.apiImpl.getLikeList(DeviceUtils.deviceID, pagenum, pagesize)
                 .subscribe(object : DataObserver<List<Artical>>(this) {
                     override fun OnNEXT(bean: List<Artical>) {
@@ -88,7 +89,7 @@ class LikeF : BaseFragment() {
                         .addType(ArticalListHolder())
 
                 val recyclerView = refreshlayout.getmScroll<RecyclerView>()
-                recyclerView.addItemDecoration(InnerDecorate(context, LinearLayout.VERTICAL))
+//                recyclerView.addItemDecoration(InnerDecorate(context, LinearLayout.VERTICAL))
                 refreshAdapterHandler = RefreshAdapterHandler()
                 refreshAdapterHandler?.attachRefreshLayout(refreshlayout, adapter, LinearLayoutManager(context))
 

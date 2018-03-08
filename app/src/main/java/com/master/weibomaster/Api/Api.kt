@@ -27,4 +27,7 @@ interface Api {
     @GET("like")
     fun like(@Query("like_id") like_id: String, @Query("flag") flag: Int, @Query("like_user") like_user: String): Observable<Base<Any>>
 
+    @GET("getWordCloud")
+    fun generatePic(@Query("id") id: Int, @Query("context") context: String, @Query("user") user: String, @Query("pattern") pattern: String?=null): Observable<Base<String>>
+
 }

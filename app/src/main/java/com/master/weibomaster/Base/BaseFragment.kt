@@ -1,5 +1,6 @@
 package coms.pacs.pacs.BaseComponent
 
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -11,6 +12,7 @@ import com.master.weibomaster.R
 import com.master.weibomaster.Rx.Utils.RxLifeUtils
 import com.master.weibomaster.Util.SizeUtils
 import com.master.weibomaster.Util.StateBarUtils
+import com.nestrefreshlib.State.DefaultStateListener
 import com.nestrefreshlib.State.StateLayout
 import kotlinx.android.synthetic.main.titlebar_fragment.*
 
@@ -24,7 +26,7 @@ abstract class BaseFragment : Fragment() {
     var stateLayout: StateLayout? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var inflate: View? = null
-        stateLayout = StateLayout(context).setContent(getLayoutId())
+        initStateLayout()
         if (needTitle()) {
              inflate = layoutInflater.inflate(R.layout.titlebar_fragment, container, false)
             val viewGroup = inflate!!.findViewById(R.id.fl_content) as ViewGroup
@@ -38,6 +40,19 @@ abstract class BaseFragment : Fragment() {
         return inflate
     }
 
+    private fun initStateLayout() {
+        stateLayout = StateLayout(context).setContent(getLayoutId())
+        stateLayout?.setStateListener(object : DefaultStateListener() {
+            override fun netError(p0: Context?) {
+                stateLayout?.showLoading()
+                loadData()
+            }
+
+        })
+    }
+
+    abstract fun loadData()
+
     private fun handleTitlebar(inflate: View) {
         inflate.findViewById<View>(R.id.extraspace).layoutParams.height = StateBarUtils.getStatusBarHeight(context)
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
@@ -50,6 +65,7 @@ abstract class BaseFragment : Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init(savedInstanceState)
+        loadData()
         viewCreated = true
         if (firestLoad && isvisable) {
             firestLoad = false

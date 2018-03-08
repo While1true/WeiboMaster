@@ -5,14 +5,17 @@ import android.content.Context
 import com.master.weibomaster.Util.AdjustUtil
 import com.nestrefreshlib.RefreshViews.RefreshLayout
 import com.tencent.smtt.sdk.QbSdk
-import coms.pacs.pacs.Utils.log
-import coms.pacs.pacs.Utils.mtoString
 import io.reactivex.plugins.RxJavaPlugins
+import org.xml.sax.ErrorHandler
+import org.xml.sax.SAXParseException
+import android.content.Intent
+import com.master.weibomaster.Services.X5PreLoadService
+
 
 /**
  * Created by vange on 2018/1/16.
  */
-class App : Application(), QbSdk.PreInitCallback {
+class App : Application(){
 
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
@@ -27,14 +30,26 @@ class App : Application(), QbSdk.PreInitCallback {
                 .setScrollLayoutIdDefault(R.layout.recyclerview)
                 .setHeaderLayoutidDefault(R.layout.header_layout)
                 .setFooterLayoutidDefault(R.layout.footer_layout))
-        RxJavaPlugins.setErrorHandler { log(it.message.mtoString()) }
-        if(!QbSdk.isTbsCoreInited()){
-            QbSdk.preInit(this,this)
-        }
+        RxJavaPlugins.setErrorHandler{object : ErrorHandler{
+            override fun warning(exception: SAXParseException?) {
+            }
 
+            override fun error(exception: SAXParseException?) {
+            }
+
+            override fun fatalError(exception: SAXParseException?) {
+            }
+
+        }}
+        preInitX5Core()
 
     }
 
+    private fun preInitX5Core() {
+        //预加载x5内核
+        val intent = Intent(this, X5PreLoadService::class.java)
+        startService(intent)
+    }
 
     init {
         app = this
@@ -42,13 +57,5 @@ class App : Application(), QbSdk.PreInitCallback {
 
     companion object {
         lateinit var app: App
-    }
-
-
-    override fun onCoreInitFinished() {
-        QbSdk.initX5Environment(this,null)
-    }
-
-    override fun onViewInitFinished(p0: Boolean) {
     }
 }

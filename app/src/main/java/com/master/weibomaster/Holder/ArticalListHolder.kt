@@ -6,6 +6,7 @@ import android.widget.TextView
 import com.master.VangeBugs.Api.ApiImpl
 import com.master.weibomaster.Activity.CategoryListActivity
 import com.master.weibomaster.Activity.WebViewActivity
+import com.master.weibomaster.Fragment.WordCloudF
 import com.master.weibomaster.Model.Artical
 import com.master.weibomaster.Model.Base
 import com.master.weibomaster.Model.UPDATE_INDICATE
@@ -15,6 +16,7 @@ import com.master.weibomaster.Rx.Utils.RxBus
 import com.master.weibomaster.Rx.Utils.RxLifeUtils
 import com.master.weibomaster.Util.ActivityUtils
 import com.master.weibomaster.Util.DeviceUtils
+import com.master.weibomaster.Util.FragmentUtils
 import com.master.weibomaster.Widgets.IndicateTextView
 import com.nestrefreshlib.Adpater.Base.Holder
 import com.nestrefreshlib.Adpater.Impliment.BaseHolder
@@ -35,9 +37,17 @@ class ArticalListHolder : BaseHolder<Artical>(R.layout.artical_list_layout) {
         p0?.setText(R.id.time, p1?.timestr)
         p0?.setText(R.id.come, p1?.come)
 
+
+        p0?.setOnClickListener(R.id.cloud,{
+            val fragment = WordCloudF()
+            fragment.artical=p1
+            FragmentUtils.showAddFragment(ActivityUtils.getTopActivity(), fragment)
+        })
+
         p0?.setOnClickListener(R.id.net,{
             val intent=Intent(ActivityUtils.getTopActivity(),WebViewActivity::class.java)
             intent.putExtra("url",p1?.href)
+            intent.putExtra("fid",p1?.href)
             ActivityUtils.getTopActivity().startActivity(intent)
         })
         collect?.setOnClickListener {
