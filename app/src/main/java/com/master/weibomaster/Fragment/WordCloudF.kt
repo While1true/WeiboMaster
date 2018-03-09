@@ -2,10 +2,7 @@ package com.master.weibomaster.Fragment
 
 import android.Manifest
 import android.os.Bundle
-import android.widget.ImageView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestOptions
 import com.master.VangeBugs.Api.ApiImpl
 import com.master.weibomaster.Model.Artical
 import com.master.weibomaster.R
@@ -19,10 +16,10 @@ import kotlinx.android.synthetic.main.word_could_fragment.*
 import java.io.File
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.opengl.ETC1.getHeight
-import android.opengl.ETC1.getWidth
 import android.view.View
+import com.master.weibomaster.Rx.RxSchedulers
 import com.tbruyelle.rxpermissions2.RxPermissions
+import coms.pacs.pacs.Utils.mtoString
 import coms.pacs.pacs.Utils.toast
 
 
@@ -36,8 +33,10 @@ class WordCloudF : BaseFragment() {
 
 
     override fun init(savedInstanceState: Bundle?) {
+        wordspreedAnimator.addLifeOwner(this)
+        wordspreedAnimator.text=artical?.content.mtoString()
         stateLayout?.setBackgroundResource(R.color.colorf0f0f0)
-        stateLayout?.showLoading()
+//        stateLayout?.showLoading()
         RxPermissions(activity).request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .subscribe {
                     if(!it){
@@ -49,7 +48,6 @@ class WordCloudF : BaseFragment() {
 
     override fun loadData() {
         ApiImpl.apiImpl.generatePic(artical!!.id, artical!!.content, DeviceUtils.deviceID)
-                .observeOn(Schedulers.io())
                 .map({
 
                     Glide.with(context)
@@ -58,24 +56,25 @@ class WordCloudF : BaseFragment() {
                             .submit().get()
                 }
                 )
-                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxSchedulers.compose())
                 .subscribe(object : MyObserver<File>(this) {
                     override fun onNext(t: File) {
                         super.onNext(t)
                         loadPic(t)
                         stateLayout?.showItem()
+                        wordspreedAnimator.stop()
                     }
 
                     override fun onError(e: Throwable) {
                         super.onError(e)
                         stateLayout?.ShowError()
+                        wordspreedAnimator.stop()
                     }
                 })
     }
 
     private fun loadPic(pic: File) {
-        Glide.with(imageview).setDefaultRequestOptions(RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE))
-                .load(pic).into(imageview)
+        Glide.with(imageview).load(pic).into(imageview)
 
         content.text = artical?.content + "\n" + artical?.come + "\n" + artical?.timestr
 
@@ -84,7 +83,7 @@ class WordCloudF : BaseFragment() {
         }
 
         wordshare.setOnClickListener {
-            val saveImageToGallery = FileUtils.saveImageToGallery(context, getViewBitmap(imgLayout), System.currentTimeMillis().toString() + ".jpg")
+            val saveImageToGallery = FileUtils.saveImageToGallery(context, getViewBitmap(imgLayout), artical!!.id.toString() + ".jpg")
             FileUtils.send(context, saveImageToGallery, "image/jpeg")
 
         }

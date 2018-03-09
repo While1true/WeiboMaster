@@ -54,6 +54,6 @@ public class K2JUtils {
      */
     public static void log(String descripte,CharSequence message){
         if (true)
-            Log.i("Pacsssssss"+ "--" + descripte + "--", "log: "+message);
+            Log.i("xxxxxxxxxx"+ "--" + descripte + "--", "log: "+message);
     }
 }

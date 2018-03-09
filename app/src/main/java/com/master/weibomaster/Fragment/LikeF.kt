@@ -1,28 +1,17 @@
 package com.master.weibomaster.Fragment
 
-import android.content.Context
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.InnerDecorate
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.widget.LinearLayout
 import com.master.VangeBugs.Api.ApiImpl
 import com.master.weibomaster.Holder.ArticalListHolder
-import com.master.weibomaster.Holder.CategoryHolder
 import com.master.weibomaster.Model.Artical
-import com.master.weibomaster.Model.Base
-import com.master.weibomaster.Model.Category
-import com.master.weibomaster.Model.UPDATE_INDICATE
 import com.master.weibomaster.R
 import com.master.weibomaster.Rx.DataObserver
-import com.master.weibomaster.Rx.MyObserver
-import com.master.weibomaster.Rx.Utils.RxBus
 import com.master.weibomaster.Util.DeviceUtils
 import com.nestrefreshlib.Adpater.Impliment.SAdapter
 import com.nestrefreshlib.RefreshViews.RefreshListener
 import com.nestrefreshlib.RefreshViews.RefreshWrap.RefreshAdapterHandler
-import com.nestrefreshlib.State.DefaultStateListener
 import coms.pacs.pacs.BaseComponent.BaseFragment
 import kotlinx.android.synthetic.main.refreshlayout.*
 
@@ -44,7 +33,8 @@ class LikeF : BaseFragment() {
         stateLayout?.showLoading()
     }
 
-    override fun loadData() {
+    override fun loadLazy() {
+        super.loadLazy()
         ApiImpl.apiImpl.getLikeList(DeviceUtils.deviceID, pagenum, pagesize)
                 .subscribe(object : DataObserver<List<Artical>>(this) {
                     override fun OnNEXT(bean: List<Artical>) {
@@ -78,6 +68,9 @@ class LikeF : BaseFragment() {
 
                     }
                 })
+    }
+    override fun loadData() {
+
     }
 
     private fun showData(bean: List<Artical>) {

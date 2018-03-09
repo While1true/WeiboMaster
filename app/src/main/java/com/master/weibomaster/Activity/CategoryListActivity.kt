@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.refreshlayout.*
  */
 class CategoryListActivity : BaseActivity() {
     var pagenum = 0
-    var pagesize = 18
+    var pagesize = 10
     var category = ""
     var nomore = false
     var list = mutableListOf<Any>()

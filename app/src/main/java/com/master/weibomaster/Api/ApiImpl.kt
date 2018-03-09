@@ -10,7 +10,7 @@ import io.reactivex.Observable
  * Created by 不听话的好孩子 on 2018/2/26.
  */
 class ApiImpl : Api {
-    override fun generatePic(id: Int, context: String, user: String, pattern: String?)= api.generatePic(id,context, user,pattern).compose(RxSchedulers.compose())
+    override fun generatePic(id: Int, context: String, user: String, pattern: String?)= api.generatePic(id,context, user,pattern)
 
     override fun getLikeList(like_user: String, pagenum: Int, pagesize: Int)=api.getLikeList(like_user,pagenum,pagesize).compose(RxSchedulers.compose())
 

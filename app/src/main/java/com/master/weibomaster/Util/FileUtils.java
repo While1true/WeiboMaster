@@ -169,7 +169,10 @@ public class FileUtils {
 
     public static File saveImageToGallery(Context context, Bitmap bmp,String filename) {
         // 首先保存图片
-        File appDir = new File(context.getFilesDir(), "pic/"+filename);
+        File appDir = new File(MemoryUtils.FILE, filename);
+        if(appDir.exists()&&appDir.getTotalSpace()!=0){
+            return appDir;
+        }
         if (!appDir.getParentFile().exists()) {
             appDir.getParentFile().mkdir();
         }
