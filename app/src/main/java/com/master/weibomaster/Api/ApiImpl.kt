@@ -5,11 +5,18 @@ import com.master.weibomaster.Rx.Net.RetrofitHttpManger
 import com.master.weibomaster.Rx.RxSchedulers
 import com.master.weibomaster.Util.DeviceUtils
 import io.reactivex.Observable
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.ResponseBody
 
 /**
  * Created by 不听话的好孩子 on 2018/2/26.
  */
 class ApiImpl : Api {
+    override fun download(user: String)=api.download(user).compose(RxSchedulers.compose())
+
+    override fun uploadPattern(user: String, name: String, pattern: MultipartBody.Part)=api.uploadPattern(user,name,pattern).compose(RxSchedulers.compose())
+
     override fun generatePic(id: Int, context: String, user: String, pattern: String?)= api.generatePic(id,context, user,pattern)
 
     override fun getLikeList(like_user: String, pagenum: Int, pagesize: Int)=api.getLikeList(like_user,pagenum,pagesize).compose(RxSchedulers.compose())

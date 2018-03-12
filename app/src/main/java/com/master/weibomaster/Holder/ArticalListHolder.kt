@@ -16,12 +16,14 @@ import com.master.weibomaster.Rx.Utils.RxBus
 import com.master.weibomaster.Rx.Utils.RxLifeUtils
 import com.master.weibomaster.Util.ActivityUtils
 import com.master.weibomaster.Util.DeviceUtils
+import com.master.weibomaster.Util.FileUtils
 import com.master.weibomaster.Util.FragmentUtils
 import com.master.weibomaster.Widgets.IndicateTextView
 import com.nestrefreshlib.Adpater.Base.Holder
 import com.nestrefreshlib.Adpater.Impliment.BaseHolder
 import coms.pacs.pacs.Utils.mtoString
 import coms.pacs.pacs.Utils.toast
+import kotlinx.android.synthetic.main.word_could_fragment.*
 
 /**
  * Created by 不听话的好孩子 on 2018/2/26.
@@ -37,6 +39,10 @@ class ArticalListHolder : BaseHolder<Artical>(R.layout.artical_list_layout) {
         p0?.setText(R.id.time, p1?.timestr)
         p0?.setText(R.id.come, p1?.come)
 
+        p0?.setOnClickListener(R.id.share,{
+            val text = p1?.content + "\n" + p1?.come + "\n" + p1?.timestr
+            FileUtils.sendText(ActivityUtils.getTopActivity(),text)
+        })
 
         p0?.setOnClickListener(R.id.cloud,{
             val fragment = WordCloudF()

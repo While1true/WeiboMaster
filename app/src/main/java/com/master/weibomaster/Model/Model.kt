@@ -35,7 +35,7 @@ data class Artical(
 		val imgs: String, ////ww1.sinaimg.cn/thumbnail/608185adjw1ery25r6ugmj20ku0ku0x1.jpg
 		var like_count: Int, //0
 		var is_like: Int //0
-): SAdapter.DifferCallback.differ {
+):Serializable, SAdapter.DifferCallback.differ {
 	override fun firstCondition()=id.toString()
 
 	override fun secondCondition()=datelong.toString()

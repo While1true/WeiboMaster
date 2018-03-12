@@ -1,11 +1,7 @@
 package com.master.weibomaster.Activity
 
-import android.content.Context
-import android.support.v7.widget.InnerDecorate
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.View
-import android.widget.LinearLayout
 import com.master.VangeBugs.Api.ApiImpl
 import com.master.VangeBugs.Base.BaseActivity
 import com.master.weibomaster.Holder.ArticalListHolder
@@ -17,7 +13,6 @@ import com.master.weibomaster.Util.StateBarUtils
 import com.nestrefreshlib.Adpater.Impliment.SAdapter
 import com.nestrefreshlib.RefreshViews.RefreshListener
 import com.nestrefreshlib.RefreshViews.RefreshWrap.RefreshAdapterHandler
-import com.nestrefreshlib.State.DefaultStateListener
 import kotlinx.android.synthetic.main.refreshlayout.*
 
 /**

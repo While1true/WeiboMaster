@@ -25,3 +25,5 @@
 -dontwarn com.didi.virtualapk.**
 -dontwarn android.content.pm.**
 -keep class android.** { *; }
+
+-dontwarn com.bumptech.glide.**

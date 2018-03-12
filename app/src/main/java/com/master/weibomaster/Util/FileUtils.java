@@ -3,6 +3,7 @@ package com.master.weibomaster.Util;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
@@ -15,6 +16,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by vange on 2017/9/15.
@@ -164,6 +166,18 @@ public class FileUtils {
             e.printStackTrace();
         }
     }
+    public static void sendText(Context context,String text){
+        try {
+            Intent share = new Intent(Intent.ACTION_SEND);
+            share.addCategory(Intent.CATEGORY_DEFAULT);
+            share.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            share.putExtra(Intent.EXTRA_TEXT,text);
+            share.setType("text/plain");
+            context.startActivity(Intent.createChooser(share, "分享到"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
 
@@ -199,5 +213,39 @@ public class FileUtils {
         return appDir;
     }
 
+
+    public static File Uri2File(Context context,Uri uri){
+        String[] proj = { MediaStore.Images.Media.DATA };
+        Cursor actualimagecursor = context.getContentResolver().query(uri,proj,null,null,null);
+        int actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        actualimagecursor.moveToFirst();
+        String img_path = actualimagecursor.getString(actual_image_column_index);
+       return new File(img_path);
+    }
+
+    /**
+     * 写入文件
+     *
+     * @param in
+     * @param file
+     */
+    public static void writeFile(InputStream in, File file) throws IOException {
+        if (!file.getParentFile().exists())
+            file.getParentFile().mkdirs();
+
+        if (file != null && file.exists())
+            file.delete();
+
+        FileOutputStream out = new FileOutputStream(file);
+        byte[] buffer = new byte[1024 * 128];
+        int len = -1;
+        while ((len = in.read(buffer)) != -1) {
+            out.write(buffer, 0, len);
+        }
+        out.flush();
+        out.close();
+        in.close();
+
+    }
 
 }

@@ -49,6 +49,15 @@ public class RetrofitHttpManger {
                         return chain.proceed(builder.build());
                     }
                 })
+                .addInterceptor(new Interceptor() {
+                    @Override
+                    public Response intercept(Chain chain) throws IOException {
+                        Response originalResponse = chain.proceed(chain.request());
+                        return originalResponse.newBuilder()
+                                .body(new ProgressDownloadBody(originalResponse.body(), originalResponse.request().url().url().toString()))
+                                .build();
+                    }
+                })
                 .build();
 
         mRetrofit = new Retrofit.Builder()
