@@ -4,6 +4,8 @@ package com.master.weibomaster.Rx.Net;
 import com.master.weibomaster.Util.K2JUtils;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
@@ -21,10 +23,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class RetrofitHttpManger {
-    private static final int DEFAULT_CONNECT_TIMEOUT = 5;
-    private static final int DEFAULT_READ_TIMEOUT = 10;
-    private static final String BASEURL = "http://10.0.110.127:8080/pacsAndroid/services/rest/pacs/";
+    private static final int DEFAULT_CONNECT_TIMEOUT = 12;
+    private static final int DEFAULT_READ_TIMEOUT = 12;
+    private static final String BASEURL = "http://10.0.110.134:8090/masterWeiBo/";
     private Retrofit mRetrofit;
+
+    static List<String> progrssUrls = new ArrayList<>(16);
 
 
     private RetrofitHttpManger() {
@@ -47,6 +51,20 @@ public class RetrofitHttpManger {
                         builder.addHeader("zh", "grid");
                         builder.addHeader("mm", "grid");
                         return chain.proceed(builder.build());
+                    }
+                })
+                .addInterceptor(new Interceptor() {
+                    @Override
+                    public Response intercept(Chain chain) throws IOException {
+                        Response originalResponse = chain.proceed(chain.request());
+                        String url = originalResponse.request().url().url().toString();
+                        if (progrssUrls.contains(url)) {
+                            return originalResponse.newBuilder()
+                                    .body(new ProgressDownloadBody(originalResponse.body(), url))
+                                    .build();
+                        } else {
+                            return originalResponse;
+                        }
                     }
                 })
                 .build();

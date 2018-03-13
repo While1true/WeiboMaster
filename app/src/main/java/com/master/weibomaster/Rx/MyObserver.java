@@ -1,7 +1,6 @@
 package com.master.weibomaster.Rx;
 
 
-import com.master.weibomaster.Model.DownStatu;
 import com.master.weibomaster.Rx.Utils.RxLifeUtils;
 import com.master.weibomaster.Util.K2JUtils;
 
@@ -40,11 +39,62 @@ public abstract class MyObserver<T> implements Observer<T> {
 
     @Override
     public void onComplete() {
+
+    }
+    public void dispose(){
         if (d != null && !d.isDisposed())
             d.isDisposed();
     }
 
-    public void onProgress(DownStatu downStatu) {
+    public void onProgress(Progress progress) {
+    }
+    public static class Progress{
+        Long total=0l;
+        Long current=0l;
+        String file;
+        float speed;
+
+        public Long getTotal() {
+            return total;
+        }
+
+        public void setTotal(Long total) {
+            this.total = total;
+        }
+
+        public Long getCurrent() {
+            return current;
+        }
+
+        public void setCurrent(Long current) {
+            this.current = current;
+        }
+
+        public String getFile() {
+            return file;
+        }
+
+        public void setFile(String file) {
+            this.file = file;
+        }
+
+        public float getSpeed() {
+            return speed;
+        }
+
+        public void setSpeed(float speed) {
+            this.speed = speed;
+        }
+
+        @Override
+        public String toString() {
+            return "Progress{" +
+                    "total=" + total +
+                    ", current=" + current +
+                    ", file=" + file +
+                    ", speed=" + speed +
+                    '}';
+        }
     }
 
 }
