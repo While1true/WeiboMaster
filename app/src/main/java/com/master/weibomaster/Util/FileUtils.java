@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.zhy.base.fileprovider.FileProvider7;
 
@@ -16,10 +15,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
-import okhttp3.ResponseBody;
-import okio.BufferedSink;
-import okio.Okio;
+import java.io.InputStream;
 
 /**
  * Created by vange on 2017/9/15.
@@ -231,24 +227,20 @@ public class FileUtils {
      *
      * @param file
      */
-    public static void writeFile(ResponseBody responseBody, File file){
-            BufferedSink sink = null;
-            //下载文件到本地
-            try {
-                sink = Okio.buffer(Okio.sink(file));
-                sink.writeAll(responseBody.source());
-            } catch (Exception e) {
-                if (e != null) {
-                    e.printStackTrace();
-                }
-            } finally {
-                try {
-                    if (sink != null) sink.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+    public static void writeFile(InputStream is, File file){
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            int len = 0;
+            byte[] buffer = new byte[4096];
+            while (-1 != (len = is.read(buffer))) {
+                fos.write(buffer, 0, len);
             }
-            Log.d("下载成功", "isSuccessful");
+            fos.flush();
+            fos.close();
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
