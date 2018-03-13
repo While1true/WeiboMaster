@@ -13,6 +13,7 @@ import com.master.weibomaster.Rx.Utils.RxLifeUtils
 import com.master.weibomaster.Util.FileUtils
 import com.master.weibomaster.Util.MemoryUtils
 import io.reactivex.Observable
+import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Function
 import okhttp3.ResponseBody
 import java.io.File
@@ -25,38 +26,46 @@ import java.io.File
 
 class DownLoadService : IntentService("") {
 
+
     override fun onHandleIntent(@Nullable intent: Intent) {
         val url = intent.getStringExtra("url")
         val file = intent.getSerializableExtra("file") as File
 
-        down(url,file)
+        down(url, file)
     }
 
     companion object {
-        fun download(url: String):Observable<MyObserver.Progress> {
+        private val runningMap = mutableMapOf<String, Disposable>()
+        fun download(url: String): Observable<MyObserver.Progress> {
             val i = url.lastIndexOf(".")
             val fileName = url.substring(i)
             val file = File(MemoryUtils.FILE.toString() + fileName)
             return download(url, file)
         }
 
-        fun download(url: String, fileName: String):Observable<MyObserver.Progress> {
+        fun download(url: String, fileName: String): Observable<MyObserver.Progress> {
             val file = File(MemoryUtils.FILE.toString() + fileName)
             return download(url, file)
         }
 
-        fun download(url: String, file: File):Observable<MyObserver.Progress> {
-            val intent = Intent(App.app, DownLoadService::class.java)
-            intent.putExtra("url", url)
-            intent.putExtra("file", file)
-            App.app.startService(intent)
-
+        fun download(url: String, file: File): Observable<MyObserver.Progress> {
+            val disposable = runningMap[url]
+            if (disposable == null || disposable.isDisposed) {
+                val intent = Intent(App.app, DownLoadService::class.java)
+                intent.putExtra("url", url)
+                intent.putExtra("file", file)
+                App.app.startService(intent)
+            }
             return RxBus.getDefault().toObservable(MyObserver.Progress::class.java)
                     .filter { progress -> progress.file == url }
         }
 
-        fun stop(url:String){
-            RxLifeUtils.getInstance().remove(url)
+        fun stop(url: String) {
+            val disposable = runningMap[url]
+            if (disposable != null && !disposable.isDisposed) {
+                disposable.dispose()
+                runningMap.remove(url)
+            }
         }
 
     }
@@ -70,12 +79,11 @@ class DownLoadService : IntentService("") {
         val subscribe = RetrofitHttpManger.create<ProgressDLUtils.DownloadInterface>(ProgressDLUtils.DownloadInterface::class.java)
                 .download(url)
                 .map(Function<ResponseBody, File> { responseBody ->
-                    FileUtils.writeFile(responseBody, file)
+                    FileUtils.writeFile(responseBody.byteStream(), file)
                     file
                 })
                 .subscribe()
-        RxLifeUtils.getInstance().add(this,subscribe)
-        RxLifeUtils.getInstance().add(url,subscribe)
+        RxLifeUtils.getInstance().add(this, subscribe)
     }
 
     override fun onDestroy() {

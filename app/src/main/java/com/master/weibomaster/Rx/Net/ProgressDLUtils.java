@@ -71,7 +71,7 @@ public class ProgressDLUtils {
                 .map(new Function<ResponseBody, File>() {
                     @Override
                     public File apply(ResponseBody responseBody) throws Exception {
-                        FileUtils.writeFile(responseBody, file);
+                        FileUtils.writeFile(responseBody.byteStream(), file);
                         return file;
                     }
                 })
