@@ -17,6 +17,7 @@ import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 import okhttp3.ResponseBody;
 import retrofit2.http.GET;
+import retrofit2.http.Streaming;
 import retrofit2.http.Url;
 
 /**
@@ -26,7 +27,18 @@ import retrofit2.http.Url;
 public class ProgressDLUtils {
     public static interface DownloadInterface {
         @GET
+        @Streaming
         Observable<ResponseBody> download(@Url String url);
+    }
+    public static void addListenerUrl(String url){
+        if(!RetrofitHttpManger.progrssUrls.contains(url)){
+            RetrofitHttpManger.progrssUrls.add(url) ;
+        }
+    }
+    public static void removeListenerUrl(String url){
+        if(RetrofitHttpManger.progrssUrls.contains(url)){
+            RetrofitHttpManger.progrssUrls.remove(url);
+        }
     }
 
     public static void download(String url, String fileName, final MyObserver<File> callback) {
@@ -38,9 +50,7 @@ public class ProgressDLUtils {
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }
-        if (!RetrofitHttpManger.progrssUrls.contains(url)) {
-            RetrofitHttpManger.progrssUrls.add(url);
-        }
+        addListenerUrl(url);
         Disposable progressDisposable = RxBus.getDefault().toObservable(MyObserver.Progress.class)
                 .filter(new Predicate<MyObserver.Progress>() {
                     @Override

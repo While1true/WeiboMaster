@@ -60,7 +60,7 @@ public class ProgressDownloadBody extends ResponseBody {
 
             long lastwritetime = System.currentTimeMillis();
             long lastwrite=0l;
-            float speed=0;
+            long speed=0;
             @Override
             public long read(Buffer source, long byteCount) throws IOException {
                 long bytesRead = super.read(source, byteCount);
@@ -71,8 +71,8 @@ public class ProgressDownloadBody extends ResponseBody {
                 bytesWritten += byteCount;
 
                 long l = System.currentTimeMillis();
-                if(l-lastwritetime>=1000){
-                    speed=(bytesWritten-lastwrite)*1000f/1024/(l-lastwritetime);
+                if(l-lastwritetime>=500){
+                    speed=(bytesWritten-lastwrite)*500/(l-lastwritetime);
                     lastwrite=bytesWritten;
                     lastwritetime = l;
                 }

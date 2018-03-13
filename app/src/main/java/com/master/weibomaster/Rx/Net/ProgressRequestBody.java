@@ -63,7 +63,7 @@ public final class ProgressRequestBody extends RequestBody {
             long contentLength = 0L;
             long lastwritetime = System.currentTimeMillis();
             long lastwrite=0l;
-            float speed=0;
+            long speed=0;
             @Override
             public void write(Buffer source, long byteCount) throws IOException {
                 super.write(source, byteCount);
@@ -72,8 +72,8 @@ public final class ProgressRequestBody extends RequestBody {
                     progress.setTotal(contentLength);
                 } //增加当前写入的字节数
                 long l = System.currentTimeMillis();
-                if(l-lastwritetime>=1000){
-                    speed=(bytesWritten-lastwrite)*1000/1024/(l-lastwritetime);
+                if(l-lastwritetime>=500){
+                    speed=(bytesWritten-lastwrite)*500/(l-lastwritetime);
                     lastwrite=bytesWritten;
                     lastwritetime = l;
                 }
