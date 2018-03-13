@@ -5,11 +5,11 @@ import android.content.Context
 import com.master.weibomaster.Util.AdjustUtil
 import com.nestrefreshlib.RefreshViews.RefreshLayout
 import com.tencent.smtt.sdk.QbSdk
+import coms.pacs.pacs.Utils.log
+import coms.pacs.pacs.Utils.mtoString
 import io.reactivex.plugins.RxJavaPlugins
 import org.xml.sax.ErrorHandler
 import org.xml.sax.SAXParseException
-import android.content.Intent
-import com.master.weibomaster.Services.X5PreLoadService
 
 
 /**
@@ -35,6 +35,7 @@ class App : Application(){
             }
 
             override fun error(exception: SAXParseException?) {
+                log(exception?.message.mtoString())
             }
 
             override fun fatalError(exception: SAXParseException?) {
@@ -46,9 +47,10 @@ class App : Application(){
     }
 
     private fun preInitX5Core() {
-        //预加载x5内核
-        val intent = Intent(this, X5PreLoadService::class.java)
-        startService(intent)
+        try {
+            QbSdk.initX5Environment(applicationContext, null)
+        } catch (e: Exception) {
+        }
     }
 
     init {

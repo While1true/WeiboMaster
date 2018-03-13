@@ -40,6 +40,9 @@ public abstract class MyObserver<T> implements Observer<T> {
 
     @Override
     public void onComplete() {
+
+    }
+    public void dispose(){
         if (d != null && !d.isDisposed())
             d.isDisposed();
     }

@@ -44,10 +44,13 @@
         <activity
             android:name=".Activity.WebViewActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.SearchActivity"
+            android:screenOrientation="portrait" />
 
         <service
-            android:name=".Services.X5PreLoadService"
-            android:enabled="true"/>
+            android:name=".Services.DownLoadService"
+            android:enabled="true" />
     </application>
 
 </manifest>

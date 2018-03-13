@@ -1,5 +1,7 @@
 package com.master.weibomaster.Rx.Net;
 
+import android.graphics.Point;
+
 import com.master.weibomaster.Rx.MyObserver;
 
 import java.io.IOException;
@@ -62,7 +64,8 @@ public final class ProgressRequestBody extends RequestBody {
             long bytesWritten = 0L; //总字节长度，避免多次调用contentLength()方法
             long contentLength = 0L;
             long lastwritetime = System.currentTimeMillis();
-
+            long lastwrite=0l;
+            long speed=0;
             @Override
             public void write(Buffer source, long byteCount) throws IOException {
                 super.write(source, byteCount);
@@ -71,13 +74,21 @@ public final class ProgressRequestBody extends RequestBody {
                     progress.setTotal(contentLength);
                 } //增加当前写入的字节数
                 long l = System.currentTimeMillis();
-                float speed = ((float) byteCount)*1000/1024 / (l - lastwritetime);
-                lastwritetime= l;
-                bytesWritten += byteCount;
+                if(l-lastwritetime>=500){
+                    speed=(bytesWritten-lastwrite)*500/(l-lastwritetime);
+                    lastwrite=bytesWritten;
+                    lastwritetime = l;
+                    // 回调
+                    callback.onProgress(progress);
+                }
                 progress.setSpeed(speed);
+
+
                 progress.setCurrent(bytesWritten);
-                // 回调
-                callback.onProgress(progress);
+
+                if(bytesWritten== progress.getTotal()){
+                    callback.onProgress(progress);
+                }
             }
         };
     }

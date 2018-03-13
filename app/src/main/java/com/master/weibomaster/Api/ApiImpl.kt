@@ -13,7 +13,6 @@ import okhttp3.ResponseBody
  * Created by 不听话的好孩子 on 2018/2/26.
  */
 class ApiImpl : Api {
-    override fun download(user: String)=api.download(user).compose(RxSchedulers.compose())
 
     override fun uploadPattern(user: String, name: String, pattern: MultipartBody.Part)=api.uploadPattern(user,name,pattern).compose(RxSchedulers.compose())
 

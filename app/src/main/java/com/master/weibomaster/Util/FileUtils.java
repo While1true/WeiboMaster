@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 
@@ -17,6 +16,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
+import okhttp3.ResponseBody;
 
 /**
  * Created by vange on 2017/9/15.
@@ -226,25 +227,22 @@ public class FileUtils {
     /**
      * 写入文件
      *
-     * @param in
      * @param file
      */
-    public static void writeFile(InputStream in, File file) throws IOException {
-        if (!file.getParentFile().exists())
-            file.getParentFile().mkdirs();
-
-        if (file != null && file.exists())
-            file.delete();
-
-        FileOutputStream out = new FileOutputStream(file);
-        byte[] buffer = new byte[1024 * 128];
-        int len = -1;
-        while ((len = in.read(buffer)) != -1) {
-            out.write(buffer, 0, len);
+    public static void writeFile(InputStream is, File file){
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            int len = 0;
+            byte[] buffer = new byte[4096];
+            while (-1 != (len = is.read(buffer))) {
+                fos.write(buffer, 0, len);
+            }
+            fos.flush();
+            fos.close();
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        out.flush();
-        out.close();
-        in.close();
 
     }
 

@@ -20,7 +20,6 @@ import okio.Source;
 public class ProgressDownloadBody extends ResponseBody {
 
     private ResponseBody responseBody;
-    private String url;
     private BufferedSource bufferedSource;
     private MyObserver.Progress progress;
 
@@ -58,8 +57,10 @@ public class ProgressDownloadBody extends ResponseBody {
         return new ForwardingSource(sink) { //当前写入字节数
             long bytesWritten = 0L; //总字节长度，避免多次调用contentLength()方法
             long contentLength = 0L;
-            long lastwritetime = System.currentTimeMillis();
 
+            long lastwritetime = System.currentTimeMillis();
+            long lastwrite=0l;
+            long speed=0;
             @Override
             public long read(Buffer source, long byteCount) throws IOException {
                 long bytesRead = super.read(source, byteCount);
@@ -67,14 +68,25 @@ public class ProgressDownloadBody extends ResponseBody {
                     contentLength = contentLength();
                     progress.setTotal(contentLength);
                 } //增加当前写入的字节数
-                long l = System.currentTimeMillis();
-                float speed = ((float) byteCount) * 1000 / 1024 / (l - lastwritetime);
-                lastwritetime = l;
                 bytesWritten += byteCount;
+
+                long l = System.currentTimeMillis();
+                if(l-lastwritetime>=500){
+                    speed=(bytesWritten-lastwrite)*500/(l-lastwritetime);
+                    lastwrite=bytesWritten;
+                    lastwritetime = l;
+                    // 回调
+                    RxBus.getDefault().post(progress);
+                }
                 progress.setSpeed(speed);
+
                 progress.setCurrent(bytesWritten);
-                // 回调
-                RxBus.getDefault().post(progress);
+
+                if(bytesWritten==progress.getTotal()){
+                    // 回调
+                    RxBus.getDefault().post(progress);
+                }
+
 
                 return bytesRead;
             }

@@ -36,7 +36,4 @@ interface Api {
     @POST("uploadPattern")
     fun uploadPattern(@Query("user") user: String, @Query("name") name: String,  @Part pattern:MultipartBody.Part): Observable<Base<String>>
 
-    @GET
-    fun download(@Url url:String):Observable<ResponseBody>
-
 }
