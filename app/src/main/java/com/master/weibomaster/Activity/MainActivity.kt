@@ -3,7 +3,6 @@ package com.master.weibomaster.Activity
 import android.os.Build
 import android.text.SpannableString
 import android.text.Spanned
-import android.text.style.ClickableSpan
 import android.text.style.TextAppearanceSpan
 import com.master.weibomaster.Base.BaseActivity
 import com.master.weibomaster.R
@@ -11,7 +10,6 @@ import com.master.weibomaster.Rx.MyObserver
 import com.master.weibomaster.Rx.RxSchedulers
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 class MainActivity : BaseActivity() {

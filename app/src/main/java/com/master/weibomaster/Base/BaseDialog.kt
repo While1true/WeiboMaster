@@ -1,4 +1,4 @@
-package coms.pacs.pacs.BaseComponent
+package com.master.weibomaster.Base
 
 import android.os.Bundle
 import android.support.design.widget.BottomSheetDialogFragment

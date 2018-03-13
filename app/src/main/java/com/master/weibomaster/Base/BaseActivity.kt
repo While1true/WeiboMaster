@@ -1,4 +1,4 @@
-package com.master.VangeBugs.Base
+package com.master.weibomaster.Base
 
 import android.content.Context
 import android.os.Build
