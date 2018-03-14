@@ -4,6 +4,7 @@ import com.master.weibomaster.Rx.MyObserver;
 import com.master.weibomaster.Rx.RxSchedulers;
 import com.master.weibomaster.Rx.Utils.RxBus;
 import com.master.weibomaster.Rx.Utils.RxLifeUtils;
+import com.master.weibomaster.Services.DownLoadService;
 import com.master.weibomaster.Util.ActivityUtils;
 import com.master.weibomaster.Util.FileUtils;
 import com.master.weibomaster.Util.MemoryUtils;
@@ -30,61 +31,30 @@ public class ProgressDLUtils {
         @Streaming
         Observable<ResponseBody> download(@Url String url);
     }
-    public static void addListenerUrl(String url){
-        if(!RetrofitHttpManger.progrssUrls.contains(url)){
-            RetrofitHttpManger.progrssUrls.add(url) ;
+
+    public static void addListenerUrl(String url) {
+        if (!RetrofitHttpManger.progrssUrls.contains(url)) {
+            RetrofitHttpManger.progrssUrls.add(url);
         }
     }
-    public static void removeListenerUrl(String url){
-        if(RetrofitHttpManger.progrssUrls.contains(url)){
+
+    public static void removeListenerUrl(String url) {
+        if (RetrofitHttpManger.progrssUrls.contains(url)) {
             RetrofitHttpManger.progrssUrls.remove(url);
         }
     }
 
-    public static void download(String url, String fileName, final MyObserver<File> callback) {
-        File file = new File(MemoryUtils.FILE + fileName);
-        download(url, file, callback);
-    }
-
-    public static void download(final String url, final File file, final MyObserver<File> callback) {
-        if (!file.getParentFile().exists()) {
-            file.getParentFile().mkdirs();
-        }
-        addListenerUrl(url);
-        Disposable progressDisposable = RxBus.getDefault().toObservable(MyObserver.Progress.class)
-                .filter(new Predicate<MyObserver.Progress>() {
-                    @Override
-                    public boolean test(MyObserver.Progress progress) throws Exception {
-                        return progress.getFile().equals(url);
-                    }
-                })
-                .compose(RxSchedulers.<MyObserver.Progress>compose())
-                .subscribe(new Consumer<MyObserver.Progress>() {
-                    @Override
-                    public void accept(MyObserver.Progress progress) throws Exception {
-                        callback.onProgress(progress);
-                    }
-                });
-        RxLifeUtils.getInstance().add(ActivityUtils.getTopActivity(), progressDisposable);
-        RetrofitHttpManger.create(DownloadInterface.class)
-                .download(url)
-                .map(new Function<ResponseBody, File>() {
-                    @Override
-                    public File apply(ResponseBody responseBody) throws Exception {
-                        FileUtils.writeFile(responseBody.byteStream(), file);
-                        return file;
-                    }
-                })
-                .compose(RxSchedulers.<File>compose())
-                .subscribe(callback);
+    public Observable<MyObserver.Progress> download(String url, String fileName) {
+        return DownLoadService.Companion.download(url, fileName);
 
     }
 
-    public static void download(String url, final MyObserver<File> callback) {
-        int i = url.lastIndexOf(".");
-        String fileName = url.substring(i);
-        File file = new File(MemoryUtils.FILE + fileName);
-        download(url, file, callback);
+    public static Observable<MyObserver.Progress> download(final String url, final File file) {
+        return DownLoadService.Companion.download(url, file);
+    }
+
+    public static Observable<MyObserver.Progress> download(String url) {
+        return DownLoadService.Companion.download(url);
     }
 }
 
