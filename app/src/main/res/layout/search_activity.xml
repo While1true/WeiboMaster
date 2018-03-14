@@ -47,7 +47,7 @@
     </LinearLayout>
 </android.support.v7.widget.CardView>
 
-    <coms.kxjsj.refreshlayout_master.RefreshLayout
+    <com.nestrefreshlib.RefreshViews.RefreshLayout
         android:id="@+id/refreshlayout"
         android:layout_width="0dp"
         android:layout_height="0dp"

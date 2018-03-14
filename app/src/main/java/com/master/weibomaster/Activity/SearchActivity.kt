@@ -9,7 +9,10 @@ import com.master.weibomaster.R
 import com.master.weibomaster.Rx.DataObserver
 import com.master.weibomaster.Util.InputUtils
 import com.master.weibomaster.Util.SizeUtils
+import com.master.weibomaster.Util.StateBarUtils
 import com.nestrefreshlib.Adpater.Impliment.SAdapter
+import com.nestrefreshlib.RefreshViews.AdapterHelper.StateAdapter
+import com.nestrefreshlib.State.Interface.StateEnum
 import kotlinx.android.synthetic.main.search_activity.*
 
 /**
@@ -20,8 +23,9 @@ class SearchActivity : BaseActivity() {
     var listArticals = ArrayList<Artical>()
     var content: String = ""
     lateinit var observer : DataObserver<List<Artical>>
-    lateinit var sAdapter: SAdapter
+    lateinit var sAdapter: StateAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
+        StateBarUtils.performTransStateBar(window)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.enterTransition=android.transition.Explode()
         }
@@ -37,7 +41,6 @@ class SearchActivity : BaseActivity() {
             InputUtils.hideKeyboard(et_input)
             onBackPressed()
         }
-
     }
 
 
@@ -55,42 +58,4 @@ class SearchActivity : BaseActivity() {
         return false
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        menuInflater.inflate(R.menu.menu_search,menu!!)
-//        val item = menu.findItem(R.id.toolbar_search)
-//        item.expandActionView()
-//        searchView = item.actionView as SearchView
-//        searchView?.queryHint="姓名/医保卡号/就诊号"
-//        val searchtext = searchView?.findViewById<SearchView.SearchAutoComplete>(android.support.v7.appcompat.R.id.search_src_text)
-//        searchtext?.setHintTextColor(resources.getColor(R.color.hintcolor))
-//        searchtext?.setTextColor(0xffffffff.toInt())
-//        val mCloseButton = findViewById<ImageView>(android.support.v7.appcompat.R.id.search_close_btn)
-//        mCloseButton.setOnClickListener {  }
-//
-//        Observable.create(SearchWatcher(searchView!!))
-//                .debounce(400, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
-//                .subscribeOn(AndroidSchedulers.mainThread())
-//                .filter({
-//                    content = it
-//                    if(TextUtils.isEmpty(content)) {
-//                        sAdapter.setBeanList(null)
-//                        listArticals.clear()
-//                        sAdapter.showItem()
-//                    }
-//                    return@filter !TextUtils.isEmpty(content)
-//                })
-//                .flatMap(Function<String, Observable<Base<List<Artical>>>> {
-//                    currentPage = 1
-//                    return@Function ApiImpl.apiImpl.getArticalList(it, 20, currentPage)
-//                })
-//                .subscribe(observer)
-//
-//        return super.onCreateOptionsMenu(menu)
-//    }
-
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-////        val searchView = item.actionView as SearchView
-//
-//        return true
-//    }
 }

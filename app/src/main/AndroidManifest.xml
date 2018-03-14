@@ -46,6 +46,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.SearchActivity"
+            android:windowSoftInputMode="adjustPan|stateVisible"
             android:screenOrientation="portrait" />
 
         <service

@@ -1,7 +1,12 @@
 package com.master.weibomaster.Activity
 
+import android.content.Intent
+import android.support.v4.app.ActivityCompat
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
+import android.view.Menu
+import android.view.MenuItem
 import com.master.VangeBugs.Api.ApiImpl
 import com.master.VangeBugs.Base.BaseActivity
 import com.master.weibomaster.Fragment.CategoryF
@@ -12,7 +17,8 @@ import com.master.weibomaster.Model.UPDATE_INDICATE
 import com.master.weibomaster.R
 import com.master.weibomaster.Rx.DataObserver
 import com.master.weibomaster.Rx.Utils.RxBus
-import com.master.weibomaster.Util.StateBarUtils
+import coms.pacs.pacs.Utils.pop
+import coms.pacs.pacs.Utils.toast
 import kotlinx.android.synthetic.main.category_layout.*
 
 /**
@@ -22,7 +28,7 @@ class CategoryActivity : BaseActivity() {
     val fragments = arrayOf(CategoryF::class.java, LikeF::class.java)
     override fun initView() {
         setTitle("分类")
-        StateBarUtils.performTransStateBar(window)
+//        StateBarUtils.performTransStateBar(window)
         var adapter = object : FragmentPagerAdapter(supportFragmentManager) {
             override fun getItem(position: Int) = fragments[position].newInstance()
 
@@ -62,4 +68,37 @@ class CategoryActivity : BaseActivity() {
     }
 
     override fun getLayoutId() = R.layout.category_layout
+
+
+    var last = 0L
+    override fun onBackPressed() {
+        if (!pop()) {
+            val currentTimeMillis = System.currentTimeMillis()
+
+            if (currentTimeMillis - last > 2000) {
+                last = currentTimeMillis
+                toast("双击退出", 1)
+            } else {
+                finish()
+            }
+        }
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.toolbar_search -> {
+                val option = ActivityOptionsCompat.makeSceneTransitionAnimation(this@CategoryActivity)
+                ActivityCompat.startActivity(this@CategoryActivity, Intent(this@CategoryActivity, SearchActivity::class.java), option.toBundle())
+            }
+            R.id.loginout -> {
+            }
+        }
+        return true
+    }
 }

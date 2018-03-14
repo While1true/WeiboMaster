@@ -82,15 +82,15 @@ class MainActivity : BaseActivity() {
 
     override fun loadData() {
         val url = "http://dlied5.myapp.com/myapp/1104466820/sgame/2017_com.tencent.tmgp.sgame_h164_1.33.1.23_fe680b.apk"
-        DownLoadService.download(url)
-                .compose(RxSchedulers.compose())
-                .subscribe(object : MyObserver<MyObserver.Progress>(this) {
-                    override fun onNext(progress: Progress) {
-                        super.onNext(progress)
-                        val text = "已下载：${progress.current / 1024 / 1024} M----速度${String.format("%.2f", progress.speed / 1024 / 1024)} M/s"
-                        log(text)
-                    }
-                })
+//        DownLoadService.download(url)
+//                .compose(RxSchedulers.compose())
+//                .subscribe(object : MyObserver<MyObserver.Progress>(this) {
+//                    override fun onNext(progress: Progress) {
+//                        super.onNext(progress)
+//                        val text = "已下载：${progress.current / 1024 / 1024} M----速度${String.format("%.2f", progress.speed / 1024 / 1024)} M/s"
+//                        log(text)
+//                    }
+//                })
     }
 
     override fun getLayoutId() = R.layout.activity_main
@@ -118,35 +118,4 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    var last = 0L
-    override fun onBackPressed() {
-        if (!pop()) {
-            val currentTimeMillis = System.currentTimeMillis()
-
-            if (currentTimeMillis - last > 2000) {
-                last = currentTimeMillis
-                toast("双击退出", 1)
-            } else {
-                finish()
-            }
-        }
-
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.toolbar_search -> {
-                val option = ActivityOptionsCompat.makeSceneTransitionAnimation(this@MainActivity)
-                ActivityCompat.startActivity(this@MainActivity, Intent(this@MainActivity, SearchActivity::class.java), option.toBundle())
-            }
-            R.id.loginout -> {
-            }
-        }
-        return true
-    }
 }
