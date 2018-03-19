@@ -6,6 +6,7 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.app.AppCompatActivity
 import com.master.VangeBugs.Rx.RxSchedulers
+import com.master.VangeBugs.Util.StateBarUtils
 import io.reactivex.Observable
 import java.util.concurrent.TimeUnit
 
@@ -14,11 +15,12 @@ import java.util.concurrent.TimeUnit
  */
 class BlankActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        StateBarUtils.performTransStateBar(window)
         super.onCreate(savedInstanceState)
         Observable.timer(2, TimeUnit.SECONDS)
                 .compose(RxSchedulers.compose())
                 .subscribe {
-                    startActivity(Intent(this,CategoryActivity::class.java))
+                    startActivity(Intent(this,ProgramActivity::class.java))
                     finish()
                 }
 

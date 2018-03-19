@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+<android.support.v7.widget.CardView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/size15"
+    android:paddingRight="@dimen/size15"
+    android:layout_margin="@dimen/size8"
+    app:cardElevation="@dimen/size6">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:divider="@color/linecolor"
+        android:dividerPadding="@dimen/size3"
+        android:orientation="vertical"
+        android:showDividers="middle">
+
+        <com.master.VangeBugs.Widgets.SettingView
+            android:id="@+id/copy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/size15"
+            app:titleDrawable="@drawable/ic_collect"
+            app:titletext="复制到剪切板" />
+
+        <!--<com.master.VangeBugs.Widgets.SettingView-->
+            <!--android:id="@+id/copxxxy"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:padding="@dimen/size15"-->
+            <!--app:titleDrawable="@drawable/ic_collect"-->
+            <!--app:titletext="复制到剪切板" />-->
+
+        <!--<com.master.VangeBugs.Widgets.SettingView-->
+            <!--android:id="@+id/xx"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:padding="@dimen/size15"-->
+            <!--app:titleDrawable="@drawable/ic_collect"-->
+            <!--app:titletext="复制到剪切板" />-->
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>
+</FrameLayout>

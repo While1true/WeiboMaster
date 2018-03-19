@@ -2,18 +2,10 @@ package com.master.VangeBugs.Fragment
 
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
-import android.util.TypedValue
-import com.master.VangeBugs.Api.ApiImpl
-import com.master.VangeBugs.Model.Base
 import com.master.VangeBugs.Model.Bug
-import com.master.VangeBugs.Model.UPDATE_INDICATE
-import com.master.VangeBugs.Model.xx
 import com.master.VangeBugs.R
-import com.master.VangeBugs.Rx.DataObserver
-import com.master.VangeBugs.Rx.Utils.RxBus
 import com.nestrefreshlib.Adpater.Base.MyCallBack
 import coms.pacs.pacs.BaseComponent.BaseFragment
-import coms.pacs.pacs.Utils.toast
 import kotlinx.android.synthetic.main.textview.*
 
 /**
@@ -21,7 +13,7 @@ import kotlinx.android.synthetic.main.textview.*
  */
 class DetailF : BaseFragment() {
 
-    private var bug: xx? = null
+    private var bug: Bug? = null
     var callback: MyCallBack<Boolean>? = null
 
 
@@ -30,34 +22,10 @@ class DetailF : BaseFragment() {
     override fun init(savedInstanceState: Bundle?) {
         setTitle("Bug详情")
         textview.movementMethod = ScrollingMovementMethod.getInstance()
-        show(bug!!.fields)
-        like.setOnClickListener {
-            like.isEnabled=false
-            ApiImpl.apiImpl.like(bug!!.pk.toLong(),(bug!!.fields.like+1)%2)
-                    .subscribe(object : DataObserver<Any>(this){
-                        override fun OnNEXT(bean: Any?) {
-                            RxBus.getDefault().post(Base(code = UPDATE_INDICATE, data = ""))
-                            bug!!.fields.like=(bug!!.fields.like+1)%2
-                            callback?.call(bug!!.fields.like==1)
-                            like.isSelected = bug!!.fields.like==1
-                            if( bug!!.fields.like==1){
-                                "已设为重点关注".toast()
-                            }else{
-                                "取消关注成功".toast()
-                            }
-                            like.text = if(bug!!.fields.like==1)"已关注" else "关注"
-                        }
-
-                        override fun onComplete() {
-                            super.onComplete()
-                            like.isEnabled=true
-                        }
-
-                    })
-        }
+        show(bug!!)
     }
 
-    fun display(bug: xx?):DetailF {
+    fun display(bug: Bug?):DetailF {
         this.bug = bug
         return this
     }
@@ -71,21 +39,5 @@ class DetailF : BaseFragment() {
         callback=null
     }
     private fun show(bug: Bug) {
-        val text = """
-
-                标题：${bug.title}
-                项目：${bug.category}
-                发布者：${bug.publisher}
-                发布时间:${bug.time}
-                状态：${if (bug.state == 1) "已解决" else "待解决"}
-
-                问题：${bug.issue}
-
-
-            """.trimIndent()
-        textview.setTextSize(TypedValue.COMPLEX_UNIT_SP,22f)
-        like.isSelected = bug.like==1
-        like.text = if(bug.like==1)"已关注" else "关注"
-        textview.text = text
     }
 }

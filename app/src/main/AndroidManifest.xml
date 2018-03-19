@@ -31,10 +31,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.master.VangeBugs.Activity.MainActivity"
+            android:name="com.master.VangeBugs.Activity.CategoryActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.master.VangeBugs.Activity.CategoryActivity"
+            android:name="com.master.VangeBugs.Activity.ProgramActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.master.VangeBugs.Activity.ProgramListActivity"

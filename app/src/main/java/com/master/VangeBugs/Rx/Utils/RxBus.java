@@ -39,7 +39,7 @@ public class RxBus {
                 .filter(new Predicate<T>() {
                     @Override
                     public boolean test(T t) throws Exception {
-                        return t.getCode()==Tag;
+                        return t.getError_code()==Tag;
                     }
                 });
 

@@ -31,9 +31,9 @@ public abstract class DataObserver<T> implements Observer<Base<T>> {
 
     @Override
     public void onNext(Base<T> t) {
-        if (t.getCode()==200) {
+        if (t.getError_code()==200) {
             OnNEXT(t.getData());
-        }else if(t.getCode()==100){
+        }else if(t.getError_code()==100){
             OnERROR(t.getMessage());
         }else{
             OnLOGIN();

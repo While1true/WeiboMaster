@@ -6,6 +6,7 @@ import com.master.VangeBugs.Util.AdjustUtil
 import com.nestrefreshlib.RefreshViews.RefreshLayout
 import com.nestrefreshlib.State.Interface.Recorder
 import com.nestrefreshlib.State.StateLayout
+import com.tencent.smtt.sdk.QbSdk
 
 /**
  * Created by vange on 2018/1/16.
@@ -26,6 +27,10 @@ class App : Application() {
                 .setHeaderLayoutidDefault(R.layout.header_layout)
                 .setFooterLayoutidDefault(R.layout.footer_layout))
         StateLayout.init(Recorder.Builder().setNomoreRes(R.layout.info).build())
+        try {
+            QbSdk.initX5Environment(applicationContext, null)
+        } catch (e: Exception) {
+        }
     }
 
 

@@ -22,17 +22,21 @@ abstract class BaseActivity : AppCompatActivity() {
         if (needTitle()) {
             setContentView(R.layout.titlebar_activity)
             setSupportActionBar(toolbar)
-            if (view == null)
-                layoutInflater.inflate(getLayoutId(), fl_content, true)
-            else
+            if (view == null) {
+                if (getLayoutId() != 0)
+                    layoutInflater.inflate(getLayoutId(), fl_content, true)
+            } else
                 fl_content.addView(view)
             handleTitlebar()
             iv_back.setOnClickListener { onBack() }
         } else {
-            if (view == null)
-                setContentView(getLayoutId())
-            else
+            if (view == null) {
+                if (getLayoutId() != 0) {
+                    setContentView(getLayoutId())
+                }
+            } else {
                 setContentView(view)
+            }
         }
 
         initView()

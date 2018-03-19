@@ -1,74 +1,37 @@
 package com.master.VangeBugs.Holder
 
-import android.app.AlertDialog
 import android.text.TextUtils
-import com.master.VangeBugs.Api.ApiImpl
 import com.master.VangeBugs.Fragment.DetailF
-import com.master.VangeBugs.Model.Base
+import com.master.VangeBugs.Fragment.WebF
 import com.master.VangeBugs.Model.Bug
-import com.master.VangeBugs.Model.UPDATE_INDICATE
-import com.master.VangeBugs.Model.xx
 import com.master.VangeBugs.R
-import com.master.VangeBugs.Rx.DataObserver
-import com.master.VangeBugs.Rx.Utils.RxBus
-import com.master.VangeBugs.Rx.Utils.RxLifeUtils
 import com.master.VangeBugs.Util.ActivityUtils
 import com.master.VangeBugs.Util.FragmentUtils
 import com.nestrefreshlib.Adpater.Base.Holder
 import com.nestrefreshlib.Adpater.Base.MyCallBack
 import com.nestrefreshlib.Adpater.Impliment.BaseHolder
 import coms.pacs.pacs.Utils.mtoString
-import coms.pacs.pacs.Utils.toast
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * Created by 不听话的好孩子 on 2018/2/26.
  */
-class BugListHolder : BaseHolder<xx>(R.layout.bug_list_layout) {
-    override fun onViewBind(p0: Holder?, p3: xx?, p2: Int) {
-        var p1=p3?.fields
-        p0?.setText(R.id.issue, "发布者：" + p1?.publisher + (if (p1?.like == 1) "/(已重点关注)" else ""))
-        p0?.setText(R.id.publisher, if (TextUtils.isEmpty(p1?.title
-                        ?: "")) getissue(p1?.issue) else p1?.title)
-        p0?.setText(R.id.time, getissue(p1?.time))
-        p0?.setText(R.id.state, if (p1?.state == 0) "待解决" else "解决")
+class BugListHolder : BaseHolder<Bug>(R.layout.bug_list_layout) {
+    val dateformat=SimpleDateFormat("yyyy-MM-dd hh:mm")
+    override fun onViewBind(p0: Holder?, p3: Bug, p2: Int) {
+        p0?.setText(R.id.issue, "发布者：" + p3.tester)
+        p0?.setText(R.id.publisher, if (TextUtils.isEmpty(p3.title
+                        )) getissue(p3.content) else p3.title)
+        p0?.setText(R.id.time, dateformat.format(Date(p3.create_time)))
+        p0?.setText(R.id.state, if (p3.status == "N") "待解决" else "解决")
 
         p0?.itemView?.setOnClickListener {
-            val display = DetailF().display(p3)
+            val display = WebF().display(p3)
             display.callback= MyCallBack<Boolean> {
-                p0?.setText(R.id.issue, "发布者：" + p1?.publisher + (if (it) "/(已重点关注)" else ""))
+                p0.setText(R.id.issue, "发布者：" + p3.tester)
             }
             FragmentUtils.showAddFragment(ActivityUtils.getTopActivity(), display)
-        }
-        p0?.itemView?.setOnLongClickListener {
-            var islike = (p1!!.like == 1)
-
-            AlertDialog.Builder(p0!!.itemView.context)
-                    .setTitle(if (islike) "取消关注该Bug？" else "重点关注该Bug？")
-                    .setMessage(if (islike) "将从关注页移除" else "将直接添加在关注页方便查看")
-                    .setNegativeButton("取消", null)
-                    .setPositiveButton("确认", { dialog, which ->
-                        ApiImpl.apiImpl.like(p3!!.pk.toLong(), (p1!!.like + 1) % 2)
-                                .subscribe(object : DataObserver<Any>(p0?.itemView) {
-                                    override fun onComplete() {
-                                        super.onComplete()
-                                        RxLifeUtils.getInstance().remove(p0?.itemView)
-                                    }
-
-                                    override fun OnNEXT(bean: Any?) {
-                                        p1?.like = (p1?.like + 1) % 2
-                                        p0?.setText(R.id.issue, "发布者：" + p1?.publisher + (if (p1?.like == 1) "/(已重点关注)" else ""))
-                                        RxBus.getDefault().post(Base(code = UPDATE_INDICATE, data = p2))
-                                        "成功".toast()
-                                    }
-
-                                    override fun OnERROR(error: String?) {
-                                        super.OnERROR(error)
-                                        "失败".toast()
-                                    }
-
-                                })
-                    }).create().show()
-            true
         }
     }
 

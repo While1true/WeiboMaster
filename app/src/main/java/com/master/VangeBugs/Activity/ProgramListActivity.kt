@@ -9,7 +9,7 @@ import android.widget.LinearLayout
 import com.master.VangeBugs.Api.ApiImpl
 import com.master.VangeBugs.Base.BaseActivity
 import com.master.VangeBugs.Holder.BugListHolder
-import com.master.VangeBugs.Model.xx
+import com.master.VangeBugs.Model.Bug
 import com.master.VangeBugs.R
 import com.master.VangeBugs.Rx.DataObserver
 import com.master.VangeBugs.Util.StateBarUtils
@@ -25,9 +25,9 @@ import kotlinx.android.synthetic.main.refreshlayout.*
  */
 class ProgramListActivity : BaseActivity() {
     var pagenum = 0
-    var pagesize = 18
-    var category = ""
-    var category_id = ""
+    var pagesize = 8
+    var titlex = ""
+    var id = 0
     var nomore = false
     var stateLayout: StateLayout? = null
     var list = mutableListOf<Any>()
@@ -35,16 +35,16 @@ class ProgramListActivity : BaseActivity() {
     var refreshAdapterHandler: RefreshAdapterHandler? = null
     override fun initView() {
         StateBarUtils.performTransStateBar(window)
-        category = intent.getStringExtra("category")
-        category_id = intent.getStringExtra("category_id")
-        setTitle(category)
+        titlex = intent.getStringExtra("title")
+        id = intent.getIntExtra("id",0)
+        setTitle(titlex)
         stateLayout?.showLoading()
     }
 
     override fun loadData() {
-        ApiImpl.apiImpl.getBugList(category_id, pagenum, pagesize)
-                .subscribe(object : DataObserver<List<xx>>(this) {
-                    override fun OnNEXT(bean: List<xx>) {
+        ApiImpl.apiImpl.getBugList(id.toString(), pagenum, pagesize)
+                .subscribe(object : DataObserver<List<Bug>>(this) {
+                    override fun OnNEXT(bean: List<Bug>) {
                         if (pagenum == 0) {
                             list.clear()
                         }

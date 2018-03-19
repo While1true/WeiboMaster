@@ -54,8 +54,8 @@ class LikeF : BaseFragment() {
 
     private fun getdata() {
         ApiImpl.apiImpl.getUnsolvedLike()
-                .subscribe(object : DataObserver<List<xx>>(this) {
-                    override fun OnNEXT(bean: List<xx>) {
+                .subscribe(object : DataObserver<List<Bug>>(this) {
+                    override fun OnNEXT(bean: List<Bug>) {
                         if (adapter == null)
                             stateLayout?.showItem()
                         showData(bean)
@@ -69,7 +69,7 @@ class LikeF : BaseFragment() {
     }
 
     var adapter: SAdapter? = null
-    private fun showData(bean: List<xx>) {
+    private fun showData(bean: List<Bug>) {
         if (adapter == null) {
             adapter = SAdapter(bean)
                     .apply {

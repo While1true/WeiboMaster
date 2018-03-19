@@ -17,26 +17,29 @@ import kotlinx.android.synthetic.main.titlebar_fragment.*
  * Created by vange on 2018/1/16.
  */
 abstract class BaseFragment : Fragment() {
-    var contentView: View? = null
     private var firestLoad = true
     private var viewCreated = false
     private var isvisable = false
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var inflate: View? = null
+        var contentView = contentView()
         if (needTitle()) {
-            inflate = layoutInflater.inflate(R.layout.titlebar_fragment, container, false)
-            layoutInflater.inflate(getLayoutId(), inflate!!.findViewById(R.id.fl_content) as ViewGroup, true)
-            inflate!!.findViewById<View>(R.id.iv_back).setOnClickListener { onBack() }
-            handleTitlebar(inflate)
+            val titleview = layoutInflater.inflate(R.layout.titlebar_fragment, container, false)
+            val viewGroup = titleview!!.findViewById(R.id.fl_content) as ViewGroup
+            if(contentView==null) {
+                layoutInflater.inflate(getLayoutId(),viewGroup, true)
+            }else{
+                viewGroup.addView(contentView)
+            }
+            titleview.findViewById<View>(R.id.iv_back).setOnClickListener { onBack() }
+            handleTitlebar(titleview)
+            contentView=titleview
         } else {
-            contentView = contentView()
             if (contentView == null) {
                 contentView = layoutInflater.inflate(getLayoutId(), null)
             }
-            inflate = contentView
         }
-        inflate?.isClickable = true
-        return inflate
+        contentView?.isClickable = true
+        return contentView
     }
 
     private fun handleTitlebar(inflate: View) {
