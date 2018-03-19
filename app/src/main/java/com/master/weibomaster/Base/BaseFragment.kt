@@ -42,13 +42,6 @@ abstract class BaseFragment : Fragment() {
 
     private fun initStateLayout() {
         stateLayout = StateLayout(context).setContent(getLayoutId())
-        stateLayout?.setStateListener(object : DefaultStateListener() {
-            override fun netError(p0: Context?) {
-                stateLayout?.showLoading()
-                loadData()
-            }
-
-        })
     }
 
     abstract fun loadData()

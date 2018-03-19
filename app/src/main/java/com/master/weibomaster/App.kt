@@ -15,7 +15,7 @@ class App : Application() {
     }
     override fun onCreate() {
         super.onCreate()
-        AdjustUtil.adjust(this)
+//        AdjustUtil.adjust(this)
         RefreshLayout.init(RefreshLayout.DefaultBuilder()
                 .setCanheaderDefault(true)
                 .setCanfootrDefault(true)

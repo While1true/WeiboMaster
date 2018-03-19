@@ -39,13 +39,6 @@ abstract class BaseActivity : AppCompatActivity(){
 
     private fun initStateLayout() {
         stateLayout = StateLayout(this).setContent(getLayoutId())
-        stateLayout?.setStateListener(object : DefaultStateListener() {
-            override fun netError(p0: Context?) {
-                stateLayout?.showLoading()
-                loadData()
-            }
-
-        })
     }
 
     private fun handleTitlebar() {
