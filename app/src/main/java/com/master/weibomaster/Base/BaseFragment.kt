@@ -1,6 +1,5 @@
 package com.master.weibomaster.Base
 
-import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -12,7 +11,6 @@ import com.master.weibomaster.R
 import com.master.weibomaster.Rx.Utils.RxLifeUtils
 import com.master.weibomaster.Util.SizeUtils
 import com.master.weibomaster.Util.StateBarUtils
-import com.nestrefreshlib.State.DefaultStateListener
 import com.nestrefreshlib.State.StateLayout
 import kotlinx.android.synthetic.main.titlebar_fragment.*
 
