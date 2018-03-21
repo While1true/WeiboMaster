@@ -38,7 +38,7 @@ class CategoryF : BaseFragment() {
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        refreshlayout.attrsUtils.overscrolL_ELASTIC=true
+        refreshlayout.attrsUtils.overscroll=true
         stateLayout?.showLoading()
         ApiImpl.apiImpl.getPrograms()
                 .subscribe(object : DataObserver<List<BugCategory>>(this) {

@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import com.master.VangeBugs.Util.AdjustUtil
 import com.nestrefreshlib.RefreshViews.RefreshLayout
+import com.nestrefreshlib.RefreshViews.RefreshWrap.RefreshHandlerImpl
 import com.nestrefreshlib.State.Interface.Recorder
 import com.nestrefreshlib.State.StateLayout
 import com.tencent.smtt.sdk.QbSdk
@@ -21,12 +22,13 @@ class App : Application() {
         super.onCreate()
         AdjustUtil.adjust(this)
         RefreshLayout.init(RefreshLayout.DefaultBuilder()
+                .setBaseRefreshHandler(RefreshHandlerImpl::class.java)
                 .setCanheaderDefault(true)
                 .setCanfootrDefault(true)
                 .setScrollLayoutIdDefault(R.layout.recyclerview)
                 .setHeaderLayoutidDefault(R.layout.header_layout)
                 .setFooterLayoutidDefault(R.layout.footer_layout))
-        StateLayout.init(Recorder.Builder().setNomoreRes(R.layout.info).build())
+        StateLayout.init(Recorder.Builder().setNomoreRes(R.layout.state_nomore).build())
         try {
             QbSdk.initX5Environment(applicationContext, null)
         } catch (e: Exception) {
