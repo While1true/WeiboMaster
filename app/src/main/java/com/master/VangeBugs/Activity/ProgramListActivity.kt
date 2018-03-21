@@ -14,7 +14,6 @@ import com.master.VangeBugs.Rx.DataObserver
 import com.master.VangeBugs.Util.StateBarUtils
 import com.nestrefreshlib.RefreshViews.AdapterHelper.AdapterScrollListener
 import com.nestrefreshlib.RefreshViews.AdapterHelper.StateAdapter
-import com.nestrefreshlib.RefreshViews.RefreshListener
 import com.nestrefreshlib.State.DefaultStateListener
 import com.nestrefreshlib.State.Interface.StateEnum
 import kotlinx.android.synthetic.main.refreshlayout.*
@@ -35,12 +34,12 @@ class ProgramListActivity : BaseActivity() {
         titlex = intent.getStringExtra("title")
         setTitle(titlex)
 
-        id = intent.getIntExtra("id",0)
+        id = intent.getIntExtra("id", 0)
         initAdapter()
     }
 
     override fun loadData() {
-        refreshlayout.attrsUtils.overscroll=true
+        refreshlayout.attrsUtils.overscroll = true
         ApiImpl.apiImpl.getBugList(id.toString(), pagenum, pagesize)
                 .subscribe(object : DataObserver<List<Bug>>(this) {
                     override fun OnNEXT(bean: List<Bug>) {
@@ -48,14 +47,14 @@ class ProgramListActivity : BaseActivity() {
                             list.clear()
                         }
                         list.addAll(bean)
-                        if (pagenum == 1&&bean.isEmpty()) {
+                        if (pagenum == 1 && bean.isEmpty()) {
                             mAdapter?.showEmpty()
                         } else {
                             if (bean.size < pagesize) {
                                 nomore = true
-                                mAdapter?.showState(StateEnum.SHOW_NOMORE,if(pagenum==1) "" else "这是底线了")
-                            }else {
-                                mAdapter?.showState(StateEnum.SHOW_NOMORE,"正在加载中...")
+                                mAdapter?.showState(StateEnum.SHOW_NOMORE, if (pagenum == 1) "" else "这是底线了")
+                            } else {
+                                mAdapter?.showState(StateEnum.SHOW_NOMORE, "正在加载中...")
                             }
                             refreshlayout.NotifyCompleteRefresh0()
                         }
@@ -75,7 +74,7 @@ class ProgramListActivity : BaseActivity() {
 
     private fun initAdapter() {
         mAdapter = StateAdapter(list)
-                .setStateListener(object : DefaultStateListener(){
+                .setStateListener(object : DefaultStateListener() {
                     override fun netError(p0: Context?) {
                         mAdapter?.showLoading()
                         loadData()
@@ -85,29 +84,34 @@ class ProgramListActivity : BaseActivity() {
                 .addLifeOwener(this)
                 .addType(BugListHolder()) as StateAdapter?
         mAdapter?.showLoading()
-       refreshlayout.getmScroll<RecyclerView>().apply {
-           addItemDecoration(InnerDecorate(this@ProgramListActivity, LinearLayout.VERTICAL))
-           layoutManager=LinearLayoutManager(this@ProgramListActivity)
-           adapter=mAdapter
-           addOnScrollListener(AdapterScrollListener(refreshlayout))
-       }
-
-        refreshlayout.setListener(object : RefreshListener() {
-            override fun Loading() {
+        refreshlayout.getmScroll<RecyclerView>().apply {
+            addItemDecoration(InnerDecorate(this@ProgramListActivity, LinearLayout.VERTICAL))
+            layoutManager = LinearLayoutManager(this@ProgramListActivity)
+            adapter = mAdapter
+            addOnScrollListener(AdapterScrollListener(AdapterScrollListener.Callback {
                 if (!nomore) {
                     pagenum++
                     loadData()
                 }
-            }
+            }))
+        }
 
-            override fun Refreshing() {
-                refreshlayout.attrsUtils.canfootr=true
-                nomore = false
-                pagenum = 1
-                loadData()
-            }
-
-        })
+//        refreshlayout.setListener(object : RefreshListener() {
+//            override fun Loading() {
+//                if (!nomore) {
+//                    pagenum++
+//                    loadData()
+//                }
+//            }
+//
+//            override fun Refreshing() {
+//                refreshlayout.attrsUtils.canfootr=true
+//                nomore = false
+//                pagenum = 1
+//                loadData()
+//            }
+//
+//        })
     }
 
     override fun getLayoutId() = R.layout.refreshlayout
