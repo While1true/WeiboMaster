@@ -83,6 +83,8 @@ public abstract class RefreshLayoutPageLoading<T> extends DataObserver<List<T>> 
             @Override
             public void Refreshing() {
                 pagenum = 1;
+                loading=false;
+                nomore=false;
                 Go();
             }
 
