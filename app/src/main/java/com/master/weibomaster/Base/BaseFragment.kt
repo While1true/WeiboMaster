@@ -1,4 +1,4 @@
-package com.master.weibomaster.Base
+package coms.pacs.pacs.BaseComponent
 
 import android.os.Build
 import android.os.Bundle
@@ -11,7 +11,6 @@ import com.master.weibomaster.R
 import com.master.weibomaster.Rx.Utils.RxLifeUtils
 import com.master.weibomaster.Util.SizeUtils
 import com.master.weibomaster.Util.StateBarUtils
-import com.nestrefreshlib.State.StateLayout
 import kotlinx.android.synthetic.main.titlebar_fragment.*
 
 /**
@@ -21,28 +20,27 @@ abstract class BaseFragment : Fragment() {
     private var firestLoad = true
     private var viewCreated = false
     private var isvisable = false
-    var stateLayout: StateLayout? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var inflate: View? = null
-        initStateLayout()
+        var contentView = contentView()
         if (needTitle()) {
-             inflate = layoutInflater.inflate(R.layout.titlebar_fragment, container, false)
-            val viewGroup = inflate!!.findViewById(R.id.fl_content) as ViewGroup
-            viewGroup.addView(stateLayout)
-            inflate!!.findViewById<View>(R.id.iv_back).setOnClickListener { onBack() }
-            handleTitlebar(inflate)
+            val titleview = layoutInflater.inflate(R.layout.titlebar_fragment, container, false)
+            val viewGroup = titleview!!.findViewById(R.id.fl_content) as ViewGroup
+            if(contentView==null) {
+                layoutInflater.inflate(getLayoutId(),viewGroup, true)
+            }else{
+                viewGroup.addView(contentView)
+            }
+            titleview.findViewById<View>(R.id.iv_back).setOnClickListener { onBack() }
+            handleTitlebar(titleview)
+            contentView=titleview
         } else {
-            inflate = stateLayout
+            if (contentView == null) {
+                contentView = layoutInflater.inflate(getLayoutId(), null)
+            }
         }
-        inflate?.isClickable = true
-        return inflate
+        contentView?.isClickable = true
+        return contentView
     }
-
-    private fun initStateLayout() {
-        stateLayout = StateLayout(context).setContent(getLayoutId())
-    }
-
-    abstract fun loadData()
 
     private fun handleTitlebar(inflate: View) {
         inflate.findViewById<View>(R.id.extraspace).layoutParams.height = StateBarUtils.getStatusBarHeight(context)
@@ -56,7 +54,6 @@ abstract class BaseFragment : Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init(savedInstanceState)
-        loadData()
         viewCreated = true
         if (firestLoad && isvisable) {
             firestLoad = false
@@ -78,6 +75,7 @@ abstract class BaseFragment : Fragment() {
 
     open fun loadLazy() {}
 
+    open fun contentView(): View? = null
     open fun needTitle(): Boolean {
         return false
     }

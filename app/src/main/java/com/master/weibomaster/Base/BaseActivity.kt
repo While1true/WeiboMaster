@@ -1,4 +1,4 @@
-package com.master.weibomaster.Base
+package com.master.VangeBugs.Base
 
 import android.os.Build
 import android.os.Bundle
@@ -9,34 +9,38 @@ import com.master.weibomaster.R
 import com.master.weibomaster.Rx.Utils.RxLifeUtils
 import com.master.weibomaster.Util.ActivityUtils
 import com.master.weibomaster.Util.SizeUtils
-import com.nestrefreshlib.State.StateLayout
 import kotlinx.android.synthetic.main.titlebar_activity.*
 
 /**
  * Created by vange on 2018/1/16.
  */
-abstract class BaseActivity : AppCompatActivity(){
-    var stateLayout: StateLayout? = null
+abstract class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ActivityUtils.addActivity(this)
-        initStateLayout()
+        var view = contentView()
         if (needTitle()) {
             setContentView(R.layout.titlebar_activity)
             setSupportActionBar(toolbar)
-            fl_content.addView(stateLayout)
+            if (view == null) {
+                if (getLayoutId() != 0)
+                    layoutInflater.inflate(getLayoutId(), fl_content, true)
+            } else
+                fl_content.addView(view)
             handleTitlebar()
             iv_back.setOnClickListener { onBack() }
         } else {
-            setContentView(stateLayout)
+            if (view == null) {
+                if (getLayoutId() != 0) {
+                    setContentView(getLayoutId())
+                }
+            } else {
+                setContentView(view)
+            }
         }
 
         initView()
         loadData()
-    }
-
-    private fun initStateLayout() {
-        stateLayout = StateLayout(this).setContent(getLayoutId())
     }
 
     private fun handleTitlebar() {
@@ -64,6 +68,8 @@ abstract class BaseActivity : AppCompatActivity(){
     open fun onBack() {
         onBackPressed()
     }
+
+    open fun contentView(): View? = null
 
     open fun setMenuClickListener(res: Int, listener: View.OnClickListener) {
         iv_menu.setOnClickListener(listener)
