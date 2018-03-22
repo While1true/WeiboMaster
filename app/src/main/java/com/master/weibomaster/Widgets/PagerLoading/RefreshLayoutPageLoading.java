@@ -15,6 +15,7 @@ import com.nestrefreshlib.RefreshViews.AdapterHelper.AdapterScrollListener;
 import com.nestrefreshlib.RefreshViews.AdapterHelper.StateAdapter;
 import com.nestrefreshlib.RefreshViews.RefreshLayout;
 import com.nestrefreshlib.RefreshViews.RefreshListener;
+import com.nestrefreshlib.RefreshViews.RefreshWrap.RefreshAdapterHandler;
 import com.nestrefreshlib.State.DefaultStateListener;
 import com.nestrefreshlib.State.Interface.StateEnum;
 
@@ -22,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
-
 
 /**
  * Created by 不听话的好孩子 on 2018/3/22.
@@ -36,12 +36,18 @@ public abstract class RefreshLayoutPageLoading<T> extends DataObserver<List<T>> 
     private List<T> list = new ArrayList<>();
     private RefreshLayout refreshLayout;
     private StateAdapter stateAdapter = new StateAdapter(list);
+    private RefreshAdapterHandler handler;
 
     public RefreshLayoutPageLoading(RefreshLayout refreshLayout) {
-        this(refreshLayout, new LinearLayoutManager(refreshLayout.getContext()), new InnerDecorate(refreshLayout.getContext(), LinearLayout.VERTICAL));
+        this(refreshLayout, new LinearLayoutManager(refreshLayout.getContext()),false, new InnerDecorate(refreshLayout.getContext(), LinearLayout.VERTICAL));
     }
 
-    public RefreshLayoutPageLoading(RefreshLayout refreshLayout, RecyclerView.LayoutManager layoutManager, RecyclerView.ItemDecoration... itemDecorations) {
+    public RefreshLayoutPageLoading(RefreshLayout refreshLayout, boolean isinner) {
+        this(refreshLayout, new LinearLayoutManager(refreshLayout.getContext()), isinner,new InnerDecorate(refreshLayout.getContext(), LinearLayout.VERTICAL));
+    }
+
+
+    public RefreshLayoutPageLoading(RefreshLayout refreshLayout, RecyclerView.LayoutManager layoutManager, boolean isinner, RecyclerView.ItemDecoration... itemDecorations) {
         super(ActivityUtils.getTopActivity());
         this.refreshLayout = refreshLayout;
         RecyclerView scroll = refreshLayout.getmScroll();
@@ -56,14 +62,23 @@ public abstract class RefreshLayoutPageLoading<T> extends DataObserver<List<T>> 
                 Go();
             }
         });
-        scroll.setLayoutManager(layoutManager);
+
+
         if (itemDecorations != null) {
             for (RecyclerView.ItemDecoration itemDecoration : itemDecorations) {
                 scroll.addItemDecoration(itemDecoration);
             }
         }
-        scroll.addOnScrollListener(new AdapterScrollListener(this));
-        scroll.setAdapter(stateAdapter);
+
+        if(!isinner) {
+            scroll.setLayoutManager(layoutManager);
+            scroll.addOnScrollListener(new AdapterScrollListener(this));
+            scroll.setAdapter(stateAdapter);
+        }else{
+            handler=new RefreshAdapterHandler();
+            handler.attachRefreshLayout(refreshLayout,stateAdapter,layoutManager);
+            handler.stopLoading("");
+        }
         refreshLayout.setListener(new RefreshListener() {
             @Override
             public void Refreshing() {
@@ -73,7 +88,10 @@ public abstract class RefreshLayoutPageLoading<T> extends DataObserver<List<T>> 
 
             @Override
             public void Loading() {
-
+                if(handler!=null) {
+                    handler.startLoading("正在加载中...");
+//                    RefreshLayoutPageLoading.this.call();
+                }
             }
         });
     }
@@ -114,9 +132,19 @@ public abstract class RefreshLayoutPageLoading<T> extends DataObserver<List<T>> 
         } else {
             if (bean.size() < pagesize) {
                 nomore = true;
-                stateAdapter.showState(StateEnum.SHOW_NOMORE, (pagenum == 1) ? "" : "这是底线了");
+                if(handler!=null) {
+                    handler.stopLoading((pagenum == 1) ? "" : "这是底线了");
+                    stateAdapter.showItem();
+                }else {
+                    stateAdapter.showState(StateEnum.SHOW_NOMORE, (pagenum == 1) ? "" : "这是底线了");
+                }
             } else {
-                stateAdapter.showState(StateEnum.SHOW_NOMORE, "正在加载中...");
+                if(handler!=null) {
+                    handler.stopLoading((pagenum == 1) ? "" : "正在加载中...");
+                    stateAdapter.showItem();
+                }else {
+                    stateAdapter.showState(StateEnum.SHOW_NOMORE, "正在加载中...");
+                }
             }
             refreshLayout.NotifyCompleteRefresh0();
         }
@@ -131,8 +159,9 @@ public abstract class RefreshLayoutPageLoading<T> extends DataObserver<List<T>> 
     @Override
     public void OnERROR(String error) {
         super.OnERROR(error);
-        if (pagenum == 1)
+        if (pagenum == 1) {
             stateAdapter.ShowError();
+        }
         if (pagenum > 1)
             pagenum--;
         refreshLayout.NotifyCompleteRefresh0();
