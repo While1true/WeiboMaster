@@ -147,8 +147,8 @@ public abstract class RefreshLayoutPageLoading<T> extends DataObserver<List<T>> 
                     stateAdapter.showState(StateEnum.SHOW_NOMORE, "正在加载中...");
                 }
             }
-            refreshLayout.NotifyCompleteRefresh0();
         }
+        refreshLayout.NotifyCompleteRefresh0();
     }
 
     @Override
