@@ -35,7 +35,6 @@ class MyPhotoView @JvmOverloads constructor(
     }
 
     override fun onScaleChange(scaleFactor: Float, focusX: Float, focusY: Float) {
-        log(scale.mtoString())
         if (scale < 0.15f) {
             if (listener != null) {
                 if (!finish) {

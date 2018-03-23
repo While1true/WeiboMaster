@@ -1,5 +1,6 @@
 package com.master.VangeBugs.Activity
 
+import android.Manifest
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import com.master.VangeBugs.Api.ApiImpl
@@ -14,6 +15,7 @@ import com.master.VangeBugs.Rx.DataObserver
 import com.master.VangeBugs.Rx.MyObserver
 import com.master.VangeBugs.Rx.Utils.RxBus
 import com.master.VangeBugs.Util.StateBarUtils
+import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.category_layout.*
 
 /**
@@ -23,6 +25,7 @@ class CategoryActivity : BaseActivity() {
     val fragments = arrayOf(CategoryF::class.java, LikeF::class.java)
     override fun initView() {
         setTitle("分类")
+
         StateBarUtils.performTransStateBar(window)
         var adapter = object : FragmentPagerAdapter(supportFragmentManager) {
             override fun getItem(position: Int) = fragments[position].newInstance()

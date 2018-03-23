@@ -28,7 +28,7 @@ class DownLoadUtils {
         constructor(id: Long, wait: Long) {
             this.id = id
             this.wait = wait
-            downStatu= DownStatu(id=id)
+            downStatu= DownStatu(id=id,path = PrefUtil.get(id.toString(),"") as String)
         }
 
         constructor(id: Long) : this(id, 1000)
@@ -92,7 +92,7 @@ class DownLoadUtils {
             request.setDestinationInExternalPublicDir(downloadFile.parent, downloadFile.name)
             val enqueue = downloadManager.enqueue(request)
 
-
+            PrefUtil.put(enqueue.toString(),downloadFile)
             val intentFilter = IntentFilter()
             intentFilter.addAction(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
             App.app.registerReceiver(receiver, intentFilter)
@@ -104,13 +104,19 @@ class DownLoadUtils {
         }
 
         fun download(url: String, shownotify: Boolean): Long {
+
+            return download(url,getPath(url) , shownotify)
+        }
+
+        fun getPath(url:String):File{
             var name = ""
             val lastIndexOf = url.lastIndexOf("/")
             if (lastIndexOf == -1)
                 name += System.currentTimeMillis()
             else
                 name += url.substring(lastIndexOf + 1)
-            return download(url, File(Environment.DIRECTORY_DOWNLOADS, name), shownotify)
+
+            return File(Environment.DIRECTORY_DOWNLOADS, name);
         }
 
         fun download(url: String): Long {
@@ -126,7 +132,8 @@ class DownLoadUtils {
             Observable.create(DownLoadUtils.DownObserver(download))
                     .observeOn(Schedulers.io())
                     .compose(RxSchedulers.compose())
-                    .doOnNext { observer.onProgress(it) }
+                    .doOnNext {
+                        observer.onProgress(it) }
                     .filter { it.state == 1 }
                     .subscribe(observer)
         }

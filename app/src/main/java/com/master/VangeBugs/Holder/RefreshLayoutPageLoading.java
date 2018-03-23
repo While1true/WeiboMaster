@@ -129,6 +129,7 @@ public abstract class RefreshLayoutPageLoading<T> extends DataObserver<List<T>> 
         list.addAll(bean);
         if (pagenum == 1 && bean.isEmpty()) {
             nomore = true;
+            handler.stopLoading("来自国民软件技术支持");
             stateAdapter.showEmpty();
         } else {
             if (bean.size() < pagesize) {
@@ -147,8 +148,8 @@ public abstract class RefreshLayoutPageLoading<T> extends DataObserver<List<T>> 
                     stateAdapter.showState(StateEnum.SHOW_NOMORE, "正在加载中...");
                 }
             }
-            refreshLayout.NotifyCompleteRefresh0();
         }
+        refreshLayout.NotifyCompleteRefresh0();
     }
 
     @Override
