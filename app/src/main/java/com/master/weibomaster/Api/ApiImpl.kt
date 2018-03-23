@@ -28,6 +28,8 @@ class ApiImpl : Api {
 
     override fun getArticalList(category: String,like_user: String, pagenum: Int, pagesize: Int) = api.getArticalList(category,like_user, pagenum, pagesize).compose(RxSchedulers.compose())
 
+    override fun getSearchList(category: String,words: String,like_user: String, pagenum: Int, pagesize: Int) = api.getSearchList(category,words,like_user, pagenum, pagesize).compose(RxSchedulers.compose())
+
     companion object {
         private val api by lazy { RetrofitHttpManger.create(Api::class.java) }
         val apiImpl by lazy { ApiImpl() }

@@ -48,7 +48,7 @@ abstract class BaseActivity : AppCompatActivity(){
         })
     }
 
-    private fun handleTitlebar() {
+    protected fun handleTitlebar() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             val cardview = findViewById<CardView>(R.id.cardview)
             cardview.maxCardElevation = 0f

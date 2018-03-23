@@ -3,40 +3,44 @@ package com.master.weibomaster.Activity
 import android.os.Build
 import android.os.Bundle
 import android.support.v7.widget.CardView
+import android.support.v7.widget.LinearLayoutManager
+import android.text.TextUtils
+import com.master.VangeBugs.Api.ApiImpl
 import com.master.VangeBugs.Base.BaseActivity
+import com.master.weibomaster.Holder.ArticalListHolder
+import com.master.weibomaster.Holder.RefreshLayoutPageLoading
 import com.master.weibomaster.Model.Artical
 import com.master.weibomaster.R
-import com.master.weibomaster.Rx.DataObserver
+import com.master.weibomaster.Util.DeviceUtils
 import com.master.weibomaster.Util.InputUtils
-import com.master.weibomaster.Util.SizeUtils
 import com.master.weibomaster.Util.StateBarUtils
-import com.nestrefreshlib.Adpater.Impliment.SAdapter
-import com.nestrefreshlib.RefreshViews.AdapterHelper.StateAdapter
 import com.nestrefreshlib.State.Interface.StateEnum
+import coms.pacs.pacs.Rx.Utils.TextWatcher
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.search_activity.*
+import java.util.concurrent.TimeUnit
 
 /**
  * Created by 不听话的好孩子 on 2018/1/16.
  */
 class SearchActivity : BaseActivity() {
-    var currentPage = 1
-    var listArticals = ArrayList<Artical>()
     var content: String = ""
-    lateinit var observer : DataObserver<List<Artical>>
-    lateinit var sAdapter: StateAdapter
+    var category: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         StateBarUtils.performTransStateBar(window)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.enterTransition=android.transition.Explode()
+            window.enterTransition = android.transition.Explode()
         }
         super.onCreate(savedInstanceState)
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            val cardview = findViewById<CardView>(R.id.cardview)
-            cardview.maxCardElevation = 0f
-            cardview.setContentPadding(0, 0, 0, SizeUtils.dp2px(6f))
-        }
+        handleTitlebar()
     }
+
     override fun initView() {
+        val category_temp=intent.getStringExtra("category")
+        if(!TextUtils.isEmpty(category_temp)){
+            category=category_temp.trim()
+        }
         iv_back.setOnClickListener {
             InputUtils.hideKeyboard(et_input)
             onBackPressed()
@@ -44,9 +48,27 @@ class SearchActivity : BaseActivity() {
     }
 
 
-
     override fun loadData() {
+        val pageLoading = object : RefreshLayoutPageLoading<Artical>(refreshlayout, LinearLayoutManager(this@SearchActivity),true) {
+            override fun getObservable() = ApiImpl.apiImpl.getSearchList(category,content, DeviceUtils.deviceID, pagenum, pagesize)
+        }.AddLifeOwner(this)
+                .addType(ArticalListHolder())
 
+        pageLoading.stateAdapter.setLayoutId(StateEnum.SHOW_EMPTY, R.layout.search_empty)
+        pageLoading.stateAdapter.showEmpty()
+        Observable.create(TextWatcher(et_input))
+                .debounce(600, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .filter {
+                    val empty = TextUtils.isEmpty(it)
+                    if (empty) {
+                        pageLoading.stateAdapter.showEmpty()
+                    }
+                    !empty
+                }.subscribe {
+                    content = it
+                    pageLoading.RestAndGo()
+                }
     }
 
 

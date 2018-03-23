@@ -1,7 +1,11 @@
 package com.master.weibomaster.Activity
 
+import android.content.Intent
+import android.support.v4.app.ActivityCompat
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.View
 import com.master.VangeBugs.Api.ApiImpl
 import com.master.VangeBugs.Base.BaseActivity
 import com.master.weibomaster.Holder.ArticalListHolder
@@ -31,6 +35,14 @@ class CategoryListActivity : BaseActivity() {
         category = intent.getStringExtra("category")
         setTitle(category)
         stateLayout?.showLoading()
+
+        setMenuClickListener(R.drawable.ic_search, View.OnClickListener {
+            val option = ActivityOptionsCompat.makeSceneTransitionAnimation(this@CategoryListActivity)
+            val intent = Intent(this@CategoryListActivity, SearchActivity::class.java)
+            intent.putExtra("category",category)
+            ActivityCompat.startActivity(this@CategoryListActivity, intent, option.toBundle())
+
+        })
     }
 
     override fun loadData() {
