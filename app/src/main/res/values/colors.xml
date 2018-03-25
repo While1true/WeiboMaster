@@ -13,4 +13,5 @@
     <color name="colorf0f0f0">#f0f0f0</color>
     <color name="colorfff">#fff</color>
     <color name="color30666666">#20666666</color>
+    <color name="hintcolor">#55ffffff</color>
 </resources>

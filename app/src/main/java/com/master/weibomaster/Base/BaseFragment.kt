@@ -1,4 +1,4 @@
-package coms.pacs.pacs.BaseComponent
+package com.master.weibomaster.Base
 
 import android.content.Context
 import android.os.Build
@@ -29,7 +29,7 @@ abstract class BaseFragment : Fragment() {
         initStateLayout()
         if (needTitle()) {
              inflate = layoutInflater.inflate(R.layout.titlebar_fragment, container, false)
-            val viewGroup = inflate!!.findViewById(R.id.fl_content) as ViewGroup
+            val viewGroup = inflate!!.findViewById<ViewGroup>(R.id.fl_content)
             viewGroup.addView(stateLayout)
             inflate!!.findViewById<View>(R.id.iv_back).setOnClickListener { onBack() }
             handleTitlebar(inflate)
@@ -41,7 +41,7 @@ abstract class BaseFragment : Fragment() {
     }
 
     private fun initStateLayout() {
-        stateLayout = StateLayout(context).setContent(getLayoutId())
+        stateLayout = StateLayout(context!!).setContent(getLayoutId())
         stateLayout?.setStateListener(object : DefaultStateListener() {
             override fun netError(p0: Context?) {
                 stateLayout?.showLoading()
@@ -62,7 +62,7 @@ abstract class BaseFragment : Fragment() {
         }
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init(savedInstanceState)
         loadData()
@@ -92,7 +92,7 @@ abstract class BaseFragment : Fragment() {
     }
 
     open fun onBack() {
-        fragmentManager.popBackStack()
+        fragmentManager!!.popBackStack()
     }
 
     fun setTitle(title: String) {
@@ -114,7 +114,7 @@ abstract class BaseFragment : Fragment() {
     }
 
     fun stop() {
-        fragmentManager.popBackStack()
+        fragmentManager!!.popBackStack()
     }
 
 }

@@ -126,7 +126,7 @@ class DownLoadUtils {
             Observable.create(DownLoadUtils.DownObserver(download))
                     .observeOn(Schedulers.io())
                     .compose(RxSchedulers.compose())
-                    .doOnNext { observer.onProgress(it) }
+                    .doOnNext { observer.onNext(it) }
                     .filter { it.state == 1 }
                     .subscribe(observer)
         }

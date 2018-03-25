@@ -3,7 +3,7 @@
 buildscript {
     ext.cor_version = '0.21.2'
     ext.latest_version='3.1.0'
-    ext.support='26.1.0'
+    ext.support='27.0.2'
     ext.kotlin_version = '1.2.21'
     repositories {
         maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}

@@ -22,6 +22,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.master.weibomaster.Util.Glide.MyAppGlidModule"
+            android:value="AppGlideModule" />
         <activity
             android:name=".Activity.BlankActivity"
             android:screenOrientation="portrait"
@@ -44,10 +47,14 @@
         <activity
             android:name=".Activity.WebViewActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.SearchActivity"
+            android:windowSoftInputMode="adjustPan|stateVisible"
+            android:screenOrientation="portrait" />
 
         <service
-            android:name=".Services.X5PreLoadService"
-            android:enabled="true"/>
+            android:name=".Services.DownLoadService"
+            android:enabled="true" />
     </application>
 
 </manifest>

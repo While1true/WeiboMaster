@@ -2,8 +2,7 @@ package com.master.weibomaster.Activity
 
 import android.content.Intent
 import android.net.Uri
-import android.webkit.JavascriptInterface
-import com.master.VangeBugs.Base.BaseActivity
+import com.master.weibomaster.Base.BaseActivity
 import com.master.weibomaster.R
 import com.master.weibomaster.Util.StateBarUtils
 import com.tencent.smtt.sdk.WebChromeClient

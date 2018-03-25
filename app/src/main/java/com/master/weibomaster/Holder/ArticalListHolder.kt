@@ -2,9 +2,7 @@ package com.master.weibomaster.Holder
 
 import android.app.AlertDialog
 import android.content.Intent
-import android.widget.TextView
-import com.master.VangeBugs.Api.ApiImpl
-import com.master.weibomaster.Activity.CategoryListActivity
+import com.master.weibomaster.Api.ApiImpl
 import com.master.weibomaster.Activity.WebViewActivity
 import com.master.weibomaster.Fragment.WordCloudF
 import com.master.weibomaster.Model.Artical
@@ -16,6 +14,7 @@ import com.master.weibomaster.Rx.Utils.RxBus
 import com.master.weibomaster.Rx.Utils.RxLifeUtils
 import com.master.weibomaster.Util.ActivityUtils
 import com.master.weibomaster.Util.DeviceUtils
+import com.master.weibomaster.Util.FileUtils
 import com.master.weibomaster.Util.FragmentUtils
 import com.master.weibomaster.Widgets.IndicateTextView
 import com.nestrefreshlib.Adpater.Base.Holder
@@ -37,6 +36,10 @@ class ArticalListHolder : BaseHolder<Artical>(R.layout.artical_list_layout) {
         p0?.setText(R.id.time, p1?.timestr)
         p0?.setText(R.id.come, p1?.come)
 
+        p0?.setOnClickListener(R.id.share,{
+            val text = p1?.content + "\n" + p1?.come + "\n" + p1?.timestr
+            FileUtils.sendText(ActivityUtils.getTopActivity(),text)
+        })
 
         p0?.setOnClickListener(R.id.cloud,{
             val fragment = WordCloudF()

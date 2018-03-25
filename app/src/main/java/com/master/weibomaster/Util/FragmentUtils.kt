@@ -68,18 +68,18 @@ class FragmentUtils {
 
         fun showFragmentReplaceFragment(activity: Fragment, id: Int, fragment: Fragment) {
             activity.fragmentManager
-                    .beginTransaction()
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                    .replace(id, fragment)
-                    .addToBackStack(null)
-                    .commit()
+                    ?.beginTransaction()
+                    ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                    ?.replace(id, fragment)
+                    ?.addToBackStack(null)
+                    ?.commit()
         }
 
         fun showFragmentReplaceFragment(activity: Fragment, fragment: Fragment) {
             showFragmentReplaceFragment(activity, android.R.id.content, fragment)
         }
         fun showFragmentAddFragment(activity: Fragment, id: Int, fragment: Fragment) {
-            activity.fragmentManager
+            activity.fragmentManager!!
                     .beginTransaction()
                     .setTransition(FragmentTransaction.TRANSIT_ENTER_MASK)
                     .add(id, fragment)

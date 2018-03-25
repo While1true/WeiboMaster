@@ -1,4 +1,4 @@
-package coms.pacs.pacs.BaseComponent
+package com.master.weibomaster.Base
 
 import android.app.Dialog
 import android.graphics.drawable.ColorDrawable

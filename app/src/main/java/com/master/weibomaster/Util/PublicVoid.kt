@@ -87,7 +87,7 @@ fun Fragment.showAddFragment(fragment: Fragment) {
 }
 
 fun Fragment.pop(): Boolean {
-    return fragmentManager.popBackStackImmediate()
+    return fragmentManager!!.popBackStackImmediate()
 }
 
 fun FragmentActivity.pop(): Boolean {

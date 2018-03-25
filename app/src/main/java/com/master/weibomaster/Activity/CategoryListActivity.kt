@@ -1,13 +1,13 @@
 package com.master.weibomaster.Activity
 
-import android.content.Context
-import android.support.v7.widget.InnerDecorate
+import android.content.Intent
+import android.support.v4.app.ActivityCompat
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.widget.LinearLayout
-import com.master.VangeBugs.Api.ApiImpl
-import com.master.VangeBugs.Base.BaseActivity
+import com.master.weibomaster.Api.ApiImpl
+import com.master.weibomaster.Base.BaseActivity
 import com.master.weibomaster.Holder.ArticalListHolder
 import com.master.weibomaster.Model.Artical
 import com.master.weibomaster.R
@@ -17,7 +17,6 @@ import com.master.weibomaster.Util.StateBarUtils
 import com.nestrefreshlib.Adpater.Impliment.SAdapter
 import com.nestrefreshlib.RefreshViews.RefreshListener
 import com.nestrefreshlib.RefreshViews.RefreshWrap.RefreshAdapterHandler
-import com.nestrefreshlib.State.DefaultStateListener
 import kotlinx.android.synthetic.main.refreshlayout.*
 
 /**
@@ -36,6 +35,14 @@ class CategoryListActivity : BaseActivity() {
         category = intent.getStringExtra("category")
         setTitle(category)
         stateLayout?.showLoading()
+
+        setMenuClickListener(R.drawable.ic_search, View.OnClickListener {
+            val option = ActivityOptionsCompat.makeSceneTransitionAnimation(this@CategoryListActivity)
+            val intent = Intent(this@CategoryListActivity, SearchActivity::class.java)
+            intent.putExtra("category",category)
+            ActivityCompat.startActivity(this@CategoryListActivity, intent, option.toBundle())
+
+        })
     }
 
     override fun loadData() {

@@ -3,7 +3,7 @@ package com.master.weibomaster.Fragment
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import com.master.VangeBugs.Api.ApiImpl
+import com.master.weibomaster.Api.ApiImpl
 import com.master.weibomaster.Holder.ArticalListHolder
 import com.master.weibomaster.Model.Artical
 import com.master.weibomaster.R
@@ -12,7 +12,7 @@ import com.master.weibomaster.Util.DeviceUtils
 import com.nestrefreshlib.Adpater.Impliment.SAdapter
 import com.nestrefreshlib.RefreshViews.RefreshListener
 import com.nestrefreshlib.RefreshViews.RefreshWrap.RefreshAdapterHandler
-import coms.pacs.pacs.BaseComponent.BaseFragment
+import com.master.weibomaster.Base.BaseFragment
 import kotlinx.android.synthetic.main.refreshlayout.*
 
 /**

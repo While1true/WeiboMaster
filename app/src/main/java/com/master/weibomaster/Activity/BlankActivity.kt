@@ -18,8 +18,7 @@ class BlankActivity : AppCompatActivity() {
         Observable.timer(2, TimeUnit.SECONDS)
                 .compose(RxSchedulers.compose())
                 .subscribe {
-                    val option=ActivityOptionsCompat.makeSceneTransitionAnimation(this@BlankActivity)
-                    ActivityCompat.startActivity(this,Intent(this,MainActivity::class.java),option.toBundle())
+                    startActivity(Intent(this,MainActivity::class.java))
                     finish()
                 }
 
