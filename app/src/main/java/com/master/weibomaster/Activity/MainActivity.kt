@@ -23,7 +23,7 @@ import com.nestrefreshlib.Adpater.Impliment.SAdapter
 
 
 class MainActivity : BaseActivity() {
-
+    var bean: Artical?=null
     override fun initView() {
         RxPermissions(this).request(Manifest.permission.READ_PHONE_STATE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -36,7 +36,7 @@ class MainActivity : BaseActivity() {
             finish()
         }
         share.setOnClickListener {
-            FileUtils.sendView(refreshlayout,"1232.jpg","image/jpeg")
+            FileUtils.sendView(refreshlayout,bean?.content+".jpg","image/jpeg")
         }
         stateLayout?.showLoading()
     }
@@ -44,6 +44,7 @@ class MainActivity : BaseActivity() {
     override fun loadData() {
         ApiImpl.apiImpl.latestSplash().subscribe(object : DataObserver<Artical>(this) {
             override fun OnNEXT(bean: Artical) {
+                this@MainActivity.bean=bean
                 stateLayout?.showItem()
                 val split = bean.imgs?.split(";")
                 if (split!=null&&split.isNotEmpty()) {
@@ -79,7 +80,7 @@ class MainActivity : BaseActivity() {
                 .addType(R.layout.imageview, object : PositionHolder() {
                     override fun onBind(p0: Holder?, p1: Int) {
                         Glide.with(this@MainActivity)
-                                .load("https:" + asList[p1])
+                                .load(if(asList[p1].startsWith("http")) asList[p1] else ("https:"+asList[p1]))
                                 .into(p0!!.getView<ImageView>(R.id.image))
                     }
 
@@ -94,7 +95,7 @@ class MainActivity : BaseActivity() {
 
 
             override fun onBind(p0: Holder?, p1: Int) {
-                p0?.setText(R.id.textview, bean.content + "\n" + bean.timestr)
+                p0?.setText(R.id.textview, bean.content + "\n" + bean.timestr+" [常观世音] ")
             }
 
         })

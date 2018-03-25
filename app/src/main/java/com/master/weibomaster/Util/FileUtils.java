@@ -159,6 +159,7 @@ public class FileUtils {
 
     public static void sendView(View view, String filename, String type) {
         view.setDrawingCacheEnabled(true);
+        view.setDrawingCacheBackgroundColor(0xffffffff);
         Bitmap drawingCache = view.getDrawingCache();
         if (drawingCache != null) {
             File file1 = saveImageToGallery(view.getContext(), drawingCache, filename);
@@ -195,7 +196,7 @@ public class FileUtils {
 
 
     public static File saveImageToGallery(Context context, Bitmap bmp, String filename) {
-       return saveImageToGallery(context,bmp,filename);
+       return saveImageToGallery(context,bmp,filename,false);
     }
 
     public static File saveImageToGallery(Context context, Bitmap bmp, String filename, boolean insert2system) {

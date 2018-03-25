@@ -135,16 +135,16 @@ public abstract class RefreshLayoutPageLoading<T> extends DataObserver<List<T>> 
         list.addAll(bean);
         if (pagenum == 1 && bean.isEmpty()) {
             nomore = true;
-            handler.stopLoading("来自国民软件技术支持");
+            handler.stopLoading("不听话的好孩子 技术实现");
             stateAdapter.showEmpty();
         } else {
             if (bean.size() < pagesize) {
                 nomore = true;
                 if (handler != null) {
-                    handler.stopLoading((pagenum == 1) ? "不听话的好孩子 技术支持" : "这是底线了");
+                    handler.stopLoading((pagenum == 1) ? "不听话的好孩子 技术实现" : "不听话的好孩子 技术实现");
                     stateAdapter.showItem();
                 } else {
-                    stateAdapter.showState(StateEnum.SHOW_NOMORE, (pagenum == 1) ? "" : "这是底线了");
+                    stateAdapter.showState(StateEnum.SHOW_NOMORE, (pagenum == 1) ? "不听话的好孩子 技术实现" : "不听话的好孩子 技术实现");
                 }
             } else {
                 if (handler != null) {
