@@ -105,22 +105,22 @@ public abstract class RefreshLayoutPageLoading<T> extends DataObserver<List<T>> 
         }
     }
 
-    public RefreshLayoutPageLoading addType(ItemHolder<?> holder) {
+    public RefreshLayoutPageLoading<T> addType(ItemHolder<?> holder) {
         stateAdapter.addType(holder);
         return this;
     }
 
-    public RefreshLayoutPageLoading AddLifeOwner(LifecycleOwner owner) {
+    public RefreshLayoutPageLoading<T> AddLifeOwner(LifecycleOwner owner) {
         stateAdapter.addLifeOwener(owner);
         return this;
     }
 
-    public RefreshLayoutPageLoading Go() {
+    public RefreshLayoutPageLoading<T> Go() {
         loading = true;
         getObservable().subscribe(this);
         return this;
     }
-    public RefreshLayoutPageLoading RestAndGo(){
+    public RefreshLayoutPageLoading<T> RestAndGo(){
         nomore=false;
         loading=false;
         pagenum=1;
@@ -135,7 +135,9 @@ public abstract class RefreshLayoutPageLoading<T> extends DataObserver<List<T>> 
         list.addAll(bean);
         if (pagenum == 1 && bean.isEmpty()) {
             nomore = true;
-            handler.stopLoading("不听话的好孩子 技术实现");
+            if (handler != null) {
+                handler.stopLoading("不听话的好孩子 技术实现");
+            }
             stateAdapter.showEmpty();
         } else {
             if (bean.size() < pagesize) {
