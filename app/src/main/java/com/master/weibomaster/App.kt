@@ -47,8 +47,9 @@ class App : Application(){
 
     private fun preInitX5Core() {
         //预加载x5内核
-        val intent = Intent(this, X5PreLoadService::class.java)
-        startService(intent)
+        QbSdk.initX5Environment(applicationContext, null)
+//        val intent = Intent(this, X5PreLoadService::class.java)
+//        startService(intent)
     }
 
     init {
