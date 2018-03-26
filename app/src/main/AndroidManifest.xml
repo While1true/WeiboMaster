@@ -37,9 +37,11 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.CategoryActivity"
+            android:windowSoftInputMode="adjustNothing|stateHidden"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.CategoryListActivity"
+            android:windowSoftInputMode="adjustNothing|stateHidden"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.WebViewActivity"
