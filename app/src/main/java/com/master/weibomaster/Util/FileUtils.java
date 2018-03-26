@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.view.View;
 
 import com.zhy.base.fileprovider.FileProvider7;
 
@@ -109,10 +110,10 @@ public class FileUtils {
             {".wmv", "audio/x-ms-wmv"},
             {".wps", "application/vnd.ms-works"}, {".xml", "text/plain"},
             {".z", "application/x-compress"},
-            {".zip", "application/x-zip-compressed"},{".rar","application/x-rar-compressed"}, {"", "*/*"}};
+            {".zip", "application/x-zip-compressed"}, {".rar", "application/x-rar-compressed"}, {"", "*/*"}};
 
-    public static boolean isDocFile(File file){
-        String all="xlsx pptx html docx xml txt pdf";
+    public static boolean isDocFile(File file) {
+        String all = "xlsx pptx html docx xml txt pdf";
         String fName = file.getName();
         //获取后缀名前的分隔符"."在fName中的位置。
         int dotIndex = fName.lastIndexOf(".");
@@ -120,14 +121,15 @@ public class FileUtils {
             return false;
         }
         /* 获取文件的后缀名*/
-        String end = fName.substring(dotIndex+1, fName.length()).toLowerCase();
+        String end = fName.substring(dotIndex + 1, fName.length()).toLowerCase();
 
-        if(!TextUtils.isEmpty(end)&&all.contains(end)){
+        if (!TextUtils.isEmpty(end) && all.contains(end)) {
             return true;
         }
         return false;
     }
-    public static void openBySystem(Context context,File file) {
+
+    public static void openBySystem(Context context, File file) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         FileProvider7.setIntentDataAndType(context, intent, getMIMEType(file), file, true);
@@ -137,9 +139,10 @@ public class FileUtils {
             e.printStackTrace();
         }
     }
-    public static void openAssignFolder(Context context,String path){
+
+    public static void openAssignFolder(Context context, String path) {
         File file = new File(path);
-        if(null==file || !file.exists()){
+        if (null == file || !file.exists()) {
             return;
         }
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -148,31 +151,42 @@ public class FileUtils {
         intent.setDataAndType(Uri.fromFile(file), "file/*");
         try {
             context.startActivity(intent);
-            context.startActivity(Intent.createChooser(intent,"选择浏览工具"));
+            context.startActivity(Intent.createChooser(intent, "选择浏览工具"));
         } catch (ActivityNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    public static void send(Context context,File file,String type){
+    public static void sendView(View view, String filename, String type) {
+        view.setDrawingCacheEnabled(true);
+        view.setDrawingCacheBackgroundColor(0xffffffff);
+        Bitmap drawingCache = view.getDrawingCache();
+        if (drawingCache != null) {
+            File file1 = saveImageToGallery(view.getContext(), drawingCache, filename);
+            send(view.getContext(), file1, type);
+        }
+    }
+
+    public static void send(Context context, File file, String type) {
         try {
             Intent share = new Intent(Intent.ACTION_SEND);
             share.addCategory(Intent.CATEGORY_DEFAULT);
             share.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            share.putExtra(Intent.EXTRA_STREAM,FileProvider7.getUriForFile(context,file));
-            FileProvider7.setIntentData(context,share,file,true);
-            share.setDataAndType(FileProvider7.getUriForFile(context,file), type);
+            share.putExtra(Intent.EXTRA_STREAM, FileProvider7.getUriForFile(context, file));
+            FileProvider7.setIntentData(context, share, file, true);
+            share.setDataAndType(FileProvider7.getUriForFile(context, file), type);
             context.startActivity(Intent.createChooser(share, "分享到"));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    public static void sendText(Context context,String text){
+
+    public static void sendText(Context context, String text) {
         try {
             Intent share = new Intent(Intent.ACTION_SEND);
             share.addCategory(Intent.CATEGORY_DEFAULT);
             share.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            share.putExtra(Intent.EXTRA_TEXT,text);
+            share.putExtra(Intent.EXTRA_TEXT, text);
             share.setType("text/plain");
             context.startActivity(Intent.createChooser(share, "分享到"));
         } catch (Exception e) {
@@ -181,11 +195,14 @@ public class FileUtils {
     }
 
 
+    public static File saveImageToGallery(Context context, Bitmap bmp, String filename) {
+       return saveImageToGallery(context,bmp,filename,false);
+    }
 
-    public static File saveImageToGallery(Context context, Bitmap bmp,String filename) {
+    public static File saveImageToGallery(Context context, Bitmap bmp, String filename, boolean insert2system) {
         // 首先保存图片
         File appDir = new File(MemoryUtils.FILE, filename);
-        if(appDir.exists()&&appDir.getTotalSpace()!=0){
+        if (appDir.exists() && appDir.getTotalSpace() != 0) {
             return appDir;
         }
         if (!appDir.getParentFile().exists()) {
@@ -201,27 +218,27 @@ public class FileUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        // 其次把文件插入到系统图库
-        try {
-            MediaStore.Images.Media.insertImage(context.getContentResolver(),
-                    appDir.getAbsolutePath(), filename, null);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        if (insert2system) {
+            // 其次把文件插入到系统图库
+            try {
+                MediaStore.Images.Media.insertImage(context.getContentResolver(),
+                        appDir.getAbsolutePath(), filename, null);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            // 最后通知图库更新
+            context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + filename)));
         }
-        // 最后通知图库更新
-        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + filename)));
         return appDir;
     }
 
-
-    public static File Uri2File(Context context,Uri uri){
-        String[] proj = { MediaStore.Images.Media.DATA };
-        Cursor actualimagecursor = context.getContentResolver().query(uri,proj,null,null,null);
+    public static File Uri2File(Context context, Uri uri) {
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor actualimagecursor = context.getContentResolver().query(uri, proj, null, null, null);
         int actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         actualimagecursor.moveToFirst();
         String img_path = actualimagecursor.getString(actual_image_column_index);
-       return new File(img_path);
+        return new File(img_path);
     }
 
     /**
@@ -229,7 +246,7 @@ public class FileUtils {
      *
      * @param file
      */
-    public static void writeFile(InputStream is, File file){
+    public static void writeFile(InputStream is, File file) {
         try {
             FileOutputStream fos = new FileOutputStream(file);
             int len = 0;

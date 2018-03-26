@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_margin="@dimen/size16"
-    app:cardElevation="@dimen/size2"
     android:translationZ="@dimen/size2"
-    android:layout_height="wrap_content">
+    app:cardElevation="@dimen/size2">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -56,6 +56,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/come" />
 
+        <com.nestrefreshlib.RefreshViews.RefreshLayout
+            android:id="@+id/refreshlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/line" />
+
         <LinearLayout
             android:id="@+id/handlerLayout"
             android:layout_width="match_parent"
@@ -69,15 +77,15 @@
             android:showDividers="middle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/line">
+            app:layout_constraintTop_toBottomOf="@+id/refreshlayout">
 
             <TextView
                 android:id="@+id/share"
-                android:background="?android:attr/selectableItemBackground"
                 android:layout_width="0dp"
-                android:clickable="true"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
                 android:drawableTop="@drawable/share"
                 android:gravity="center"
                 android:text="分享" />
@@ -85,10 +93,10 @@
             <TextView
                 android:id="@+id/cloud"
                 android:layout_width="0dp"
-                android:clickable="true"
-                android:background="?android:attr/selectableItemBackground"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
                 android:drawableTop="@drawable/cloud"
                 android:gravity="center"
                 android:text="词图" />
@@ -96,10 +104,10 @@
             <TextView
                 android:id="@+id/net"
                 android:layout_width="0dp"
-                android:clickable="true"
-                android:background="?android:attr/selectableItemBackground"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
                 android:drawableTop="@drawable/ic_net"
                 android:gravity="center"
                 android:text="原文查看" />
@@ -107,14 +115,14 @@
             <com.master.weibomaster.Widgets.IndicateTextView
                 android:id="@+id/collect"
                 android:layout_width="0dp"
-                app:indicate="66"
-                android:clickable="true"
-                android:background="?android:attr/selectableItemBackground"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
                 android:drawableTop="@drawable/collect_selector2"
                 android:gravity="center"
-                android:text="收藏" />
+                android:text="收藏"
+                app:indicate="66" />
         </LinearLayout>
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

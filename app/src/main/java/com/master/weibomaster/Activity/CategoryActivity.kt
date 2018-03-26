@@ -7,8 +7,8 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.view.Menu
 import android.view.MenuItem
-import com.master.VangeBugs.Api.ApiImpl
-import com.master.VangeBugs.Base.BaseActivity
+import com.master.weibomaster.Api.ApiImpl
+import com.master.weibomaster.Base.BaseActivity
 import com.master.weibomaster.Fragment.CategoryF
 import com.master.weibomaster.Fragment.LikeF
 import com.master.weibomaster.Model.Base
@@ -17,6 +17,7 @@ import com.master.weibomaster.Model.UPDATE_INDICATE
 import com.master.weibomaster.R
 import com.master.weibomaster.Rx.DataObserver
 import com.master.weibomaster.Rx.Utils.RxBus
+import com.master.weibomaster.Util.DeviceUtils
 import coms.pacs.pacs.Utils.pop
 import coms.pacs.pacs.Utils.toast
 import kotlinx.android.synthetic.main.category_layout.*
@@ -58,7 +59,7 @@ class CategoryActivity : BaseActivity() {
     }
 
     override fun loadData() {
-        ApiImpl.apiImpl.getToDo()
+        ApiImpl.apiImpl.getToDo(DeviceUtils.deviceID)
                 .subscribe(object : DataObserver<ToDo>(this){
                     override fun OnNEXT(bean: ToDo?) {
                         collect.indicate=bean?.like__count?:0

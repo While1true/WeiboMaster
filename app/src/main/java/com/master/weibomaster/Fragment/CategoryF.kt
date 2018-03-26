@@ -3,13 +3,13 @@ package com.master.weibomaster.Fragment
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
-import com.master.VangeBugs.Api.ApiImpl
+import com.master.weibomaster.Api.ApiImpl
 import com.master.weibomaster.Holder.CategoryHolder
 import com.master.weibomaster.Model.Category
 import com.master.weibomaster.R
 import com.master.weibomaster.Rx.DataObserver
 import com.nestrefreshlib.Adpater.Impliment.SAdapter
-import coms.pacs.pacs.BaseComponent.BaseFragment
+import com.master.weibomaster.Base.BaseFragment
 import kotlinx.android.synthetic.main.refreshlayout.*
 
 /**

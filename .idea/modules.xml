@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/WeiboMaster.iml" filepath="$PROJECT_DIR$/WeiboMaster.iml" />
+      <module fileurl="file://D:\Users\ck\AndroidStudioProjects\test2\WeiboMasterX\WeiboMaster.iml" filepath="D:\Users\ck\AndroidStudioProjects\test2\WeiboMasterX\WeiboMaster.iml" />
+      <module fileurl="file://D:\Github\WeiboMaster\WeiboMasterX.iml" filepath="D:\Github\WeiboMaster\WeiboMasterX.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

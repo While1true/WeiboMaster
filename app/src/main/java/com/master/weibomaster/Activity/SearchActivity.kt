@@ -2,11 +2,10 @@ package com.master.weibomaster.Activity
 
 import android.os.Build
 import android.os.Bundle
-import android.support.v7.widget.CardView
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
-import com.master.VangeBugs.Api.ApiImpl
-import com.master.VangeBugs.Base.BaseActivity
+import com.master.weibomaster.Api.ApiImpl
+import com.master.weibomaster.Base.BaseActivity
 import com.master.weibomaster.Holder.ArticalListHolder
 import com.master.weibomaster.Holder.RefreshLayoutPageLoading
 import com.master.weibomaster.Model.Artical

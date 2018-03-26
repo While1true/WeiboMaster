@@ -1,4 +1,4 @@
-package com.master.VangeBugs.Api
+package com.master.weibomaster.Api
 
 import com.master.weibomaster.Model.Artical
 import com.master.weibomaster.Model.Base
@@ -14,11 +14,14 @@ import retrofit2.http.*
  * Created by 不听话的好孩子 on 2018/2/26.
  */
 interface Api {
+    @GET("latestSplash")
+    fun latestSplash(): Observable<Base<Artical>>
+
     @GET("category")
     fun getCategory(): Observable<Base<List<Category>>>
 
     @GET("todo")
-    fun getToDo(): Observable<Base<ToDo>>
+    fun getToDo(@Query("like_user") like_user: String): Observable<Base<ToDo>>
 
     @GET("articallist")
     fun getArticalList(@Query("category") category: String, @Query("like_user") like_user: String, @Query("pagenum") pagenum: Int, @Query("pagesize") pagesize: Int): Observable<Base<List<Artical>>>

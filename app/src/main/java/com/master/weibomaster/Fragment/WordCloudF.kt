@@ -3,13 +3,13 @@ package com.master.weibomaster.Fragment
 import android.Manifest
 import android.os.Bundle
 import com.bumptech.glide.Glide
-import com.master.VangeBugs.Api.ApiImpl
+import com.master.weibomaster.Api.ApiImpl
 import com.master.weibomaster.Model.Artical
 import com.master.weibomaster.R
 import com.master.weibomaster.Rx.MyObserver
 import com.master.weibomaster.Util.DeviceUtils
 import com.master.weibomaster.Util.FileUtils
-import coms.pacs.pacs.BaseComponent.BaseFragment
+import com.master.weibomaster.Base.BaseFragment
 import kotlinx.android.synthetic.main.word_could_fragment.*
 import java.io.File
 import android.graphics.Bitmap
@@ -41,7 +41,7 @@ class WordCloudF : BaseFragment() {
         wordspreedAnimator.text=artical?.content.mtoString()
         stateLayout?.setBackgroundResource(R.color.colorf0f0f0)
 //        stateLayout?.showLoading()
-        RxPermissions(activity).request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        RxPermissions(activity!!).request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .subscribe {
                     if(!it){
                         "没有读写权限功能可能受限".toast()
@@ -54,7 +54,7 @@ class WordCloudF : BaseFragment() {
         ApiImpl.apiImpl.generatePic(artical!!.id, artical!!.content, DeviceUtils.deviceID)
                 .map({
 
-                    Glide.with(context)
+                    Glide.with(context!!)
                             .downloadOnly()
                             .load(it?.data)
                             .submit().get()
@@ -100,7 +100,7 @@ class WordCloudF : BaseFragment() {
         return bitmap
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         if(artical!=null){
             outState?.putSerializable("bean",artical)
