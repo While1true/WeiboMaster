@@ -66,9 +66,11 @@ class MyPhotoView @JvmOverloads constructor(
         if (event?.action == MotionEvent.ACTION_UP || event?.action == MotionEvent.ACTION_POINTER_UP || event?.action == MotionEvent.ACTION_CANCEL) {
             if (scale <= 0.6f) {
                 setScale(0.1f, true)
+                super.dispatchTouchEvent(event)
                 return true
             } else if (scale < 1f) {
                 setScale(1f, true)
+                super.dispatchTouchEvent(event)
                 return true
             }
 
