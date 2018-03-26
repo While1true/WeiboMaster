@@ -8,7 +8,7 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 27
-    buildToolsVersion '27.0.1'
+    buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "com.master.weibomaster"
         minSdkVersion 21
@@ -64,6 +64,8 @@ dependencies {
     compile 'com.zhy.base:fileprovider:1.0.0'
     compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
     compile(name: 'nestrefreshlib-release', ext: 'aar')
+
+    compile(name: 'PicWatchLib-debug', ext: 'aar')
 
     //    compile 'com.didi.virtualapk:core:0.9.1'
     //    implementation 'androidx.core:core-ktx:0.1'

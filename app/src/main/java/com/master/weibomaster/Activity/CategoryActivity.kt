@@ -18,6 +18,7 @@ import com.master.weibomaster.R
 import com.master.weibomaster.Rx.DataObserver
 import com.master.weibomaster.Rx.Utils.RxBus
 import com.master.weibomaster.Util.DeviceUtils
+import com.master.weibomaster.Util.StateBarUtils
 import coms.pacs.pacs.Utils.pop
 import coms.pacs.pacs.Utils.toast
 import kotlinx.android.synthetic.main.category_layout.*
@@ -29,7 +30,7 @@ class CategoryActivity : BaseActivity() {
     val fragments = arrayOf(CategoryF::class.java, LikeF::class.java)
     override fun initView() {
         setTitle("分类")
-//        StateBarUtils.performTransStateBar(window)
+        StateBarUtils.performTransStateBar(window)
         var adapter = object : FragmentPagerAdapter(supportFragmentManager) {
             override fun getItem(position: Int) = fragments[position].newInstance()
 

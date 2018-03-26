@@ -17,6 +17,7 @@ import com.master.weibomaster.Model.Artical
 import com.master.weibomaster.Rx.DataObserver
 import com.master.weibomaster.Util.FileUtils
 import com.master.weibomaster.Util.FragmentUtils
+import com.master.weibomaster.Util.StateBarUtils
 import com.nestrefreshlib.Adpater.Base.Holder
 import com.nestrefreshlib.Adpater.Impliment.PositionHolder
 import com.nestrefreshlib.Adpater.Impliment.SAdapter

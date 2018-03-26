@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.master.picwatchlib.PicFragment
 import com.master.weibomaster.Api.ApiImpl
 import com.master.weibomaster.Activity.WebViewActivity
 import com.master.weibomaster.Fragment.WordCloudF
@@ -29,6 +30,7 @@ import com.nestrefreshlib.Adpater.Impliment.SAdapter
 import com.nestrefreshlib.RefreshViews.RefreshLayout
 import coms.pacs.pacs.Utils.mtoString
 import coms.pacs.pacs.Utils.toast
+import java.util.ArrayList
 
 /**
  * Created by 不听话的好孩子 on 2018/2/26.
@@ -68,10 +70,7 @@ open class ArticalListHolder : BaseHolder<Artical>(R.layout.artical_list_layout)
         collect?.setOnClickListener {
             doCollect(p0, p1, collect, p2)
         }
-        p0?.itemView?.setOnLongClickListener {
 
-            true
-        }
         showImgs(p1, p0)
     }
 
@@ -109,6 +108,18 @@ open class ArticalListHolder : BaseHolder<Artical>(R.layout.artical_list_layout)
                                     .load(if (split[p1].startsWith("http")) split[p1] else ("https:" + split[p1]))
                                     .transition(DrawableTransitionOptions().crossFade(800))
                                     .into(p0!!.getView<ImageView>(R.id.image))
+
+                            p0?.itemView?.setOnClickListener {
+                                val arrayListOf = arrayListOf<String>()
+                                for (s in split) {
+                                    if(!s.startsWith("http")){
+                                        arrayListOf.add("https:"+s)
+                                    }else{
+                                        arrayListOf.add(s)
+                                    }
+                                }
+                                PicFragment.Go(ActivityUtils.getTopActivity(), arrayListOf,p1,p0?.itemView, 0xDD999999.toInt())
+                            }
                         }
 
                         override fun istype(p0: Int) = true
