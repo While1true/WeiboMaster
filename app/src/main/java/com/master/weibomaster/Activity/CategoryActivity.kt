@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.view.Menu
 import android.view.MenuItem
+import com.master.picwatchlib.PicFragment
 import com.master.weibomaster.Api.ApiImpl
 import com.master.weibomaster.Base.BaseActivity
 import com.master.weibomaster.Fragment.CategoryF
@@ -56,15 +57,15 @@ class CategoryActivity : BaseActivity() {
             }
         }
         RxBus.getDefault().toObservable(UPDATE_INDICATE, Base::class.java)
-                .subscribe({ loadData()})
+                .subscribe({ loadData() })
     }
 
     override fun loadData() {
         ApiImpl.apiImpl.getToDo(DeviceUtils.deviceID)
-                .subscribe(object : DataObserver<ToDo>(this){
+                .subscribe(object : DataObserver<ToDo>(this) {
                     override fun OnNEXT(bean: ToDo?) {
-                        collect.indicate=bean?.like__count?:0
-                        category.indicate=bean?.count?:0
+                        collect.indicate = bean?.like__count ?: 0
+                        category.indicate = bean?.count ?: 0
                     }
                 })
     }
@@ -98,7 +99,9 @@ class CategoryActivity : BaseActivity() {
                 val option = ActivityOptionsCompat.makeSceneTransitionAnimation(this@CategoryActivity)
                 ActivityCompat.startActivity(this@CategoryActivity, Intent(this@CategoryActivity, SearchActivity::class.java), option.toBundle())
             }
-            R.id.loginout -> {
+            R.id.science -> {
+                val option = ActivityOptionsCompat.makeSceneTransitionAnimation(this@CategoryActivity)
+                ActivityCompat.startActivity(this@CategoryActivity, Intent(this@CategoryActivity, ScienceActivity::class.java), option.toBundle())
             }
         }
         return true

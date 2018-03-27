@@ -1,5 +1,6 @@
 package com.master.weibomaster.Widgets;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -227,6 +228,7 @@ public class SettingView extends RelativeLayout {
         return drawable;
     }
 
+    @SuppressLint("ResourceType")
     private TextView creatTitleTextView() {
         TextView titleView = new TextView(getContext());
         titleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, titlesize);

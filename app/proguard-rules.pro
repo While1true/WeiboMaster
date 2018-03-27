@@ -37,3 +37,11 @@
 
 # for DexGuard only
 -keepresourcexmlelements manifest/application/meta-data@value=GlideModule
+
+
+-keep class com.didi.virtualapk.internal.VAInstrumentation { *; }
+-keep class com.didi.virtualapk.internal.PluginContentResolver { *; }
+-dontwarn com.didi.virtualapk.**
+-dontwarn android.content.pm.**
+-keep class android.** { *; }
+

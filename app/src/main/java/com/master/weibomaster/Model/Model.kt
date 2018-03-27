@@ -20,6 +20,7 @@ data class DownStatu constructor(
 		var state:Int=0
 )
 data class Category(var category:String="",var count:Int)
+data class Statistic(var lasttime:String="",var count:Int)
 
 
 data class Artical(
@@ -41,6 +42,13 @@ data class Artical(
 	override fun secondCondition()=datelong.toString()
 }
 
+data class Science(var name:String="未知",
+				   var description:String="未知",
+				   var packageName:String="",
+				   var mainActivity:String="",
+				   var url:String="",
+				   var date:String="",
+				   var icon:String="")
 data class ToDo(
 		val like__count: Int, //2000
 		val count: Int //2000

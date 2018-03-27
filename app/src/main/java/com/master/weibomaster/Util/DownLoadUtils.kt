@@ -89,6 +89,7 @@ class DownLoadUtils {
             request.setDescription(notifyDescription)
             request.setVisibleInDownloadsUi(true)
 
+            PrefUtil.put(url,Environment.getExternalStoragePublicDirectory(downloadFile.absolutePath).absolutePath)
             request.setDestinationInExternalPublicDir(downloadFile.parent, downloadFile.name)
             val enqueue = downloadManager.enqueue(request)
 
@@ -123,19 +124,20 @@ class DownLoadUtils {
 
         fun downloadWithProgress(path: String, observer: MyObserver<DownStatu>) {
             val download = DownLoadUtils.download(path)
+            val file=PrefUtil.get(path,"")
             Observable.create(DownLoadUtils.DownObserver(download))
                     .observeOn(Schedulers.io())
                     .compose(RxSchedulers.compose())
                     .doOnNext { observer.onNext(it) }
-                    .filter { it.state == 1 }
+                    .filter {
+                        it.path= file as String
+                        it.state == 1 }
                     .subscribe(observer)
         }
 
         val receiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
-                println("------------------------onReceive")
                 val downId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
-                K2JUtils.toast(downId.toString()+"--下载完成")
             }
 
         }

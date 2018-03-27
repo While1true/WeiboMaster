@@ -1,9 +1,6 @@
 package com.master.weibomaster.Api
 
-import com.master.weibomaster.Model.Artical
-import com.master.weibomaster.Model.Base
-import com.master.weibomaster.Model.Category
-import com.master.weibomaster.Model.ToDo
+import com.master.weibomaster.Model.*
 import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -20,13 +17,20 @@ interface Api {
     @GET("category")
     fun getCategory(): Observable<Base<List<Category>>>
 
+    @GET("statistics")
+    fun statistics(@Query("user") user: String): Observable<Base<Statistic>>
+
+    @GET("science")
+    fun science(): Observable<Base<List<Science>>>
+
     @GET("todo")
     fun getToDo(@Query("like_user") like_user: String): Observable<Base<ToDo>>
 
     @GET("articallist")
     fun getArticalList(@Query("category") category: String, @Query("like_user") like_user: String, @Query("pagenum") pagenum: Int, @Query("pagesize") pagesize: Int): Observable<Base<List<Artical>>>
- @GET("search")
-    fun getSearchList(@Query("category") category: String="",@Query("words") words: String, @Query("like_user") like_user: String, @Query("pagenum") pagenum: Int, @Query("pagesize") pagesize: Int): Observable<Base<List<Artical>>>
+
+    @GET("search")
+    fun getSearchList(@Query("category") category: String = "", @Query("words") words: String, @Query("like_user") like_user: String, @Query("pagenum") pagenum: Int, @Query("pagesize") pagesize: Int): Observable<Base<List<Artical>>>
 
     @GET("getlikelist")
     fun getLikeList(@Query("like_user") like_user: String, @Query("pagenum") pagenum: Int, @Query("pagesize") pagesize: Int): Observable<Base<List<Artical>>>
@@ -39,6 +43,6 @@ interface Api {
 
     @Multipart
     @POST("uploadPattern")
-    fun uploadPattern(@Query("user") user: String, @Query("name") name: String,  @Part pattern:MultipartBody.Part): Observable<Base<String>>
+    fun uploadPattern(@Query("user") user: String, @Query("name") name: String, @Part pattern: MultipartBody.Part): Observable<Base<String>>
 
 }

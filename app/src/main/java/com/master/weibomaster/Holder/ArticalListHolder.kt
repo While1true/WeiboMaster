@@ -30,7 +30,7 @@ import com.nestrefreshlib.Adpater.Impliment.SAdapter
 import com.nestrefreshlib.RefreshViews.RefreshLayout
 import coms.pacs.pacs.Utils.mtoString
 import coms.pacs.pacs.Utils.toast
-import java.util.ArrayList
+import java.util.regex.Pattern
 
 /**
  * Created by 不听话的好孩子 on 2018/2/26.
@@ -110,13 +110,10 @@ open class ArticalListHolder : BaseHolder<Artical>(R.layout.artical_list_layout)
                                     .into(p0!!.getView<ImageView>(R.id.image))
 
                             p0?.itemView?.setOnClickListener {
+                                val pattern= Pattern.compile("(/.*?/)")
                                 val arrayListOf = arrayListOf<String>()
                                 for (s in split) {
-                                    if(!s.startsWith("http")){
-                                        arrayListOf.add("https:"+s)
-                                    }else{
-                                        arrayListOf.add(s)
-                                    }
+                                    handlerImageUrl(s, pattern, arrayListOf)
                                 }
                                 PicFragment.Go(ActivityUtils.getTopActivity(), arrayListOf,p1,p0?.itemView, 0xDD999999.toInt())
                             }
@@ -129,6 +126,26 @@ open class ArticalListHolder : BaseHolder<Artical>(R.layout.artical_list_layout)
         else{
             refreshLayout?.visibility=View.GONE
         }
+    }
+
+    private fun handlerImageUrl(s: String, pattern: Pattern, arrayListOf: ArrayList<String>) {
+        val stringBuffer = StringBuffer()
+        var url = ""
+        url = if (!s.startsWith("http")) {
+            "https:" + s
+        } else {
+            s
+        }
+        val matcher = pattern.matcher(url)
+        try {
+            matcher.find()
+            matcher.find()
+            matcher.appendReplacement(stringBuffer, "/large/")
+            matcher.appendTail(stringBuffer)
+            url = stringBuffer.toString()
+        } catch (e: Exception) {
+        }
+        arrayListOf.add(url)
     }
 
     private fun doCollect(p0: Holder?, p1: Artical, collect: IndicateTextView?, p2: Int) {

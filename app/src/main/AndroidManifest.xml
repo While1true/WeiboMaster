@@ -25,6 +25,7 @@
         <meta-data
             android:name="com.master.weibomaster.Util.Glide.MyAppGlidModule"
             android:value="AppGlideModule" />
+
         <activity
             android:name=".Activity.BlankActivity"
             android:screenOrientation="portrait"
@@ -40,19 +41,23 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.CategoryActivity"
-            android:windowSoftInputMode="adjustNothing|stateHidden"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing|stateHidden" />
+        <activity
+            android:name=".Activity.ScienceActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing|stateHidden" />
         <activity
             android:name=".Activity.CategoryListActivity"
-            android:windowSoftInputMode="adjustNothing|stateHidden"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing|stateHidden" />
         <activity
             android:name=".Activity.WebViewActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.SearchActivity"
-            android:windowSoftInputMode="adjustPan|stateVisible"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateVisible" />
 
         <service
             android:name=".Services.DownLoadService"

@@ -2,6 +2,8 @@ package com.master.weibomaster
 
 import android.app.Application
 import android.content.Context
+import android.support.multidex.MultiDex
+import com.didi.virtualapk.PluginManager
 import com.master.weibomaster.Util.AdjustUtil
 import com.nestrefreshlib.RefreshViews.RefreshLayout
 import com.tencent.smtt.sdk.QbSdk
@@ -19,7 +21,8 @@ class App : Application(){
 
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
-//        PluginManager.getInstance(base).init()
+        PluginManager.getInstance(base).init()
+        MultiDex.install(this)
     }
     override fun onCreate() {
         super.onCreate()
