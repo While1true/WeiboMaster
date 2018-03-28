@@ -51,7 +51,8 @@ public class ApkUtils {
                 if (PluginManager.getInstance(ActivityUtils.getTopActivity()).getLoadedPlugin(science.getPackageName()) == null)
                     PluginManager.getInstance(ActivityUtils.getTopActivity()).loadPlugin(file);
                 Intent intent = new Intent();
-                intent.setClassName(ActivityUtils.getTopActivity(), science.getMainActivity());
+                intent.setClassName(science.getPackageName(), science.getMainActivity());
+                intent.putExtra("user",DeviceUtils.INSTANCE.getDeviceID());
                 ActivityUtils.getTopActivity().startActivity(intent);
             } catch (Exception e) {
                 e.printStackTrace();
