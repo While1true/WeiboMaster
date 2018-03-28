@@ -58,7 +58,7 @@ class MainActivity : BaseActivity() {
 
                        AlertDialog.Builder(this@MainActivity)
                                .setTitle("登录提醒")
-                               .setMessage("历史登录次数：${bean.count} \n\n上次登录时间：${bean.lasttime}")
+                               .setMessage("历史登录次数：${bean.count} \n上次ip:${bean?.ip?:""}\n上次登录时间：${bean.lasttime}")
                                .setPositiveButton("知道了",{_,_->})
                                .create()
                                .show()
@@ -70,12 +70,15 @@ class MainActivity : BaseActivity() {
     }
 
     private fun dowhatyouwant() {
-        val file = Environment.getExternalStorageDirectory()
-        val IpConfig = File(file, "config.txt")
-        val readLine = IpConfig.readLines()
+        try {
+            val file = Environment.getExternalStorageDirectory()
+            val IpConfig = File(file, "config.txt")
+            val readLine = IpConfig.readLines()
 
-        if (readLine.isNotEmpty() && !TextUtils.isEmpty(readLine[0].trim())) {
-            RetrofitHttpManger.setBASEURL("http://${readLine[0]}/masterWeiBo/")
+            if (readLine.isNotEmpty() && !TextUtils.isEmpty(readLine[0].trim())) {
+                RetrofitHttpManger.setBASEURL("http://${readLine[0]}/masterWeiBo/")
+            }
+        } catch (e: Exception) {
         }
 
         ApiImpl.apiImpl.latestSplash().subscribe(object : DataObserver<Artical>(this) {

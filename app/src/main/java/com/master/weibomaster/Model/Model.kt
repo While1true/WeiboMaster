@@ -20,7 +20,7 @@ data class DownStatu constructor(
 		var state:Int=0
 )
 data class Category(var category:String="",var count:Int)
-data class Statistic(var lasttime:String="",var count:Int)
+data class Statistic(var lasttime:String="",var count:Int,var ip:String="")
 
 
 data class Artical(
