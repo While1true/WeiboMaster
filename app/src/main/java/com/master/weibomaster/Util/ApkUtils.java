@@ -1,6 +1,7 @@
 package com.master.weibomaster.Util;
 
 import android.content.Intent;
+import android.text.TextUtils;
 
 import com.didi.virtualapk.PluginManager;
 import com.master.weibomaster.Model.Science;
@@ -20,11 +21,19 @@ import java.io.InputStream;
 
 public class ApkUtils {
     public static void startApk(Science science, MyObserver<MyObserver.Progress> listener) {
+        if(TextUtils.isEmpty(science.getUrl())){
+            K2JUtils.toast("该功能在开发中");
+            return;
+        }
         if (!startApk(science))
             DownLoadService.Companion.download(science.getUrl()).compose(RxSchedulers.<MyObserver.Progress>compose()).subscribe(listener);
     }
 
     public static boolean startApk(Science science) {
+        if(TextUtils.isEmpty(science.getUrl())){
+            K2JUtils.toast("该功能在开发中");
+            return false;
+        }
         String url = science.getUrl();
         File file = DownLoadService.Companion.getFileByUrl(url);
         long available = 0;
