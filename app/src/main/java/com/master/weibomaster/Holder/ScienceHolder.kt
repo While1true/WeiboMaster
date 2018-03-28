@@ -32,7 +32,6 @@ class ScienceHolder : BaseHolder<Science>(R.layout.science_layout) {
         val progressbar = p0?.getView<ProgressBar>(R.id.progressBar)
         val progresstext = p0?.getView<TextView>(R.id.progresstext)
         p0.itemView.setOnClickListener {
-            p0.itemView.isEnabled=false
             ApkUtils.startApk(p1, object : MyObserver<MyObserver.Progress>(ActivityUtils.getTopActivity()) {
                 override fun onNext(t: Progress) {
                     super.onNext(t)
@@ -41,7 +40,6 @@ class ScienceHolder : BaseHolder<Science>(R.layout.science_layout) {
                         progressbar.progress = (100 * t.current / t.total).toInt()
                         progresstext.text = "正在下载中...${progressbar.progress}%"
                     } else {
-                        p0.itemView.isEnabled=true
                         progresslayout.visibility = View.INVISIBLE
                         ApkUtils.startApk(p1)
                     }
@@ -50,7 +48,6 @@ class ScienceHolder : BaseHolder<Science>(R.layout.science_layout) {
 
                 override fun onError(e: Throwable) {
                     super.onError(e)
-                    p0.itemView.isEnabled=true
                     "下载失败".toast()
                     progresslayout.visibility=View.INVISIBLE
                 }
