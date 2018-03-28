@@ -2,6 +2,7 @@ package com.master.weibomaster.Rx.Net;
 
 import com.master.weibomaster.Rx.MyObserver;
 import com.master.weibomaster.Rx.Utils.RxBus;
+import com.master.weibomaster.Services.DownLoadService;
 
 import java.io.IOException;
 
@@ -27,7 +28,8 @@ public class ProgressDownloadBody extends ResponseBody {
                                 String url) {
         this.responseBody = responseBody;
         progress = new MyObserver.Progress();
-        progress.setFile(url);
+        progress.setUrl(url);
+        progress.setFile(DownLoadService.Companion.getFileByUrl(url));
     }
 
     @Override
@@ -64,24 +66,26 @@ public class ProgressDownloadBody extends ResponseBody {
             @Override
             public long read(Buffer source, long byteCount) throws IOException {
                 long bytesRead = super.read(source, byteCount);
+                if(bytesRead==-1){
+                    progress.setComplete(true);
+                    RxBus.getDefault().post(progress);
+                    return bytesRead;
+                }
                 if (contentLength == 0) { //获得contentLength的值，后续不再调用
                     contentLength = contentLength();
                     progress.setTotal(contentLength);
                 } //增加当前写入的字节数
-                bytesWritten += byteCount;
-
+                bytesWritten += bytesRead;
+                progress.setCurrent(bytesWritten);
                 long l = System.currentTimeMillis();
                 if(l-lastwritetime>=500){
                     speed=(bytesWritten-lastwrite)*500/(l-lastwritetime);
+                    progress.setSpeed(speed);
                     lastwrite=bytesWritten;
                     lastwritetime = l;
+                    // 回调
+                    RxBus.getDefault().post(progress);
                 }
-                progress.setSpeed(speed);
-
-                progress.setCurrent(bytesWritten);
-                // 回调
-                RxBus.getDefault().post(progress);
-
                 return bytesRead;
             }
         };

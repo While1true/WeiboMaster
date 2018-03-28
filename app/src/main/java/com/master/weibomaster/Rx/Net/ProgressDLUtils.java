@@ -1,21 +1,11 @@
 package com.master.weibomaster.Rx.Net;
 
 import com.master.weibomaster.Rx.MyObserver;
-import com.master.weibomaster.Rx.RxSchedulers;
-import com.master.weibomaster.Rx.Utils.RxBus;
-import com.master.weibomaster.Rx.Utils.RxLifeUtils;
 import com.master.weibomaster.Services.DownLoadService;
-import com.master.weibomaster.Util.ActivityUtils;
-import com.master.weibomaster.Util.FileUtils;
-import com.master.weibomaster.Util.MemoryUtils;
 
 import java.io.File;
 
 import io.reactivex.Observable;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
-import io.reactivex.functions.Predicate;
 import okhttp3.ResponseBody;
 import retrofit2.http.GET;
 import retrofit2.http.Streaming;
