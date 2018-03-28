@@ -12,6 +12,8 @@ import com.master.weibomaster.Rx.Utils.RxBus
 import com.master.weibomaster.Rx.Utils.RxLifeUtils
 import com.master.weibomaster.Util.FileUtils
 import com.master.weibomaster.Util.MemoryUtils
+import coms.pacs.pacs.Utils.log
+import coms.pacs.pacs.Utils.mtoString
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Function
@@ -37,10 +39,14 @@ class DownLoadService : IntentService("") {
     companion object {
         private val runningMap = mutableMapOf<String, Disposable>()
         fun download(url: String): Observable<MyObserver.Progress> {
-            val i = url.lastIndexOf(".")
+
+            return download(url, getFileByUrl(url))
+        }
+
+        fun getFileByUrl(url: String): File {
+            val i = url.lastIndexOf("/")
             val fileName = url.substring(i)
-            val file = File(MemoryUtils.FILE.toString() + fileName)
-            return download(url, file)
+            return File(MemoryUtils.FILE.toString() + fileName)
         }
 
         fun download(url: String, fileName: String): Observable<MyObserver.Progress> {
@@ -57,7 +63,9 @@ class DownLoadService : IntentService("") {
                 App.app.startService(intent)
             }
             return RxBus.getDefault().toObservable(MyObserver.Progress::class.java)
-                    .filter { progress -> progress.file == url }
+                    .filter { progress ->
+                        progress.url == url
+                    }
         }
 
         fun stop(url: String) {

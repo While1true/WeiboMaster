@@ -5,6 +5,8 @@ import com.master.weibomaster.Rx.Utils.RxLifeUtils;
 import com.master.weibomaster.Util.K2JUtils;
 
 
+import java.io.File;
+
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -52,8 +54,26 @@ public abstract class MyObserver<T> implements Observer<T> {
     public static class Progress{
         Long total=0l;
         Long current=0l;
-        String file;
+        File file;
+        String url;
+        private boolean complete;
         float speed;
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        public boolean isComplete() {
+            return complete;
+        }
+
+        public void setComplete(boolean complete) {
+            this.complete = complete;
+        }
 
         public Long getTotal() {
             return total;
@@ -71,11 +91,11 @@ public abstract class MyObserver<T> implements Observer<T> {
             this.current = current;
         }
 
-        public String getFile() {
+        public File getFile() {
             return file;
         }
 
-        public void setFile(String file) {
+        public void setFile(File file) {
             this.file = file;
         }
 

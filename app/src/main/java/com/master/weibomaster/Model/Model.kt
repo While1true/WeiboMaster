@@ -47,6 +47,7 @@ data class Science(var name:String="未知",
 				   var packageName:String="",
 				   var mainActivity:String="",
 				   var url:String="",
+				   var size:Long=0,
 				   var date:String="",
 				   var icon:String="")
 data class ToDo(

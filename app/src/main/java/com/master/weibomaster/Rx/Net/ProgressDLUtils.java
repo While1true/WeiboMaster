@@ -55,7 +55,7 @@ public class ProgressDLUtils {
                 .filter(new Predicate<MyObserver.Progress>() {
                     @Override
                     public boolean test(MyObserver.Progress progress) throws Exception {
-                        return progress.getFile().equals(url);
+                        return progress.getUrl().equals(url);
                     }
                 })
                 .compose(RxSchedulers.<MyObserver.Progress>compose())
@@ -81,7 +81,7 @@ public class ProgressDLUtils {
     }
 
     public static void download(String url, final MyObserver<File> callback) {
-        int i = url.lastIndexOf(".");
+        int i = url.lastIndexOf("/");
         String fileName = url.substring(i);
         File file = new File(MemoryUtils.FILE + fileName);
         download(url, file, callback);
