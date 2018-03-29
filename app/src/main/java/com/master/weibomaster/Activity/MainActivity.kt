@@ -31,6 +31,7 @@ import java.io.File
 
 
 class MainActivity : BaseActivity() {
+
     var bean: Artical? = null
     override fun initView() {
         RxPermissions(this).request(Manifest.permission.READ_PHONE_STATE,
