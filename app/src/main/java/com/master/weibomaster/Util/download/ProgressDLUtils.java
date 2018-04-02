@@ -1,7 +1,11 @@
-package com.master.weibomaster.Rx.Net;
+package com.master.weibomaster.Util.download;
 
-import com.master.weibomaster.Rx.MyObserver;
-import com.master.weibomaster.Services.DownLoadService;
+
+
+import com.master.rxlib.Rx.MyObserver;
+import com.master.rxlib.Rx.Net.RetrofitHttpManger;
+import com.master.weibomaster.App;
+import com.master.weibomaster.Util.RxManager;
 
 import java.io.File;
 
@@ -16,6 +20,7 @@ import retrofit2.http.Url;
  */
 
 public class ProgressDLUtils {
+    public static final File FILE=new File(App.app.getFilesDir(), "file/");
     public static interface DownloadInterface {
         @GET
         @Streaming
@@ -23,28 +28,30 @@ public class ProgressDLUtils {
     }
 
     public static void addListenerUrl(String url) {
-        if (!RetrofitHttpManger.progrssUrls.contains(url)) {
-            RetrofitHttpManger.progrssUrls.add(url);
-        }
+            RxManager.get().addDownloadUrlListener(url,FILE);
     }
 
     public static void removeListenerUrl(String url) {
-        if (RetrofitHttpManger.progrssUrls.contains(url)) {
-            RetrofitHttpManger.progrssUrls.remove(url);
-        }
+        RxManager.get().removeDownloadListener(url);
     }
 
     public Observable<MyObserver.Progress> download(String url, String fileName) {
-        return DownLoadService.Companion.download(url, fileName);
+        return DownLoadService.download(url, fileName);
 
     }
 
     public static Observable<MyObserver.Progress> download(final String url, final File file) {
-        return DownLoadService.Companion.download(url, file);
+        return DownLoadService.download(url, file);
     }
 
     public static Observable<MyObserver.Progress> download(String url) {
-        return DownLoadService.Companion.download(url);
+        return DownLoadService.download(url);
+    }
+
+    public static File getFileByUrl(String url){
+        int index = url.lastIndexOf("/");
+        String name = url.substring(index);
+        return new File(FILE+name);
     }
 }
 
