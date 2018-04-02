@@ -71,18 +71,19 @@ public final class ProgressRequestBody extends RequestBody {
                     contentLength = contentLength();
                     progress.setTotal(contentLength);
                 } //增加当前写入的字节数
+                bytesWritten+=byteCount;
                 long l = System.currentTimeMillis();
-                if(l-lastwritetime>=500){
+                if(l-lastwritetime>=500||bytesWritten==contentLength){
                     speed=(bytesWritten-lastwrite)*500/(l-lastwritetime);
                     lastwrite=bytesWritten;
                     lastwritetime = l;
+                    progress.setSpeed(speed);
+                    progress.setCurrent(bytesWritten);
+                    if(callback!=null){
+                        callback.onProgress(progress);
+                    }
                 }
-                progress.setSpeed(speed);
 
-
-                progress.setCurrent(bytesWritten);
-                // 回调
-                callback.onProgress(progress);
             }
         };
     }
