@@ -5,13 +5,16 @@
     <color name="colorAccent">#FF4081</color>
 
 
-    <color name="transparent">#0000</color>
+
     <color name="presstransparent">#11ffffff</color>
+    <color name="transparent">#0000</color>
     <color name="black353535">#353535</color>
     <color name="black535353">#353535</color>
     <color name="linecolor">#ededed</color>
-    <color name="colorf0f0f0">#f0f0f0</color>
-    <color name="colorfff">#fff</color>
-    <color name="color30666666">#20666666</color>
     <color name="hintcolor">#55ffffff</color>
+    <color name="colorfff">#fff</color>
+    <color name="colorf0f0f0">#f0f0f0</color>
+
+    <color name="color30666666">#20666666</color>
+
 </resources>

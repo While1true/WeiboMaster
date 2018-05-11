@@ -6,8 +6,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import com.master.weibomaster.Api.ApiImpl
 import com.master.weibomaster.Base.BaseActivity
-import com.master.weibomaster.Holder.ArticalListHolder
-import com.master.weibomaster.Holder.RefreshLayoutPageLoading
+import com.master.weibomaster.Holder.*
 import com.master.weibomaster.Model.Artical
 import com.master.weibomaster.R
 import com.master.weibomaster.Util.DeviceUtils
@@ -52,6 +51,10 @@ class SearchActivity : BaseActivity() {
             override fun getObservable() = ApiImpl.apiImpl.getSearchList(category,content, DeviceUtils.deviceID, pagenum, pagesize)
         }.AddLifeOwner(this)
                 .addType(ArticalListHolder())
+                .addType(ArticalListHolder_1())
+                .addType(ArticalListHolder2_4())
+                .addType(ArticalListHolder_4())
+                .addType(ArticalListHolder_6())
 
         pageLoading.stateAdapter.setLayoutId(StateEnum.SHOW_EMPTY, R.layout.search_empty)
         pageLoading.stateAdapter.showEmpty()

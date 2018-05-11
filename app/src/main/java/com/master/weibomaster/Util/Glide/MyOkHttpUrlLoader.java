@@ -11,6 +11,7 @@ import com.bumptech.glide.load.model.MultiModelLoaderFactory;
 import com.master.weibomaster.Util.K2JUtils;
 
 import java.io.InputStream;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
@@ -61,6 +62,8 @@ public class MyOkHttpUrlLoader implements ModelLoader<GlideUrl, InputStream> {
                         K2JUtils.log("HttpLoggingInterceptor", message);
                       }
                     }).setLevel(HttpLoggingInterceptor.Level.BODY))
+                    .connectTimeout(12, TimeUnit.SECONDS)
+                    .readTimeout(12,TimeUnit.SECONDS)
                     .build();
           }
         }

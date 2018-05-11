@@ -81,7 +81,7 @@ public class ProgressDownloadBody extends ResponseBody {
                 bytesWritten += bytesRead;
                 progress.setCurrent(bytesWritten);
                 long l = System.currentTimeMillis();
-                if(l-lastwritetime>=500){
+                if(l-lastwritetime>=500||bytesWritten==contentLength){
                     speed=(bytesWritten-lastwrite)*500/(l-lastwritetime);
                     progress.setSpeed(speed);
                     lastwrite=bytesWritten;
