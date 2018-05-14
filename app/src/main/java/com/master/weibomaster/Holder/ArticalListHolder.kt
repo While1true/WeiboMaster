@@ -2,6 +2,7 @@ package com.master.weibomaster.Holder
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.support.test.internal.util.LogUtil
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -28,6 +29,7 @@ import com.nestrefreshlib.Adpater.Impliment.BaseHolder
 import com.nestrefreshlib.Adpater.Impliment.PositionHolder
 import com.nestrefreshlib.Adpater.Impliment.SAdapter
 import com.nestrefreshlib.RefreshViews.RefreshLayout
+import coms.pacs.pacs.Utils.log
 import coms.pacs.pacs.Utils.mtoString
 import coms.pacs.pacs.Utils.toast
 import java.util.regex.Pattern
@@ -36,10 +38,10 @@ import java.util.regex.Pattern
  * Created by 不听话的好孩子 on 2018/2/26.
  */
 open class ArticalListHolder : BaseHolder<Artical>(R.layout.artical_list_layout) {
-    val eachwidth:Int
-    init {
-        eachwidth= ActivityUtils.getTopActivity().resources.displayMetrics.widthPixels - SizeUtils.dp2px(32f+16f)
-    }
+   companion object Poll{
+       val onePoll:RecyclerView.RecycledViewPool=RecyclerView.RecycledViewPool()
+       val eachwidth= ActivityUtils.getTopActivity().resources.displayMetrics.widthPixels - SizeUtils.dp2px(32f+16f)
+   }
     override fun onViewBind(p0: Holder?, p1: Artical?, p2: Int) {
         p0?.setText(R.id.content, p1?.content)
         val collect = p0?.getView<IndicateTextView>(R.id.collect)
@@ -89,6 +91,8 @@ open class ArticalListHolder : BaseHolder<Artical>(R.layout.artical_list_layout)
                 spancount=3
                 recyclerview?.layoutManager = GridLayoutManager(ActivityUtils.getTopActivity(), 3)
             }
+            recyclerview?.recycledViewPool= onePoll
+            log(onePoll.hashCode().toString())
             recyclerview?.adapter = SAdapter(split.size)
                     .addLifeOwener(ActivityUtils.getTopActivity())
                     .addType(R.layout.imageview_, object : PositionHolder() {

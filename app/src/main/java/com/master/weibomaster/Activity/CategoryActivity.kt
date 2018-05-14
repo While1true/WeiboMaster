@@ -1,7 +1,5 @@
 package com.master.weibomaster.Activity
 
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.support.test.internal.util.LogUtil
 import android.support.v4.app.ActivityCompat
@@ -10,7 +8,6 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.view.Menu
 import android.view.MenuItem
-import com.master.picwatchlib.PicFragment
 import com.master.weibomaster.Api.ApiImpl
 import com.master.weibomaster.Base.BaseActivity
 import com.master.weibomaster.Fragment.CategoryF
