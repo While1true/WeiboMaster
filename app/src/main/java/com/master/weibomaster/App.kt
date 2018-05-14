@@ -51,10 +51,6 @@ class App : Application(){
 
     private fun preInitX5Core() {
         try {
-            try {
-                QbSdk.preInit(this)
-            } catch (e: Exception) {
-            }
             QbSdk.initX5Environment(applicationContext, null)
         } catch (e: Exception) {
         }

@@ -1,6 +1,7 @@
 package com.master.weibomaster.Api
 
 import com.master.weibomaster.Model.*
+import com.update.UpdateBean
 import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -44,5 +45,8 @@ interface Api {
     @Multipart
     @POST("uploadPattern")
     fun uploadPattern(@Query("user") user: String, @Query("name") name: String, @Part pattern: MultipartBody.Part): Observable<Base<String>>
+
+    @GET("update")
+    fun update(): Observable<Base<UpdateBean>>
 
 }

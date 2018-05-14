@@ -20,8 +20,11 @@ import com.master.weibomaster.Rx.DataObserver
 import com.master.weibomaster.Rx.Utils.RxBus
 import com.master.weibomaster.Util.DeviceUtils
 import com.master.weibomaster.Util.StateBarUtils
+import com.update.UpdateBean
+import com.update.UpdateUtils
 import coms.pacs.pacs.Utils.pop
 import coms.pacs.pacs.Utils.toast
+import jp.wasabeef.blurry.Blurry
 import kotlinx.android.synthetic.main.category_layout.*
 
 /**
@@ -58,6 +61,15 @@ class CategoryActivity : BaseActivity() {
         }
         RxBus.getDefault().toObservable(UPDATE_INDICATE, Base::class.java)
                 .subscribe({ loadData() })
+        ApiImpl.apiImpl.update().subscribe(object :DataObserver<UpdateBean>(this){
+            override fun OnNEXT(bean: UpdateBean?) {
+                if (Integer.parseInt(bean?.updateNumber) > packageManager.getPackageInfo(packageName, 0).versionCode) {
+                    UpdateUtils.checkUpdate(this@CategoryActivity, bean)
+                }
+            }
+
+        })
+
     }
 
     override fun loadData() {
