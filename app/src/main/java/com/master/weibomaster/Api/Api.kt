@@ -20,6 +20,8 @@ interface Api {
 
     @GET("statistics")
     fun statistics(@Query("user") user: String): Observable<Base<Statistic>>
+    @GET("downloadstatistic")
+    fun downloadstatistic(@Query("user") user: String): Observable<Base<Statistic>>
 
     @GET("science")
     fun science(): Observable<Base<List<Science>>>

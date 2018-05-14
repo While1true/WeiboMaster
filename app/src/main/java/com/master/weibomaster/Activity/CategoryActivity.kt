@@ -1,6 +1,9 @@
 package com.master.weibomaster.Activity
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
+import android.support.test.internal.util.LogUtil
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.FragmentPagerAdapter
@@ -13,6 +16,7 @@ import com.master.weibomaster.Base.BaseActivity
 import com.master.weibomaster.Fragment.CategoryF
 import com.master.weibomaster.Fragment.LikeF
 import com.master.weibomaster.Model.Base
+import com.master.weibomaster.Model.Statistic
 import com.master.weibomaster.Model.ToDo
 import com.master.weibomaster.Model.UPDATE_INDICATE
 import com.master.weibomaster.R
@@ -24,7 +28,6 @@ import com.update.UpdateBean
 import com.update.UpdateUtils
 import coms.pacs.pacs.Utils.pop
 import coms.pacs.pacs.Utils.toast
-import jp.wasabeef.blurry.Blurry
 import kotlinx.android.synthetic.main.category_layout.*
 
 /**
@@ -61,14 +64,22 @@ class CategoryActivity : BaseActivity() {
         }
         RxBus.getDefault().toObservable(UPDATE_INDICATE, Base::class.java)
                 .subscribe({ loadData() })
-        ApiImpl.apiImpl.update().subscribe(object :DataObserver<UpdateBean>(this){
-            override fun OnNEXT(bean: UpdateBean?) {
-                if (Integer.parseInt(bean?.updateNumber) > packageManager.getPackageInfo(packageName, 0).versionCode) {
-                    UpdateUtils.checkUpdate(this@CategoryActivity, bean)
-                }
-            }
 
-        })
+        ApiImpl.apiImpl.update().filter {
+            Integer.parseInt(it?.data.updateNumber) > packageManager.getPackageInfo(packageName, 0).versionCode
+        }.subscribe(object : DataObserver<UpdateBean>(this@CategoryActivity) {
+                    override fun OnNEXT(bean: UpdateBean?) {
+                        UpdateUtils.checkUpdate(this@CategoryActivity, bean, { _, _: Int ->
+                            ApiImpl.apiImpl.downloadstatistic(DeviceUtils.deviceID)
+                                    .subscribe(object : DataObserver<Statistic>(this@CategoryActivity) {
+                                        override fun OnNEXT(bean: Statistic) {
+                                            LogUtil.logDebug("下载统计", "下载统计成功")
+                                        }
+
+                                    })
+                        })
+                    }
+                })
 
     }
 

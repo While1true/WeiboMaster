@@ -83,7 +83,9 @@ class WordCloudF : BaseFragment() {
         content.text = artical?.content + "\n" + artical?.come + "\n" + artical?.timestr
 
         share.setOnClickListener {
-            FileUtils.send(context, pic, "image/jpeg")
+            val file = File(pic.parentFile, "xx.jpg")
+            pic.renameTo(file)
+            FileUtils.send(context, file, "image/jpeg")
         }
 
         wordshare.setOnClickListener {

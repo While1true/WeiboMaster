@@ -14,11 +14,12 @@ import okhttp3.MultipartBody
  * Created by 不听话的好孩子 on 2018/2/26.
  */
 class ApiImpl : Api {
-    override fun update()=api.update().compose(RxSchedulers.compose())
+    override fun update() = api.update().compose(RxSchedulers.compose())
 
-    override fun science()=api.science().compose(RxSchedulers.compose())
+    override fun science() = api.science().compose(RxSchedulers.compose())
 
     override fun statistics(user: String) = api.statistics(user).compose(RxSchedulers.compose())
+    override fun downloadstatistic(user: String) = api.downloadstatistic(user).compose(RxSchedulers.compose())
 
     override fun latestSplash() = api.latestSplash().compose(RxSchedulers.compose())
 

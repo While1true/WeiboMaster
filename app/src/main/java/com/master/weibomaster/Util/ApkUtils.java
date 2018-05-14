@@ -31,7 +31,7 @@ public class ApkUtils {
 
     public static boolean startApk(Science science) {
         if(TextUtils.isEmpty(science.getUrl())){
-            K2JUtils.toast("该功能在开发中");
+            K2JUtils.toast("更多功能敬请期待！");
             return false;
         }
         String url = science.getUrl();

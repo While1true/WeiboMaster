@@ -3,6 +3,7 @@ package com.update;
 import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
@@ -12,6 +13,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
 
@@ -31,41 +33,24 @@ public class UpdateUtils {
     private static DownloadManager downloadManager;
     private static String downloadLink;
 
-    public static void checkUpdate(final FragmentActivity context, final UpdateBean updateBean) {
-        new MyDialogFragment()
-                .setBean(updateBean)
-                .setLayout(R.layout.update_dialog)
-                .setCallback(new MyCallback<MyDialogFragment>() {
-                    @Override
-                    public void call(MyDialogFragment dialogFragment) {
-                        downloadManager = (DownloadManager) context.getApplication().getSystemService(DOWNLOAD_SERVICE);
-                        downloadLink = updateBean.getDownloadLink();
-                        Uri uri= Uri.parse(downloadLink);
-                        DownloadManager.Request request = new DownloadManager.Request(uri);
-                        request.setAllowedOverRoaming(false);
+    public static void checkUpdate(final Context context, final UpdateBean updateBean, final DialogInterface.OnClickListener onCofirmListener) {
+      new AlertDialog.Builder(context)
+              .setTitle("检查更新")
+              .setMessage("大小："+updateBean.getAppSize()+"   版本："+updateBean.getVersionNumber()+"\n"+updateBean.getUpdateInformation())
+              .setPositiveButton("立即更新", new DialogInterface.OnClickListener() {
+                  @Override
+                  public void onClick(DialogInterface dialog, int which) {
+                      downloadLink=updateBean.getDownloadLink();
+                      download(context);
+                      onCofirmListener.onClick(dialog,which);
+                      dialog.dismiss();
+                  }
+              }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialog, int which) {
 
-                        //通知栏显示
-                        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                        PackageInfo pkg = null;
-                        try {
-                            pkg = context.getPackageManager().getPackageInfo(context.getApplication().getPackageName(), 0);
-                            String appName = pkg.applicationInfo.loadLabel(context.getPackageManager()).toString();
-                            request.setTitle(appName);
-                        } catch (PackageManager.NameNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                        request.setDescription("正在下载中...");
-                        request.setVisibleInDownloadsUi(true);
-
-                        //设置下载的路径
-                        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, downloadLink.substring(downloadLink.lastIndexOf("/")));
-                        enqueue = downloadManager.enqueue(request);
-                        context.registerReceiver(mReceiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
-                        Toast.makeText(context,"已转到后台下载...",Toast.LENGTH_SHORT).show();
-                        dialogFragment.dismiss();
-                    }
-                })
-                .show(context.getSupportFragmentManager(), "x");
+          }
+      }).create().show();
     }
 
     private static BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -76,6 +61,32 @@ public class UpdateUtils {
     };
 
 
+    private static void download(Context context){
+        downloadManager = (DownloadManager) context.getApplicationContext().getSystemService(DOWNLOAD_SERVICE);
+        Uri uri= Uri.parse(downloadLink);
+        DownloadManager.Request request = new DownloadManager.Request(uri);
+        request.setAllowedOverRoaming(false);
+
+        //通知栏显示
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        PackageInfo pkg = null;
+        try {
+            pkg = context.getPackageManager().getPackageInfo(context.getApplicationContext().getPackageName(), 0);
+            String appName = pkg.applicationInfo.loadLabel(context.getPackageManager()).toString();
+            request.setTitle(appName);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        request.setDescription("正在下载中...");
+        request.setVisibleInDownloadsUi(true);
+
+        //设置下载的路径
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, downloadLink.substring(downloadLink.lastIndexOf("/")));
+        enqueue = downloadManager.enqueue(request);
+        context.registerReceiver(mReceiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+        Toast.makeText(context,"已转到后台下载...",Toast.LENGTH_SHORT).show();
+
+    }
     public static void reset(Context context){
         context.unregisterReceiver(mReceiver);
         downloadManager=null;
