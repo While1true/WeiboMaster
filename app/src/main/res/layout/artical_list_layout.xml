@@ -42,7 +42,8 @@
             android:layout_marginTop="8dp"
             android:text="2018-3-7"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/content" />
+            app:layout_constraintTop_toBottomOf="@+id/content"
+            android:layout_marginRight="16dp" />
 
         <View
             android:id="@+id/line"
@@ -56,7 +57,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/come" />
 
-        <com.nestrefreshlib.RefreshViews.RefreshLayout
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/refreshlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

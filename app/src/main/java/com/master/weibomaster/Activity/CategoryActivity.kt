@@ -46,9 +46,11 @@ class CategoryActivity : BaseActivity() {
         vp.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
             override fun onPageSelected(position: Int) {
                 if (position == 0) {
+                    setTitle("分类")
                     rg_menu.check(R.id.category)
                 } else {
                     rg_menu.check(R.id.collect)
+                    setTitle("收藏")
                 }
             }
         })
