@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f0f0f0"
     tools:context="com.master.weibomaster.Activity.MainActivity">
 
     <FrameLayout
@@ -44,7 +43,8 @@
         android:background="@drawable/update_bt_bg"
         android:text="学习了"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginRight="@dimen/size24" />
 
     <com.master.weibomaster.Widgets.GradualButton
         android:id="@+id/share"
@@ -57,5 +57,6 @@
         android:text="分享"
         app:layout_constraintBottom_toBottomOf="@+id/next"
         app:layout_constraintEnd_toStartOf="@+id/next"
-        app:layout_constraintTop_toTopOf="@+id/next" />
+        app:layout_constraintTop_toTopOf="@+id/next"
+        android:layout_marginRight="@dimen/size16" />
 </android.support.constraint.ConstraintLayout>

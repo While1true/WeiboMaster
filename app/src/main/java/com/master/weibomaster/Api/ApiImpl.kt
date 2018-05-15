@@ -19,6 +19,7 @@ class ApiImpl : Api {
     override fun science() = api.science().compose(RxSchedulers.compose())
 
     override fun statistics(user: String) = api.statistics(user).compose(RxSchedulers.compose())
+
     override fun downloadstatistic(user: String) = api.downloadstatistic(user).compose(RxSchedulers.compose())
 
     override fun latestSplash() = api.latestSplash().compose(RxSchedulers.compose())

@@ -13,12 +13,14 @@ import com.master.weibomaster.Base.BaseFragment
 import kotlinx.android.synthetic.main.word_could_fragment.*
 import java.io.File
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.view.View
 import com.master.weibomaster.Rx.RxSchedulers
 import com.tbruyelle.rxpermissions2.RxPermissions
 import coms.pacs.pacs.Utils.mtoString
 import coms.pacs.pacs.Utils.toast
+import jp.wasabeef.blurry.Blurry
 
 
 /**
@@ -47,7 +49,6 @@ class WordCloudF : BaseFragment() {
                         "没有读写权限功能可能受限".toast()
                     }
                 }
-
     }
 
     override fun loadData() {

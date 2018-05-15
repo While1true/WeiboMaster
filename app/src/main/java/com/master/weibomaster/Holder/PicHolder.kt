@@ -46,7 +46,7 @@ abstract class PicHolder(spancountx: Int, spiltx: List<String>) :PositionHolder(
             for (s in spilt) {
                 handlerImageUrl(s, pattern, arrayListOf)
             }
-            PicFragment.Go(ActivityUtils.getTopActivity(), arrayListOf,p1,p0?.itemView, 0xDD999999.toInt())
+            PicFragment.Go(ActivityUtils.getTopActivity(), arrayListOf,p1,p0?.itemView, 0xEE666666.toInt())
         }
 
     }
