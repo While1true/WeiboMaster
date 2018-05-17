@@ -25,6 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitHttpManger {
     private static final int DEFAULT_CONNECT_TIMEOUT = 6;
     private static final int DEFAULT_READ_TIMEOUT = 8;
+    public static final String PIC_HOST="http://47.106.176.142/";
     private static String BASEURL = "http://47.106.176.142/masterWeiBo/";
     private Retrofit mRetrofit;
 

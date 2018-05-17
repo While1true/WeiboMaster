@@ -5,6 +5,7 @@ import android.net.Uri
 import com.master.weibomaster.Base.BaseActivity
 import com.master.weibomaster.R
 import com.master.weibomaster.Util.StateBarUtils
+import com.nestrefreshlib.State.Interface.StateEnum
 import com.tencent.smtt.sdk.WebChromeClient
 import com.tencent.smtt.sdk.WebView
 import com.tencent.smtt.sdk.WebViewClient
@@ -40,10 +41,16 @@ class WebViewActivity : BaseActivity() {
 
             override fun onPageFinished(p0: WebView?, p1: String?) {
                 super.onPageFinished(p0, p1)
-                stateLayout?.showItem()
+
             }
         }
         webview.webChromeClient = object : WebChromeClient() {
+            override fun onProgressChanged(p0: WebView?, p1: Int) {
+                super.onProgressChanged(p0, p1)
+                if(p1==100&&stateLayout?.showstate==StateEnum.SHOW_LOADING){
+                    stateLayout?.showItem()
+                }
+            }
         }
     }
 

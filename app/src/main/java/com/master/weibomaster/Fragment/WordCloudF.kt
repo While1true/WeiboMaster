@@ -17,10 +17,10 @@ import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.view.View
 import com.master.weibomaster.Rx.RxSchedulers
+import com.master.weibomaster.Util.PrefUtil
 import com.tbruyelle.rxpermissions2.RxPermissions
 import coms.pacs.pacs.Utils.mtoString
 import coms.pacs.pacs.Utils.toast
-import jp.wasabeef.blurry.Blurry
 
 
 /**
@@ -52,7 +52,7 @@ class WordCloudF : BaseFragment() {
     }
 
     override fun loadData() {
-        ApiImpl.apiImpl.generatePic(artical!!.id, artical!!.content, DeviceUtils.deviceID)
+        ApiImpl.apiImpl.generatePic(artical!!.id, artical!!.content, DeviceUtils.deviceID, PrefUtil.get("pattern","").toString())
                 .map({
 
                     Glide.with(context!!)
@@ -85,6 +85,9 @@ class WordCloudF : BaseFragment() {
 
         share.setOnClickListener {
             val file = File(pic.parentFile, "xx.jpg")
+            if(file.exists()){
+                file.delete()
+            }
             pic.renameTo(file)
             FileUtils.send(context, file, "image/jpeg")
         }

@@ -55,17 +55,25 @@ open class ArticalListHolder : BaseHolder<Artical>(R.layout.artical_list_layout)
             FragmentUtils.showAddFragment(ActivityUtils.getTopActivity(), fragment)
         })
 
+        p0?.setOnClickListener(R.id.content, {
+            goOriginalWeb(p1)
+        })
+
         p0?.setOnClickListener(R.id.net, {
-            val intent = Intent(ActivityUtils.getTopActivity(), WebViewActivity::class.java)
-            intent.putExtra("url", p1?.href)
-            intent.putExtra("fid", p1?.href)
-            ActivityUtils.getTopActivity().startActivity(intent)
+            goOriginalWeb(p1)
         })
         collect?.setOnClickListener {
             doCollect(p0, p1, collect, p2)
         }
 
         showImgs(p1, p0)
+    }
+
+    private fun goOriginalWeb(p1: Artical?){
+        val intent = Intent(ActivityUtils.getTopActivity(), WebViewActivity::class.java)
+        intent.putExtra("url", p1?.href)
+        intent.putExtra("fid", p1?.href)
+        ActivityUtils.getTopActivity().startActivity(intent)
     }
 
     private fun showImgs(p1: Artical, p0: Holder?) {

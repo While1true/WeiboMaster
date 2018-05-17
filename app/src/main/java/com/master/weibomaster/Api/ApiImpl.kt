@@ -14,6 +14,7 @@ import okhttp3.MultipartBody
  * Created by 不听话的好孩子 on 2018/2/26.
  */
 class ApiImpl : Api {
+    override fun getPattern(user: String?)=api.getPattern(user).compose(RxSchedulers.compose())
     override fun update() = api.update().compose(RxSchedulers.compose())
 
     override fun science() = api.science().compose(RxSchedulers.compose())

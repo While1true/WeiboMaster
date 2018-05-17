@@ -58,6 +58,9 @@
             android:name=".Activity.WebViewActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".Activity.ModelActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".Activity.SearchActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateVisible" />

@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.master.weibomaster.Api.ApiImpl
 import com.master.weibomaster.Base.BaseActivity
 import com.master.weibomaster.Fragment.CategoryF
@@ -124,6 +125,9 @@ class CategoryActivity : BaseActivity() {
             R.id.science -> {
                 val option = ActivityOptionsCompat.makeSceneTransitionAnimation(this@CategoryActivity)
                 ActivityCompat.startActivity(this@CategoryActivity, Intent(this@CategoryActivity, ScienceActivity::class.java), option.toBundle())
+            }
+            R.id.pattern -> {
+                startActivity(Intent(this@CategoryActivity, ModelActivity::class.java))
             }
         }
         return true

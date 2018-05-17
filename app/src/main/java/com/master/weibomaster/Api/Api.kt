@@ -51,4 +51,7 @@ interface Api {
     @GET("update")
     fun update(): Observable<Base<UpdateBean>>
 
+    @GET("getPattern")
+    fun getPattern(@Query("user")user:String?): Observable<Base<List<Pattern>>>
+
 }
