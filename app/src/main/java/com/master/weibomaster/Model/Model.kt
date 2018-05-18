@@ -20,7 +20,11 @@ data class DownStatu constructor(
         var state: Int = 0
 )
 
-data class Category(var category: String = "", var count: Int)
+data class Category(var category: String = "", var count: Int,var wordsTop10:String)
+
+data class Category_Second(var category: String = "", var count: Int,var parent:String="")
+
+
 data class Statistic(var lasttime: String = "", var count: Int, var ip: String = "")
 
 

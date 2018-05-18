@@ -1,8 +1,10 @@
 package com.master.weibomaster.Fragment
 
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 import com.master.weibomaster.Api.ApiImpl
 import com.master.weibomaster.Holder.CategoryHolder
 import com.master.weibomaster.Model.Category
@@ -10,6 +12,8 @@ import com.master.weibomaster.R
 import com.master.weibomaster.Rx.DataObserver
 import com.nestrefreshlib.Adpater.Impliment.SAdapter
 import com.master.weibomaster.Base.BaseFragment
+import com.master.weibomaster.Holder.LabelHolder
+import com.master.weibomaster.Model.Category_Second
 import kotlinx.android.synthetic.main.refreshlayout.*
 
 /**
@@ -36,18 +40,33 @@ class CategoryF : BaseFragment() {
 
     override fun init(savedInstanceState: Bundle?) {
         refreshlayout.attrsUtils.overscrolL_ELASTIC=true
+        refreshlayout.setBackgroundColor(0xfffCfCfC.toInt())
         stateLayout?.showLoading()
     }
 
     private fun showData(bean: List<Category>) {
+        var cats=arrayListOf<Any>()
+        for ( item in bean){
+            cats.add(item)
+            val words = item.wordsTop10.split(";")
+            for (word in words){
+                val wods = word.split(",")
+                val cat=Category_Second(wods[0],wods[1].toInt(),item.category)
+                cats.add(cat)
+            }
+        }
         val recyclerview = refreshlayout.getmScroll<RecyclerView>()
-        val adapterx = SAdapter(bean)
+        val adapterx = SAdapter(cats)
                 .apply {
                     addType(CategoryHolder())
+                    addType(LabelHolder())
                     addLifeOwener { lifecycle }
                 }
+        val flexboxLayoutManager = FlexboxLayoutManager(context)
+        flexboxLayoutManager.flexDirection = FlexDirection.ROW
+        flexboxLayoutManager.justifyContent = JustifyContent.FLEX_START
         recyclerview?.apply {
-            layoutManager = GridLayoutManager(context, 2)
+            layoutManager =flexboxLayoutManager
             adapter = adapterx
         }
 
