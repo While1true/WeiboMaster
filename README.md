@@ -11,8 +11,7 @@ kotlin 开始
 #### 1.Android端
 
 >分类页
-
-![device-2018-03-29-084240.png](https://upload-images.jianshu.io/upload_images/6456519-d21bbc68407db7a3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/200x200)
+![device-2018-05-21-105635.png](https://upload-images.jianshu.io/upload_images/6456519-3342b37984f15e12.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 > 基本分类信息检索页
 
