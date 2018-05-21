@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.transition.Fade
-import android.view.Window
 import android.view.WindowManager
 import com.master.weibomaster.Api.ApiImpl
 import com.master.weibomaster.Base.BaseActivity
@@ -39,11 +38,15 @@ class SearchActivity : BaseActivity() {
      */
     var category: String = ""
 
+    /**
+     * 来源
+     */
+    var come:String=""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         StateBarUtils.performTransStateBar(window)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.enterTransition = android.transition.Explode()
-            window.exitTransition=Fade()
+            window.enterTransition = Fade()
         }
         super.onCreate(savedInstanceState)
         handleTitlebar()
@@ -52,8 +55,13 @@ class SearchActivity : BaseActivity() {
     override fun initView() {
         val category_temp = intent.getStringExtra("category")
         val words = intent.getStringExtra("words")
+        val come = intent.getStringExtra("come")
         if (!TextUtils.isEmpty(category_temp)) {
             category = category_temp.trim()
+            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN or WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
+        }
+        if (!TextUtils.isEmpty(come)) {
+            this.come = come.trim()
         }
         if (!TextUtils.isEmpty(words)) {
             this.words = words.trim()
@@ -68,16 +76,16 @@ class SearchActivity : BaseActivity() {
 
     override fun loadData() {
         val pageLoading = object : RefreshLayoutPageLoading<Artical>(refreshlayout, LinearLayoutManager(this@SearchActivity), true) {
-            override fun getObservable() = ApiImpl.apiImpl.getSearchList(category, words + content, DeviceUtils.deviceID, pagenum, pagesize)
+            override fun getObservable() = ApiImpl.apiImpl.getSearchList(come,category, words + content, DeviceUtils.deviceID, pagenum, pagesize)
         }.AddLifeOwner(this)
                 .addType(ArticalListHolder())
                 .addType(ArticalListHolder_1())
                 .addType(ArticalListHolder2_4())
                 .addType(ArticalListHolder_4())
                 .addType(ArticalListHolder_6())
-        if (!TextUtils.isEmpty(words)) {
+        if (!TextUtils.isEmpty(words)||!TextUtils.isEmpty(category)) {
             pageLoading.Go()
-            et_input.hint = words
+            et_input.hint = if(TextUtils.isEmpty(words)) category else words
         }
         pageLoading.stateAdapter.setLayoutId(StateEnum.SHOW_EMPTY, R.layout.search_empty)
         pageLoading.stateAdapter.showEmpty()

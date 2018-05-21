@@ -16,8 +16,9 @@ class CategoryHolder : BaseHolder<Category>(R.layout.category_item) {
         p0?.setText(R.id.title, p1?.category)
         p0?.setText(R.id.subtitle, "相关博文条数：" + p1?.count)
         p0?.itemView?.setOnClickListener {
-            var intent= Intent(ActivityUtils.getTopActivity(), CategoryListActivity::class.java)
-            intent.putExtra("category",p1?.category)
+            var intent = Intent(ActivityUtils.getTopActivity(), CategoryListActivity::class.java)
+            if (p1?.category != "热门分类")
+                intent.putExtra("come", p1?.category)
 //            val intent = Intent(p0?.itemView.context, ProgramListActivity::class.java)
 //            intent.putExtra("category", p1?.category)
 //            intent.putExtra("category_id", p1?.category_id)

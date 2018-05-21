@@ -30,10 +30,10 @@ interface Api {
     fun getToDo(@Query("like_user") like_user: String): Observable<Base<ToDo>>
 
     @GET("articallist")
-    fun getArticalList(@Query("category") category: String, @Query("like_user") like_user: String, @Query("pagenum") pagenum: Int, @Query("pagesize") pagesize: Int): Observable<Base<List<Artical>>>
+    fun getArticalList(@Query("come") come: String,@Query("category") category: String, @Query("like_user") like_user: String, @Query("pagenum") pagenum: Int, @Query("pagesize") pagesize: Int): Observable<Base<List<Artical>>>
 
     @GET("search")
-    fun getSearchList(@Query("category") category: String = "", @Query("words") words: String, @Query("like_user") like_user: String, @Query("pagenum") pagenum: Int, @Query("pagesize") pagesize: Int): Observable<Base<List<Artical>>>
+    fun getSearchList(@Query("come") come: String,@Query("category") category: String = "", @Query("words") words: String, @Query("like_user") like_user: String, @Query("pagenum") pagenum: Int, @Query("pagesize") pagesize: Int): Observable<Base<List<Artical>>>
 
     @GET("getlikelist")
     fun getLikeList(@Query("like_user") like_user: String, @Query("pagenum") pagenum: Int, @Query("pagesize") pagesize: Int): Observable<Base<List<Artical>>>
