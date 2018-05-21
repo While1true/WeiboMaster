@@ -12,7 +12,7 @@ kotlin 开始
 
 >分类页
 
-![device-2018-03-29-093020.png](https://upload-images.jianshu.io/upload_images/6456519-0afd1f76a7e9d442.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/200)
+![device-2018-03-29-084240.png](https://upload-images.jianshu.io/upload_images/6456519-d21bbc68407db7a3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/200x200)
 
 > 基本分类信息检索页
 
