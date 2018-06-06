@@ -1,4 +1,5 @@
 # WeiboMaster
+# [点击进入主页](http://47.106.176.142/masterWeiBo/index)
 kotlin 开始
 ## 搭建一体式多方位应用
 
